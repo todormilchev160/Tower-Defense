@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BaseHealth : MonoBehaviour
 {
@@ -19,5 +20,9 @@ public class BaseHealth : MonoBehaviour
         enemyDamageBase=other.GetComponent<EnemyDamageBase>();
         Debug.Log("Triggered");
         baseHealth-=enemyDamageBase.damageDealtOnBase;
+        if(baseHealth<=0)
+        {
+            SceneManager.LoadScene("TodorScene");
+        }
     }
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class Arrow : MonoBehaviour
 {
     public float speed = 10f;
     public float damage = 10f;
@@ -41,7 +41,11 @@ public class Projectile : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if(other.CompareTag("Enemy"))
+        {
         enemyHealth=other.GetComponent<EnemyHealth>();
         enemyHealth.TakeDamage(damage);
+        Destroy(gameObject);
+        }
     }
 }
