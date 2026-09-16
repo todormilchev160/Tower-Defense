@@ -4,6 +4,7 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
    [SerializeField]private float health=10;
+   [SerializeField]private bool isLastEnemy;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -20,7 +21,15 @@ public class EnemyHealth : MonoBehaviour
         health-=damage;
         if (health <= 0)
         {
-            Destroy(gameObject);
+           Die();
         }
+    }
+    void Die()
+    {
+        if(isLastEnemy)
+        {
+            GameManager.waveCleared=true;
+        }
+        Destroy(gameObject);
     }
 }

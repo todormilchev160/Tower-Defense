@@ -3,13 +3,19 @@ using UnityEngine.AI;
 
 public class EnemyWalk : MonoBehaviour
 {
-    public Transform destination;
+    [SerializeField] private string destinationTag = "EnemyDestination";
 
     private NavMeshAgent agent;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        agent.SetDestination(destination.position);
+
+        GameObject destination = GameObject.FindGameObjectWithTag(destinationTag);
+
+        if (destination != null)
+        {
+            agent.SetDestination(destination.transform.position);
+        }
     }
 }
