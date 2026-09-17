@@ -19,6 +19,7 @@ public class TowerAttack : MonoBehaviour
     public GameObject projectilePrefab;
     public Transform firePoint;
     public float fireRate = 1f;
+    public Animator animator;
 
     [Header("Projectile Script")]
     public ProjectileType projectileType;
@@ -73,7 +74,7 @@ public class TowerAttack : MonoBehaviour
     {
         if (currentTarget == null)
             return;
-
+        animator.SetTrigger("Shoot");
         GameObject projectile = Instantiate(
             projectilePrefab,
             firePoint.position,
@@ -138,8 +139,6 @@ public class TowerAttack : MonoBehaviour
 
                     if (enemyAgent != null)
                     {
-                        // We do this a few times because moving the predicted
-                        // position changes the projectile travel distance.
                         for (int i = 0; i < 4; i++)
                         {
                             float distance = Vector3.Distance(
@@ -176,13 +175,11 @@ public class TowerAttack : MonoBehaviour
         float acceleration,
         float maxSpeed)
     {
-        // No acceleration
         if (acceleration <= 0f)
         {
             return distance / Mathf.Max(startingSpeed, 0.01f);
         }
 
-        // How long until projectile reaches max speed?
         float timeToMaxSpeed =
             (maxSpeed - startingSpeed) / acceleration;
 
