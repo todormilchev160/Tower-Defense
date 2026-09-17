@@ -42,26 +42,43 @@ public class EnemyWalk : MonoBehaviour
 
     void Update()
     {
-        if (!moving || destination == null)
+        // IMPORTANT:
+        // Do absolutely nothing while combat has stopped us.
+        if (!moving)
             return;
 
-        // Don't do anything while NavMesh is calculating
+        if (destination == null)
+            return;
+
+        if (agent == null || !agent.isOnNavMesh)
+            return;
+
         if (agent.pathPending)
             return;
 
-        // Check if we've reached our current waypoint
+        // If we're going directly to the final destination,
+        // don't create any more random waypoints.
+        if (goingToFinalDestination)
+            return;
+
+        if (!agent.hasPath)
+            return;
+
         if (agent.remainingDistance <= waypointReachDistance)
         {
-            if (!goingToFinalDestination)
-            {
-                SetNextRandomWaypoint();
-            }
+            SetNextRandomWaypoint();
         }
     }
 
     void SetNextRandomWaypoint()
     {
+        if (!moving)
+            return;
+
         if (destination == null)
+            return;
+
+        if (agent == null || !agent.isOnNavMesh)
             return;
 
         float distanceToDestination = Vector3.Distance(
@@ -69,31 +86,34 @@ public class EnemyWalk : MonoBehaviour
             destination.position
         );
 
-        // If we're close enough, just go directly to destination
+        // Close enough -> go directly to final destination
         if (distanceToDestination <= directDestinationDistance)
         {
             goingToFinalDestination = true;
+
+            agent.isStopped = false;
             agent.SetDestination(destination.position);
+
             return;
         }
 
-        // Direction towards final destination
         Vector3 directionToDestination =
-            (destination.position - transform.position).normalized;
+            destination.position - transform.position;
 
-        // Direction perpendicular to our movement
+        // Keep direction horizontal
+        directionToDestination.y = 0f;
+        directionToDestination.Normalize();
+
         Vector3 sideways = Vector3.Cross(
             Vector3.up,
             directionToDestination
         ).normalized;
 
-        // Pick how far forward to go
         float forwardDistance = Random.Range(
             waypointDistance * 0.5f,
             waypointDistance
         );
 
-        // Pick random left/right offset
         float sideOffset = Random.Range(
             -sidewaysRandomness,
             sidewaysRandomness
@@ -104,34 +124,23 @@ public class EnemyWalk : MonoBehaviour
             directionToDestination * forwardDistance +
             sideways * sideOffset;
 
-        // Find nearest valid position on NavMesh
         if (NavMesh.SamplePosition(
             desiredPoint,
             out NavMeshHit hit,
             waypointDistance,
             NavMesh.AllAreas))
         {
+            agent.isStopped = false;
             agent.SetDestination(hit.position);
         }
         else
         {
-            // Couldn't find random point, go directly for now
+            agent.isStopped = false;
             agent.SetDestination(destination.position);
         }
     }
 
-    public void ResumeMovement()
-    {
-        if (destination == null)
-            return;
-
-        moving = true;
-        agent.isStopped = false;
-
-        // Continue with randomized movement
-        SetNextRandomWaypoint();
-    }
-
+    // Called when combat starts
     public void StopMovement()
     {
         moving = false;
@@ -139,6 +148,24 @@ public class EnemyWalk : MonoBehaviour
         if (agent != null && agent.isOnNavMesh)
         {
             agent.isStopped = true;
+            agent.ResetPath();
+        }
+    }
+
+    // Called when enemy wins combat
+    public void ResumeMovement()
+    {
+        if (destination == null)
+            return;
+
+        moving = true;
+        goingToFinalDestination = false;
+
+        if (agent != null && agent.isOnNavMesh)
+        {
+            agent.isStopped = false;
+
+            SetNextRandomWaypoint();
         }
     }
 }

@@ -6,7 +6,8 @@ public class TowerAttack : MonoBehaviour
     public enum ProjectileType
     {
         Arrow,
-        Magic
+        Magic,
+        Bomb
     }
 
     [Header("Targeting")]
@@ -81,6 +82,29 @@ public class TowerAttack : MonoBehaviour
 
         switch (projectileType)
         {
+            case ProjectileType.Bomb:
+
+    Bomb bomb = projectile.GetComponent<Bomb>();
+
+    if (bomb != null)
+    {
+        Vector3 predictedPosition = currentTarget.position;
+
+        NavMeshAgent enemyAgent =
+            currentTarget.GetComponent<NavMeshAgent>();
+
+        if (enemyAgent != null)
+        {
+            predictedPosition =
+                currentTarget.position +
+                enemyAgent.velocity * bomb.TravelTime;
+        }
+
+        bomb.SetTargetPosition(predictedPosition);
+    }
+
+    break;
+
             // ========================
             // ARROW
             // ========================
