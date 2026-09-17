@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 4745079971870173232}
   - component: {fileID: 6347185880785500715}
   m_Layer: 0
-  m_Name: Tower
+  m_Name: UpgradedTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -157,10 +157,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0afe959ca9b8c654aaca875b98a0d489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TowerAttack
-  targetPoint: {fileID: 0}
+  targetPoint: {fileID: 325111080236345537, guid: 011884cb52f5058499d59736d762586a, type: 3}
   enemyTag: Enemy
   attackRange: 10
-  projectilePrefab: {fileID: 5627795090312600175, guid: 415b810e1931be64c910d313e71f39d0, type: 3}
+  projectilePrefab: {fileID: 5627795090312600175, guid: 87cb42918ba0a9246b2dd241d1d6f527, type: 3}
   firePoint: {fileID: 5869329121082817242}
-  fireRate: 1
+  fireRate: 0.8
   projectileType: 0
