@@ -20,6 +20,19 @@ public class TowerUIManager : MonoBehaviour
 
     [Header("Spawn Settings")]
     [SerializeField] private float spawnY = 0f;
+    [Header("Prices")]
+    public int archerPrice;
+    public int magicPrice;
+    public int bombPrice;
+    public int archerUpgradePrice;
+    public int bombUpgradePrice;
+    public int magicUpgradePrice;
+    public int archerSellPrice=80;
+    public int bombSellPrice=240;
+    public int magicSellPrice=160;
+    private int archerSellPrice2;
+    private int magicSellPrice2;
+    private int bombSellPrice2;
 
     private bool towerUIOpen = false;
     private bool firstStage=true;
@@ -31,6 +44,9 @@ public class TowerUIManager : MonoBehaviour
 
     void Start()
     {
+        archerSellPrice2=archerSellPrice;
+        magicSellPrice2=magicSellPrice;
+        bombSellPrice2=bombSellPrice;
         towerSelectionUI.SetActive(false);
         slotButton.SetActive(true);
     }
@@ -78,20 +94,44 @@ public class TowerUIManager : MonoBehaviour
 
     public void SpawnMagicTower()
     {
-        magic=true;
-        SpawnTower(magicTowerPrefab);
+        if(GameManager.currency<magicPrice)
+        {
+            return;
+        }
+        else
+        {
+            GameManager.currency-=magicPrice;
+             magic=true;
+            SpawnTower(magicTowerPrefab);
+        }
     }
 
     public void SpawnArcherTower()
     {
-        archer=true;
-        SpawnTower(archerTowerPrefab);
+        if(GameManager.currency<archerPrice)
+        {
+            return;
+        }
+        else
+        {
+            GameManager.currency-=archerPrice;
+            archer=true;
+            SpawnTower(archerTowerPrefab);
+        }
     }
 
     public void SpawnBombTower()
     {
-        bomb=true;
-        SpawnTower(bombTowerPrefab);
+        if(GameManager.currency<bombPrice)
+        {
+            return;
+        }
+        else
+        {
+            GameManager.currency-=bombPrice;
+            bomb=true;
+            SpawnTower(bombTowerPrefab);
+        }
     }
     private void SpawnTower(GameObject towerPrefab)
     {
@@ -123,26 +163,72 @@ public class TowerUIManager : MonoBehaviour
     }
     public void SellTower()
     {
+      if(magic)
+        {
+            GameManager.currency+=magicSellPrice2;
+            magicSellPrice2=magicSellPrice;
+        }
+      else if(archer)
+        {
+            GameManager.currency+=archerSellPrice2;
+            archerSellPrice2=archerSellPrice;
+        }
+        if(bomb)
+        {
+            GameManager.currency+=bombSellPrice2;
+            bombSellPrice2=bombSellPrice;
+        }
       Destroy(tower);
       firstStage=true;
       secondStage=false;
       slotButton.SetActive(true);
       towerUI.SetActive(false);
+      bomb=false;
+      magic=false;
+      archer=false;
 
     }
     public void UpgradeTower()
     {
         if(archer)
         {
-            UpgradeArcherTower();
+            if(GameManager.currency<archerUpgradePrice)
+            {
+                return;
+            }
+            else
+            {
+                archerSellPrice2+=archerUpgradePrice*8/10;
+                GameManager.currency-=archerUpgradePrice;
+                UpgradeArcherTower();
+            }
+            
         }
         if(magic)
         {
-            UpgradeMagicTower();
+            if(GameManager.currency<magicUpgradePrice)
+            {
+                return;
+            }
+            else
+            {
+                magicSellPrice2+=magicUpgradePrice*8/10;
+                GameManager.currency-=magicUpgradePrice;
+                UpgradeMagicTower();
+            }
         }
         if(bomb)
         {
-            UpgradeBombTower();
+            if(GameManager.currency < bombUpgradePrice)
+            {
+                return;
+            }
+            else
+            {
+                bombSellPrice2+=bombUpgradePrice*8/10;
+                GameManager.currency -=bombUpgradePrice;
+                UpgradeBombTower();
+            }
         }
     }
     private void UpgradeArcherTower()
