@@ -50,20 +50,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2678849289999552043, guid: 415e21684bec9cb418d761e0c821d77f, type: 3}
       propertyPath: m_Name
-      value: BombTower Variant
+      value: BombTower Variant 1
       objectReference: {fileID: 0}
     - target: {fileID: 2678849289999552043, guid: 415e21684bec9cb418d761e0c821d77f, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3984578358989256018, guid: 415e21684bec9cb418d761e0c821d77f, type: 3}
+      propertyPath: targetPoint
+      value: 
+      objectReference: {fileID: 325111080236345537, guid: 011884cb52f5058499d59736d762586a, type: 3}
+    - target: {fileID: 3984578358989256018, guid: 415e21684bec9cb418d761e0c821d77f, type: 3}
       propertyPath: projectileType
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3984578358989256018, guid: 415e21684bec9cb418d761e0c821d77f, type: 3}
       propertyPath: projectilePrefab
       value: 
-      objectReference: {fileID: 5627795090312600175, guid: c75279e344227824c92db35071b813ee, type: 3}
+      objectReference: {fileID: 6525921713793281592, guid: 74b3bae9e74af154da3b5e2b76d38265, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
