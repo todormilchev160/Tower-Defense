@@ -20,7 +20,8 @@ public class WaveSpawner : MonoBehaviour
     public float timeBetweenWaves = 5f;
 
     [Header("Spawn Point")]
-    public Transform spawnPoint;
+    public Transform leftSpawnPoint;
+    public Transform rightSpawnPoint;
 
     private int currentWave = 0;
 
@@ -45,22 +46,35 @@ public class WaveSpawner : MonoBehaviour
         }
     }
 
-    IEnumerator SpawnWave(Wave wave)
+IEnumerator SpawnWave(Wave wave)
+{
+    GameManager.waveCleared = false;
+
+    foreach (GameObject enemy in wave.enemies)
     {
-        GameManager.waveCleared = false;
-
-        foreach (GameObject enemy in wave.enemies)
+        if (enemy != null)
         {
-            if (enemy != null)
-            {
-                Instantiate(
-                    enemy,
-                    spawnPoint.position,
-                    spawnPoint.rotation
-                );
-            }
+            // Random X between the two points
+            float randomX = Random.Range(
+                leftSpawnPoint.position.x,
+                rightSpawnPoint.position.x
+            );
 
-            yield return new WaitForSeconds(wave.timeBetweenEnemies);
+            // Random X, fixed Y and Z
+            Vector3 spawnPosition = new Vector3(
+                randomX,
+                leftSpawnPoint.position.y,
+                leftSpawnPoint.position.z
+            );
+
+            Instantiate(
+                enemy,
+                spawnPosition,
+                leftSpawnPoint.rotation
+            );
         }
+
+        yield return new WaitForSeconds(wave.timeBetweenEnemies);
     }
+}
 }

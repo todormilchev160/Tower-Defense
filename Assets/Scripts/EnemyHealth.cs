@@ -1,35 +1,39 @@
-using System;
 using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-   [SerializeField]private float health=10;
-   [SerializeField]private bool isLastEnemy;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField] private float health = 10;
+    [SerializeField] private bool isLastEnemy;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    private bool isDead = false;
+
     public void TakeDamage(float damage)
     {
-        health-=damage;
+        if (isDead)
+            return;
+
+        health -= damage;
+
         if (health <= 0)
         {
-           Die();
+            Die();
         }
     }
+
     void Die()
     {
-        if(isLastEnemy)
+        isDead = true;
+
+        if (isLastEnemy)
         {
-            GameManager.waveCleared=true;
+            GameManager.waveCleared = true;
         }
+
         Destroy(gameObject);
+    }
+
+    public bool IsDead()
+    {
+        return isDead;
     }
 }

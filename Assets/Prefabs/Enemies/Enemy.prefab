@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 6328083443125927003}
   - component: {fileID: 2770559634751900350}
   - component: {fileID: 5987076761869410117}
+  - component: {fileID: -730345763526173280}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -153,7 +154,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f176deb32501f8b42a3444ad5d2d8065, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyWalk
-  destination: {fileID: 0}
+  destinationTag: EnemyDestination
+  waypointDistance: 10
+  sidewaysRandomness: 12
+  waypointReachDistance: 1
+  directDestinationDistance: 5
 --- !u!114 &6328083443125927003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,3 +212,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   health: 50
+  isLastEnemy: 0
+--- !u!114 &-730345763526173280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 605666533674246333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c20ed264f324b7f48b8fcb46c977fd93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyCombat
+  damage: 10
+  attackInterval: 1
