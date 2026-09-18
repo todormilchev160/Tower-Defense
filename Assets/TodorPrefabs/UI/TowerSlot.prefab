@@ -305,7 +305,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 19, y: 53.5}
+  m_AnchoredPosition: {x: 19, y: -15}
   m_SizeDelta: {x: 424, y: 137}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &3031371168832941483
@@ -972,10 +972,20 @@ MonoBehaviour:
   slotButton: {fileID: 3031371168832941483}
   towerOptions: {fileID: 7410191093620876610}
   towerUI: {fileID: 8430648736680183442}
-  archerTowerPrefab: {fileID: 3232792351999903638, guid: d8ad3d486da5a194f8b0bc5b5becbd25, type: 3}
-  magicTowerPrefab: {fileID: 2678849289999552043, guid: 415e21684bec9cb418d761e0c821d77f, type: 3}
-  bombTowerPrefab: {fileID: 762509113718945822, guid: 6125e13cfac4e2c4685ef56f32836e85, type: 3}
+  archerTowers: []
+  magicTowers: []
+  bombTowers: []
   spawnY: 2.8
+  archerPrice: 100
+  magicPrice: 200
+  bombPrice: 300
+  archerUpgradePrice: 50
+  bombUpgradePrice: 150
+  magicUpgradePrice: 100
+  archerSellPrice: 80
+  bombSellPrice: 240
+  magicSellPrice: 160
+  priceIncreaseAfterUgrade: 50
 --- !u!1 &5783116733166489867
 GameObject:
   m_ObjectHideFlags: 0
@@ -1096,7 +1106,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3755936293644389377}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1312037011173741624}
+        m_TargetAssemblyTypeName: TowerUIManager, Assembly-CSharp
+        m_MethodName: UpgradeTower
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6083346507692998691
 GameObject:
   m_ObjectHideFlags: 0
@@ -1490,7 +1512,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1312037011173741624}
         m_TargetAssemblyTypeName: TowerUIManager, Assembly-CSharp
-        m_MethodName: ShowTowerUI
+        m_MethodName: ShowTowerOptions
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2106,4 +2128,16 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8924493386833776885}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1312037011173741624}
+        m_TargetAssemblyTypeName: TowerUIManager, Assembly-CSharp
+        m_MethodName: SellTower
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

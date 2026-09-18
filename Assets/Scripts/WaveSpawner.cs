@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class WaveSpawner : MonoBehaviour
 {
     [System.Serializable]
@@ -22,11 +22,16 @@ public class WaveSpawner : MonoBehaviour
     [Header("Spawn Point")]
     public Transform leftSpawnPoint;
     public Transform rightSpawnPoint;
-
+    [Header("ClockVisualisation")]
+    public Image clock;
+    private float clocktime;
+    private float maxClockTime;
     private int currentWave = 0;
 
     void Start()
     {
+        clocktime=timeBetweenWaves;
+        maxClockTime=timeBetweenWaves;
         StartCoroutine(StartWaves());
     }
 
@@ -35,14 +40,16 @@ public class WaveSpawner : MonoBehaviour
         while (currentWave < waves.Length)
         {
             yield return new WaitUntil(() => GameManager.waveCleared);
+            clocktime--;
             yield return new WaitForSeconds(timeBetweenWaves);
+            clocktime=maxClockTime;
 
 
             yield return StartCoroutine(
                 SpawnWave(waves[currentWave])
             );
-
             currentWave++;
+            
         }
     }
 
@@ -77,4 +84,8 @@ IEnumerator SpawnWave(Wave wave)
         yield return new WaitForSeconds(wave.timeBetweenEnemies);
     }
 }
+void Update()
+    {
+        clock.fillAmount=clocktime/maxClockTime;
+    }
 }
