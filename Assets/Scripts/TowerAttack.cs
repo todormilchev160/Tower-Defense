@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -19,6 +20,7 @@ public class TowerAttack : MonoBehaviour
     public GameObject projectilePrefab;
     public Transform firePoint;
     public float fireRate = 1f;
+    public float fireDelay=1;
     public Animator animator;
 
     [Header("Projectile Script")]
@@ -33,7 +35,7 @@ public class TowerAttack : MonoBehaviour
 
         if (currentTarget != null && Time.time >= nextFireTime)
         {
-            Shoot();
+            StartCoroutine(Shoot());
             nextFireTime = Time.time + 1f / fireRate;
         }
     }
@@ -70,11 +72,12 @@ public class TowerAttack : MonoBehaviour
         currentTarget = closestEnemy;
     }
 
-    void Shoot()
+     IEnumerator Shoot()
     {
         if (currentTarget == null)
-            return;
+            yield break;
         animator.SetTrigger("Shoot");
+        yield return new WaitForSeconds(fireDelay);
         GameObject projectile = Instantiate(
             projectilePrefab,
             firePoint.position,
