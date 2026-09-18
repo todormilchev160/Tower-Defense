@@ -1959,7 +1959,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1724758277204200634, guid: 248930af80154554b814b3294ee6f63b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: UpgradeArcherTower
+      value: UpgradeTower
       objectReference: {fileID: 0}
     - target: {fileID: 1724758277204200634, guid: 248930af80154554b814b3294ee6f63b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName

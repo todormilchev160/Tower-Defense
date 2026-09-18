@@ -213,6 +213,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   health: 50
   isLastEnemy: 0
+  amountOfMoney: 10
 --- !u!114 &-730345763526173280
 MonoBehaviour:
   m_ObjectHideFlags: 0

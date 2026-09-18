@@ -4,6 +4,7 @@ public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] private float health = 10;
     [SerializeField] private bool isLastEnemy;
+    [SerializeField] private int amountOfMoney;
 
     private bool isDead = false;
 
@@ -22,6 +23,8 @@ public class EnemyHealth : MonoBehaviour
 
     void Die()
     {
+        GameManager.currency+=amountOfMoney;
+        
         isDead = true;
 
         if (isLastEnemy)
