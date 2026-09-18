@@ -76,7 +76,7 @@ public class TowerAttack : MonoBehaviour
     {
         if (currentTarget == null)
             yield break;
-        animator.SetBool("Shoot",true);
+        animator.SetBool("IsFiring",true);
         yield return new WaitForSeconds(fireDelay);
         GameObject projectile = Instantiate(
             projectilePrefab,

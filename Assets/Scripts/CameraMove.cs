@@ -24,14 +24,12 @@ public class CameraDrag : MonoBehaviour
         if (Mouse.current == null)
             return;
 
-        // Start dragging
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
             dragging = true;
             lastMousePosition = Mouse.current.position.ReadValue();
         }
 
-        // Stop dragging
         if (Mouse.current.leftButton.wasReleasedThisFrame)
         {
             dragging = false;
@@ -50,7 +48,6 @@ public class CameraDrag : MonoBehaviour
 
             transform.position += movement;
 
-            // Clamp camera around its original position
             transform.position = new Vector3(
                 Mathf.Clamp(
                     transform.position.x,
