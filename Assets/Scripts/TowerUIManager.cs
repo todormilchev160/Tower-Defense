@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-
+using System.Collections;
+using System;
 public class TowerUIManager : MonoBehaviour
 {
     [Header("UI")]
@@ -11,12 +12,9 @@ public class TowerUIManager : MonoBehaviour
     public GameObject towerUI;
 
     [Header("Tower Prefabs")]
-    public GameObject archerTowerPrefab;
-    public GameObject magicTowerPrefab;
-    public GameObject bombTowerPrefab;
-    public GameObject upgradedArcherPrefab;
-    public GameObject upgradedMagicPrefab;
-    public GameObject upgradedBombPrefab;
+    public GameObject[] archerTowers;
+    public GameObject[] magicTowers;
+    public GameObject[] bombTowers;
 
     [Header("Spawn Settings")]
     [SerializeField] private float spawnY = 0f;
@@ -30,9 +28,14 @@ public class TowerUIManager : MonoBehaviour
     public int archerSellPrice=80;
     public int bombSellPrice=240;
     public int magicSellPrice=160;
+    public int priceIncreaseAfterUgrade=50;
     private int archerSellPrice2;
     private int magicSellPrice2;
     private int bombSellPrice2;
+    private int archerUpgradePrice2;
+    private int bombUpgradePrice2;
+    private int magicUpgradePrice2;
+    private int currentLevel=0;
 
     private bool towerUIOpen = false;
     private bool firstStage=true;
@@ -44,6 +47,9 @@ public class TowerUIManager : MonoBehaviour
 
     void Start()
     {
+        bombUpgradePrice2=bombUpgradePrice;
+        archerUpgradePrice2=archerUpgradePrice;
+        magicUpgradePrice2=magicUpgradePrice;
         archerSellPrice2=archerSellPrice;
         magicSellPrice2=magicSellPrice;
         bombSellPrice2=bombSellPrice;
@@ -102,7 +108,7 @@ public class TowerUIManager : MonoBehaviour
         {
             GameManager.currency-=magicPrice;
              magic=true;
-            SpawnTower(magicTowerPrefab);
+            SpawnTower(magicTowers[0]);
         }
     }
 
@@ -116,7 +122,7 @@ public class TowerUIManager : MonoBehaviour
         {
             GameManager.currency-=archerPrice;
             archer=true;
-            SpawnTower(archerTowerPrefab);
+            SpawnTower(archerTowers[0]);
         }
     }
 
@@ -130,7 +136,7 @@ public class TowerUIManager : MonoBehaviour
         {
             GameManager.currency-=bombPrice;
             bomb=true;
-            SpawnTower(bombTowerPrefab);
+            SpawnTower(bombTowers[0]);
         }
     }
     private void SpawnTower(GameObject towerPrefab)
@@ -163,20 +169,25 @@ public class TowerUIManager : MonoBehaviour
     }
     public void SellTower()
     {
+        currentLevel=0;
+        
       if(magic)
         {
             GameManager.currency+=magicSellPrice2;
             magicSellPrice2=magicSellPrice;
+            magicUpgradePrice2=magicUpgradePrice;
         }
       else if(archer)
         {
             GameManager.currency+=archerSellPrice2;
             archerSellPrice2=archerSellPrice;
+            archerUpgradePrice2=archerUpgradePrice;
         }
         if(bomb)
         {
             GameManager.currency+=bombSellPrice2;
             bombSellPrice2=bombSellPrice;
+            bombUpgradePrice2=bombUpgradePrice;
         }
       Destroy(tower);
       firstStage=true;
@@ -192,58 +203,65 @@ public class TowerUIManager : MonoBehaviour
     {
         if(archer)
         {
-            if(GameManager.currency<archerUpgradePrice)
+            if(GameManager.currency<archerUpgradePrice2)
             {
                 return;
             }
             else
             {
                 archerSellPrice2+=archerUpgradePrice*8/10;
-                GameManager.currency-=archerUpgradePrice;
+                GameManager.currency-=archerUpgradePrice2;
+                archerUpgradePrice2+=priceIncreaseAfterUgrade;
                 UpgradeArcherTower();
             }
             
         }
         if(magic)
         {
-            if(GameManager.currency<magicUpgradePrice)
+            if(GameManager.currency<magicUpgradePrice2)
             {
                 return;
             }
             else
             {
                 magicSellPrice2+=magicUpgradePrice*8/10;
-                GameManager.currency-=magicUpgradePrice;
+                GameManager.currency-=magicUpgradePrice2;
+                magicUpgradePrice2+=priceIncreaseAfterUgrade;
                 UpgradeMagicTower();
             }
         }
         if(bomb)
         {
-            if(GameManager.currency < bombUpgradePrice)
+            if(GameManager.currency < bombUpgradePrice2)
             {
                 return;
             }
             else
             {
                 bombSellPrice2+=bombUpgradePrice*8/10;
-                GameManager.currency -=bombUpgradePrice;
+                GameManager.currency -=bombUpgradePrice2;
+                bombUpgradePrice2+=priceIncreaseAfterUgrade;
                 UpgradeBombTower();
             }
         }
     }
     private void UpgradeArcherTower()
     {
+        Debug.Log("upgrade");
         Destroy(tower);
-        SpawnTower(upgradedArcherPrefab);
+        currentLevel+=1;
+        SpawnTower(archerTowers[currentLevel]);
     }
     private void UpgradeMagicTower()
     {
         Destroy(tower);
-        SpawnTower(upgradedMagicPrefab);
+        currentLevel+=1;
+        SpawnTower(magicTowers[currentLevel]);
     }
     private void UpgradeBombTower()
     {
         Destroy(tower);
-        SpawnTower(upgradedBombPrefab);
+        currentLevel+=1;
+        SpawnTower(bombTowers[currentLevel]);
     }
 }

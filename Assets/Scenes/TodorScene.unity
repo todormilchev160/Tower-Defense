@@ -786,17 +786,6 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
---- !u!114 &361205969 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1312037011173741624, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-  m_PrefabInstance: {fileID: 874851602}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75ad31ece52fce443968888555b39c99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TowerUIManager
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -932,78 +921,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1284988335382493379, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -15
-      objectReference: {fileID: 0}
-    - target: {fileID: 1312037011173741624, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: bombPrice
-      value: 300
-      objectReference: {fileID: 0}
-    - target: {fileID: 1312037011173741624, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: magicPrice
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 1312037011173741624, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: archerPrice
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1312037011173741624, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: bombUpgradePrice
-      value: 150
-      objectReference: {fileID: 0}
-    - target: {fileID: 1312037011173741624, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: magicUpgradePrice
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1312037011173741624, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: archerUpgradePrice
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 1312037011173741624, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: upgradedBombPrefab
-      value: 
-      objectReference: {fileID: 762509113718945822, guid: 6125e13cfac4e2c4685ef56f32836e85, type: 3}
-    - target: {fileID: 1312037011173741624, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: upgradedMagicPrefab
-      value: 
-      objectReference: {fileID: 2678849289999552043, guid: a5d04fd5f18b882439a6ca939b2950a1, type: 3}
-    - target: {fileID: 1312037011173741624, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: upgradedArcherPrefab
-      value: 
-      objectReference: {fileID: 3232792351999903638, guid: 01068ad094ca84c4a821db7b64db02dc, type: 3}
-    - target: {fileID: 1724758277204200634, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1724758277204200634, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1724758277204200634, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1259265622}
-    - target: {fileID: 1724758277204200634, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1724758277204200634, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: UpgradeTower
-      objectReference: {fileID: 0}
-    - target: {fileID: 1724758277204200634, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: TowerUIManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 1724758277204200634, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 2815675008985965939, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3741437510430956355, guid: 248930af80154554b814b3294ee6f63b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1084,41 +1001,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4584508315240113368, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4584508315240113368, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4584508315240113368, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1259265622}
-    - target: {fileID: 4584508315240113368, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4584508315240113368, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SellTower
-      objectReference: {fileID: 0}
-    - target: {fileID: 4584508315240113368, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: TowerUIManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 4584508315240113368, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 5607679546492492994, guid: 248930af80154554b814b3294ee6f63b, type: 3}
       propertyPath: m_Name
       value: TowerSlot (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 5982490510771206320, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ShowTowerOptions
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2487,69 +2372,21 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1312037011173741624, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: bombPrice
-      value: 300
+      propertyPath: archerTowers.Array.size
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1312037011173741624, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: magicPrice
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 1312037011173741624, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: archerPrice
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1312037011173741624, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: bombUpgradePrice
-      value: 150
-      objectReference: {fileID: 0}
-    - target: {fileID: 1312037011173741624, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: magicUpgradePrice
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1312037011173741624, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: archerUpgradePrice
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 1312037011173741624, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: upgradedBombPrefab
+      propertyPath: 'archerTowers.Array.data[0]'
       value: 
-      objectReference: {fileID: 762509113718945822, guid: 6125e13cfac4e2c4685ef56f32836e85, type: 3}
+      objectReference: {fileID: 7776382096578500097, guid: 58000840e89fa9c40987e00b0bbc46a8, type: 3}
     - target: {fileID: 1312037011173741624, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: upgradedMagicPrefab
+      propertyPath: 'archerTowers.Array.data[1]'
       value: 
-      objectReference: {fileID: 2678849289999552043, guid: a5d04fd5f18b882439a6ca939b2950a1, type: 3}
+      objectReference: {fileID: 2678849289999552043, guid: 415e21684bec9cb418d761e0c821d77f, type: 3}
     - target: {fileID: 1312037011173741624, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: upgradedArcherPrefab
+      propertyPath: 'archerTowers.Array.data[2]'
       value: 
-      objectReference: {fileID: 3232792351999903638, guid: 01068ad094ca84c4a821db7b64db02dc, type: 3}
-    - target: {fileID: 1724758277204200634, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1724758277204200634, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1724758277204200634, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 361205969}
-    - target: {fileID: 1724758277204200634, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1724758277204200634, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: UpgradeTower
-      objectReference: {fileID: 0}
-    - target: {fileID: 1724758277204200634, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: TowerUIManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 1724758277204200634, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 3232792351999903638, guid: d8ad3d486da5a194f8b0bc5b5becbd25, type: 3}
     - target: {fileID: 3741437510430956355, guid: 248930af80154554b814b3294ee6f63b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2630,41 +2467,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4584508315240113368, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4584508315240113368, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4584508315240113368, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 361205969}
-    - target: {fileID: 4584508315240113368, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4584508315240113368, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SellTower
-      objectReference: {fileID: 0}
-    - target: {fileID: 4584508315240113368, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: TowerUIManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 4584508315240113368, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 5607679546492492994, guid: 248930af80154554b814b3294ee6f63b, type: 3}
       propertyPath: m_Name
       value: TowerSlot (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 5982490510771206320, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ShowTowerOptions
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2880,17 +2685,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 249207444}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1259265622 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1312037011173741624, guid: 248930af80154554b814b3294ee6f63b, type: 3}
-  m_PrefabInstance: {fileID: 495148737}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75ad31ece52fce443968888555b39c99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TowerUIManager
 --- !u!1 &1328240091 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2678849289999552043, guid: 415e21684bec9cb418d761e0c821d77f, type: 3}
