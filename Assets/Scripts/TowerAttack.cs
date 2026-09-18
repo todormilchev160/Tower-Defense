@@ -76,7 +76,7 @@ public class TowerAttack : MonoBehaviour
     {
         if (currentTarget == null)
             yield break;
-        animator.SetTrigger("Shoot");
+        animator.SetBool("Shoot",true);
         yield return new WaitForSeconds(fireDelay);
         GameObject projectile = Instantiate(
             projectilePrefab,
@@ -170,6 +170,7 @@ public class TowerAttack : MonoBehaviour
 
                 break;
         }
+        animator.SetBool("IsFiring",false);
     }
 
     float CalculateTravelTime(
