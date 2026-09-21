@@ -938,7 +938,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &5405562342762324089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -972,9 +972,18 @@ MonoBehaviour:
   slotButton: {fileID: 3031371168832941483}
   towerOptions: {fileID: 7410191093620876610}
   towerUI: {fileID: 8430648736680183442}
-  archerTowers: []
-  magicTowers: []
-  bombTowers: []
+  archerTowers:
+  - {fileID: 3232792351999903638, guid: 6b26eed7d8644e24c86cb87dfeffc12e, type: 3}
+  - {fileID: 3232792351999903638, guid: 9d5b75c6efa59734792332ba0fe9da68, type: 3}
+  - {fileID: 3232792351999903638, guid: 9cf224a80523afe4f973a8af85c0d301, type: 3}
+  magicTowers:
+  - {fileID: 2678849289999552043, guid: 608994b4f25ad1c42ac41f7d66c5410b, type: 3}
+  - {fileID: 2678849289999552043, guid: 75de388cfd7e27840a085fecd0ad0226, type: 3}
+  - {fileID: 2678849289999552043, guid: a2bebc0dccdc63941a89aacd7dc3b128, type: 3}
+  bombTowers:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   spawnY: 2.8
   archerPrice: 100
   magicPrice: 200
