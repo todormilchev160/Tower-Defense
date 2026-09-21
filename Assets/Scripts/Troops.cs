@@ -16,12 +16,14 @@ public class Troops : MonoBehaviour
 
     [Header("Targeting")]
     [SerializeField] private string enemyTag = "Enemy";
+    [SerializeField] private float detectionRange = 10f;
 
     private NavMeshAgent agent;
 
     private EnemyCombat currentEnemy;
     private EnemyHealth currentEnemyHealth;
 
+    // IMPORTANT: NOT STATIC
     private bool engaged = false;
     private bool isDead = false;
 
@@ -32,40 +34,38 @@ public class Troops : MonoBehaviour
 
     void Update()
     {
-        if (isDead)
+        if (isDead || engaged)
             return;
 
-        // Enemy was destroyed
+        // If we don't currently have an enemy, find one
         if (currentEnemy == null)
         {
-            engaged = false;
-
             FindNearestEnemy();
 
-            return;
+            if (currentEnemy == null)
+                return;
         }
 
-        if (engaged)
+        // Enemy may have died while we were moving toward it
+        if (currentEnemy.IsDead())
+        {
+            ClearEnemy();
             return;
+        }
 
         float distance = Vector3.Distance(
             transform.position,
             currentEnemy.transform.position
         );
 
-        // We are close enough to fight
         if (distance <= engagementDistance)
         {
             StartFight();
         }
         else
         {
-            // Continue chasing enemy
             agent.isStopped = false;
-
-            agent.SetDestination(
-                currentEnemy.transform.position
-            );
+            agent.SetDestination(currentEnemy.transform.position);
         }
     }
 
@@ -75,7 +75,6 @@ public class Troops : MonoBehaviour
             GameObject.FindGameObjectsWithTag(enemyTag);
 
         float closestDistance = Mathf.Infinity;
-
         EnemyCombat closestEnemy = null;
 
         foreach (GameObject enemyObject in enemies)
@@ -89,7 +88,6 @@ public class Troops : MonoBehaviour
             if (enemy.IsDead())
                 continue;
 
-            // Don't select an enemy already fighting another troop
             if (enemy.IsEngaged())
                 continue;
 
@@ -97,6 +95,11 @@ public class Troops : MonoBehaviour
                 transform.position,
                 enemyObject.transform.position
             );
+
+            // IMPORTANT:
+            // continue, NOT return
+            if (distance > detectionRange)
+                continue;
 
             if (distance < closestDistance)
             {
@@ -113,10 +116,7 @@ public class Troops : MonoBehaviour
                 currentEnemy.GetComponent<EnemyHealth>();
 
             agent.isStopped = false;
-
-            agent.SetDestination(
-                currentEnemy.transform.position
-            );
+            agent.SetDestination(currentEnemy.transform.position);
         }
     }
 
@@ -125,21 +125,23 @@ public class Troops : MonoBehaviour
         if (currentEnemy == null)
             return;
 
-        // Enemy may have become engaged with another troop
-        if (currentEnemy.IsEngaged())
+        if (currentEnemy.IsDead())
         {
-            currentEnemy = null;
-            currentEnemyHealth = null;
+            ClearEnemy();
             return;
         }
 
-        engaged = true;
+        if (currentEnemy.IsEngaged())
+        {
+            ClearEnemy();
+            return;
+        }
 
-        // Stop troop
         agent.isStopped = true;
         agent.ResetPath();
 
-        // Stop enemy and make it attack us
+        engaged = true;
+
         currentEnemy.Engage(this);
 
         StartCoroutine(AttackRoutine());
@@ -151,21 +153,51 @@ public class Troops : MonoBehaviour
         {
             yield return new WaitForSeconds(attackInterval);
 
+            if (currentEnemy == null)
+                break;
+
+            if (currentEnemy.IsDead())
+            {
+                EnemyDied();
+                yield break;
+            }
+
             if (currentEnemyHealth != null)
             {
                 currentEnemyHealth.TakeDamage(damage);
+
+                // Check immediately after damaging it
+                if (currentEnemy == null || currentEnemy.IsDead())
+                {
+                    EnemyDied();
+                    yield break;
+                }
             }
         }
+    }
 
-        // Enemy died
+    public void EnemyDied()
+    {
+        if (isDead)
+            return;
+
+        Debug.Log("Enemy killed - looking for next enemy");
+
         engaged = false;
         currentEnemy = null;
         currentEnemyHealth = null;
 
+        agent.isStopped = false;
+    }
+
+    void ClearEnemy()
+    {
+        currentEnemy = null;
+        currentEnemyHealth = null;
+        engaged = false;
+
         if (!isDead)
-        {
             agent.isStopped = false;
-        }
     }
 
     public void TakeDamage(float damage)
@@ -191,12 +223,16 @@ public class Troops : MonoBehaviour
 
         StopAllCoroutines();
 
-        // Tell enemy it won
         if (currentEnemy != null)
         {
             currentEnemy.TroopDied(this);
         }
 
         Destroy(gameObject);
+    }
+
+    public bool IsEngaged()
+    {
+        return engaged;
     }
 }

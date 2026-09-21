@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8898325808351912520}
   - component: {fileID: 2493145496593110661}
   - component: {fileID: 2558749157472531735}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: DamageText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -146,7 +146,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 694490877996532275}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: R_Arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -186,7 +186,8 @@ GameObject:
   - component: {fileID: 2770559634751900350}
   - component: {fileID: 5987076761869410117}
   - component: {fileID: -730345763526173280}
-  m_Layer: 0
+  - component: {fileID: 3889334038857041398}
+  m_Layer: 3
   m_Name: TodorEnemyWithHealthbar
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -280,7 +281,7 @@ CapsuleCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -357,7 +358,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -383,6 +384,7 @@ MonoBehaviour:
   healthbarFill: {fileID: 1445252073108139028}
   damageText: {fileID: 2558749157472531735}
   damagefeedbacktime: 1
+  animator: {fileID: 3889334038857041398}
 --- !u!114 &-730345763526173280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -397,6 +399,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyCombat
   damage: 1
   attackInterval: 1
+  animator: {fileID: 3889334038857041398}
+--- !u!95 &3889334038857041398
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 605666533674246333}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &726168828101081025
 GameObject:
   m_ObjectHideFlags: 0
@@ -406,7 +431,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7753129164330727405}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Enemy1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -438,7 +463,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5741887718189715104}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: L_Arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -471,7 +496,7 @@ GameObject:
   - component: {fileID: 5565795803591843991}
   - component: {fileID: 9182177889716351419}
   - component: {fileID: 1445252073108139028}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: ImageFill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -545,7 +570,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1955526536577547338}
   - component: {fileID: 2982431682278357655}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube.035
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -643,7 +668,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7257172050835201036}
   - component: {fileID: 9002249203076857958}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube.037
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -741,7 +766,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8923292588338307811}
   - component: {fileID: 7298644847920337313}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube.036
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -839,7 +864,7 @@ GameObject:
   m_Component:
   - component: {fileID: 156422843508670010}
   - component: {fileID: 5584750304807731252}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube.047
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -936,7 +961,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4912722262140593719}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Body/Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -975,7 +1000,7 @@ GameObject:
   - component: {fileID: 4273569489503209348}
   - component: {fileID: 4198413163495638733}
   - component: {fileID: 7160335798952329712}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1075,7 +1100,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3340677506607799574}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1106,7 +1131,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2141770613274837009}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: L_Leg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1138,7 +1163,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8256040452408489682}
   - component: {fileID: 7548443096832050138}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Enemy1_Animated
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1199,7 +1224,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3709510037239684574}
   - component: {fileID: 5872050143791700026}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube.034
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1298,7 +1323,7 @@ GameObject:
   - component: {fileID: 2191336553910283328}
   - component: {fileID: 2815090359904956045}
   - component: {fileID: 2845112477329732282}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: HealthbarImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1372,7 +1397,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7906134203531901274}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: R_Leg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1404,7 +1429,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6434597036578702371}
   - component: {fileID: 8437277513222590709}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube.048
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -11,6 +11,7 @@ public class EnemyHealth : MonoBehaviour
     public Image healthbarFill;
     public TextMeshProUGUI damageText;
     public float damagefeedbacktime=1;
+    public Animator animator;
 
     private bool isDead = false;
     void Start()
@@ -40,6 +41,7 @@ public class EnemyHealth : MonoBehaviour
 
     void Die()
     {
+        animator.SetTrigger("Die");
         GameManager.currency+=amountOfMoney;
         
         isDead = true;
@@ -48,6 +50,12 @@ public class EnemyHealth : MonoBehaviour
         {
             GameManager.waveCleared = true;
         }
+        EnemyCombat combat = GetComponent<EnemyCombat>();
+
+if (combat != null)
+{
+    combat.Die();
+}
 
         Destroy(gameObject);
     }

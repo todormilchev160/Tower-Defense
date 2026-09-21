@@ -17,7 +17,7 @@ public class WaveSpawner : MonoBehaviour
     public Wave[] waves;
 
     [Header("Wave Settings")]
-    public float timeBetweenWaves = 5f;
+    public float timeBetweenWaves = 100f;
 
     [Header("Spawn Point")]
     public Transform leftSpawnPoint;
@@ -27,6 +27,8 @@ public class WaveSpawner : MonoBehaviour
     private float clocktime;
     private float maxClockTime;
     private int currentWave = 0;
+    private bool clockrunout=false;
+    private bool clockticking=false;
 
     void Start()
     {
@@ -40,9 +42,9 @@ public class WaveSpawner : MonoBehaviour
         while (currentWave < waves.Length)
         {
             yield return new WaitUntil(() => GameManager.waveCleared);
-            clocktime--;
-            yield return new WaitForSeconds(timeBetweenWaves);
-            clocktime=maxClockTime;
+            clockticking=true;
+            yield return new WaitUntil(()=>clockrunout);
+            clockticking=false;
 
 
             yield return StartCoroutine(
@@ -61,13 +63,11 @@ IEnumerator SpawnWave(Wave wave)
     {
         if (enemy != null)
         {
-            // Random X between the two points
             float randomX = Random.Range(
                 leftSpawnPoint.position.x,
                 rightSpawnPoint.position.x
             );
 
-            // Random X, fixed Y and Z
             Vector3 spawnPosition = new Vector3(
                 randomX,
                 leftSpawnPoint.position.y,
@@ -87,5 +87,21 @@ IEnumerator SpawnWave(Wave wave)
 void Update()
     {
         clock.fillAmount=clocktime/maxClockTime;
+        if(clocktime==0)
+        {
+            clockrunout=true;
+        }
+        else
+        {
+            clockrunout=false;
+        }
+        if(clockticking)
+        {
+            clocktime--;
+        }
+        else
+        {
+            clocktime=maxClockTime;
+        }
     }
 }
