@@ -8,7 +8,7 @@ public class CameraDrag : MonoBehaviour
 
     [Header("Maximum distance from start")]
     public float maxXDistance = 5f;
-    public float maxYDistance = 3f;
+    public float maxZDistance = 3f;
 
     private Vector3 initialPosition;
     private Vector2 lastMousePosition;
@@ -24,12 +24,14 @@ public class CameraDrag : MonoBehaviour
         if (Mouse.current == null)
             return;
 
+        // Start dragging
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
             dragging = true;
             lastMousePosition = Mouse.current.position.ReadValue();
         }
 
+        // Stop dragging
         if (Mouse.current.leftButton.wasReleasedThisFrame)
         {
             dragging = false;
@@ -37,29 +39,37 @@ public class CameraDrag : MonoBehaviour
 
         if (dragging)
         {
-            Vector2 currentMousePosition = Mouse.current.position.ReadValue();
-            Vector2 mouseDelta = currentMousePosition - lastMousePosition;
+            Vector2 currentMousePosition =
+                Mouse.current.position.ReadValue();
 
+            Vector2 mouseDelta =
+                currentMousePosition - lastMousePosition;
+
+            // Mouse X -> World X
+            // Mouse Y -> World Z
             Vector3 movement = new Vector3(
                 -mouseDelta.x * dragSpeed,
-                -mouseDelta.y * dragSpeed,
-                0
+                0f,
+                -mouseDelta.y * dragSpeed
             );
 
             transform.position += movement;
 
+            // Clamp camera position
             transform.position = new Vector3(
                 Mathf.Clamp(
                     transform.position.x,
                     initialPosition.x - maxXDistance,
                     initialPosition.x + maxXDistance
                 ),
+
+                initialPosition.y,
+
                 Mathf.Clamp(
-                    transform.position.y,
-                    initialPosition.y - maxYDistance,
-                    initialPosition.y + maxYDistance
-                ),
-                initialPosition.z
+                    transform.position.z,
+                    initialPosition.z - maxZDistance,
+                    initialPosition.z + maxZDistance
+                )
             );
 
             lastMousePosition = currentMousePosition;

@@ -21,5 +21,6 @@ public class GameManager : MonoBehaviour
     public void StartWaves()
     {
         waveSpawner.SetActive(true);
+        Barracks.UnlockSpawning();
     }
 }

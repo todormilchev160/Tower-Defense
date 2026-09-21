@@ -42,8 +42,10 @@ public class WaveSpawner : MonoBehaviour
         while (currentWave < waves.Length)
         {
             yield return new WaitUntil(() => GameManager.waveCleared);
+            Barracks.LockSpawning();
             clockticking=true;
             yield return new WaitUntil(()=>clockrunout);
+            Barracks.UnlockSpawning();
             clockticking=false;
 
 
