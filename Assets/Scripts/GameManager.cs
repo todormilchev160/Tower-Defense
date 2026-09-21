@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
     public static int currency=1000;
     public static bool waveCleared=true;
     public TextMeshProUGUI currencyText;
+    public GameObject waveSpawner;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -16,5 +17,9 @@ public class GameManager : MonoBehaviour
     void Update()
     {
       currencyText.text =currency+"$";
+    }
+    public void StartWaves()
+    {
+        waveSpawner.SetActive(true);
     }
 }

@@ -4,6 +4,11 @@ using UnityEngine.SceneManagement;
 public class BaseHealth : MonoBehaviour
 {
     private float baseHealth;
+    public int amountOfHealthIncreasedOnUpgrade;
+    [Header("Prices")]
+    public int baseUgradePrice=100;
+    public int upgradePriceIncreaseAfterUpgrade=50;
+    public int moneyAfterDowngrade;
     [SerializeField]private float maxHealth=100;
     private EnemyDamageBase enemyDamageBase;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -31,4 +36,18 @@ public class BaseHealth : MonoBehaviour
             SceneManager.LoadScene("TodorScene");
         }
     }
+    public void UpgradeBase()
+    {
+        if(GameManager.currency<baseUgradePrice)
+        {
+            return;
+        }
+        else
+        {
+            maxHealth+=amountOfHealthIncreasedOnUpgrade;
+            baseHealth+=amountOfHealthIncreasedOnUpgrade;
+            GameManager.currency-=baseUgradePrice;
+        }
+    }
+
 }

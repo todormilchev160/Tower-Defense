@@ -8,6 +8,8 @@ public class EnemyCombat : MonoBehaviour
     [SerializeField] private float damage = 2f;
     [SerializeField] private float attackInterval = 1f;
 
+    public Animator animator;
+
     private NavMeshAgent agent;
     private EnemyWalk enemyWalk;
     private EnemyHealth enemyHealth;
@@ -25,17 +27,18 @@ public class EnemyCombat : MonoBehaviour
 
     public void Engage(Troops troop)
     {
-        if (enemyHealth.IsDead())
+        if (enemyHealth == null || enemyHealth.IsDead())
             return;
 
-        // Already fighting somebody
         if (engaged)
+            return;
+
+        if (troop == null)
             return;
 
         currentTroop = troop;
         engaged = true;
 
-        // Stop enemy movement
         agent.isStopped = true;
         agent.ResetPath();
 
@@ -44,20 +47,24 @@ public class EnemyCombat : MonoBehaviour
 
     IEnumerator AttackRoutine()
     {
-        while (engaged && currentTroop != null)
+        while (engaged)
         {
             yield return new WaitForSeconds(attackInterval);
 
-            if (currentTroop != null)
+            if (currentTroop == null)
+                break;
+
+            if (animator != null)
             {
-                currentTroop.TakeDamage(damage);
+                animator.SetTrigger("Attack");
             }
+
+            currentTroop.TakeDamage(damage);
         }
     }
 
     public void TroopDied(Troops troop)
     {
-        // Make sure this is the troop we're fighting
         if (troop != currentTroop)
             return;
 
@@ -66,9 +73,25 @@ public class EnemyCombat : MonoBehaviour
 
         StopAllCoroutines();
 
-        if (!enemyHealth.IsDead())
+        if (enemyHealth != null && !enemyHealth.IsDead())
         {
             enemyWalk.ResumeMovement();
+        }
+    }
+
+    // Call this when this enemy dies
+    public void Die()
+    {
+        if (currentTroop != null)
+        {
+            Troops troop = currentTroop;
+
+            currentTroop = null;
+            engaged = false;
+
+            StopAllCoroutines();
+
+            troop.EnemyDied();
         }
     }
 
@@ -79,6 +102,6 @@ public class EnemyCombat : MonoBehaviour
 
     public bool IsDead()
     {
-        return enemyHealth.IsDead();
+        return enemyHealth == null || enemyHealth.IsDead();
     }
 }
