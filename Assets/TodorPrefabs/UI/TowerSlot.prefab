@@ -973,15 +973,18 @@ MonoBehaviour:
   towerOptions: {fileID: 7410191093620876610}
   towerUI: {fileID: 8430648736680183442}
   archerTowers:
-  - {fileID: 7776382096578500097, guid: 58000840e89fa9c40987e00b0bbc46a8, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 3232792351999903638, guid: 6b26eed7d8644e24c86cb87dfeffc12e, type: 3}
+  - {fileID: 3232792351999903638, guid: 9d5b75c6efa59734792332ba0fe9da68, type: 3}
+  - {fileID: 3232792351999903638, guid: 9cf224a80523afe4f973a8af85c0d301, type: 3}
   magicTowers:
-  - {fileID: 2678849289999552043, guid: 415e21684bec9cb418d761e0c821d77f, type: 3}
-  - {fileID: 2678849289999552043, guid: 415e21684bec9cb418d761e0c821d77f, type: 3}
-  - {fileID: 2678849289999552043, guid: 415e21684bec9cb418d761e0c821d77f, type: 3}
-  bombTowers: []
-  spawnY: 2.8
+  - {fileID: 2678849289999552043, guid: 608994b4f25ad1c42ac41f7d66c5410b, type: 3}
+  - {fileID: 2678849289999552043, guid: 75de388cfd7e27840a085fecd0ad0226, type: 3}
+  - {fileID: 2678849289999552043, guid: a2bebc0dccdc63941a89aacd7dc3b128, type: 3}
+  bombTowers:
+  - {fileID: 3232792351999903638, guid: ad7598bb16f97e1478b3de8170c3025e, type: 3}
+  - {fileID: 3232792351999903638, guid: f8f22c554ec92bc45b7bbbfd5c6dabc0, type: 3}
+  - {fileID: 3232792351999903638, guid: ce97bdab17c2df447a321dec7abc72f2, type: 3}
+  spawnY: 0.6
   archerPrice: 100
   magicPrice: 200
   bombPrice: 300
