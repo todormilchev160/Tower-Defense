@@ -22,14 +22,15 @@ public class Troops : MonoBehaviour
 
     private EnemyCombat currentEnemy;
     private EnemyHealth currentEnemyHealth;
+    private Animator animator;
 
-    // IMPORTANT: NOT STATIC
     private bool engaged = false;
     private bool isDead = false;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -37,7 +38,6 @@ public class Troops : MonoBehaviour
         if (isDead || engaged)
             return;
 
-        // If we don't currently have an enemy, find one
         if (currentEnemy == null)
         {
             FindNearestEnemy();
@@ -46,7 +46,6 @@ public class Troops : MonoBehaviour
                 return;
         }
 
-        // Enemy may have died while we were moving toward it
         if (currentEnemy.IsDead())
         {
             ClearEnemy();
@@ -152,7 +151,7 @@ public class Troops : MonoBehaviour
         while (engaged && currentEnemy != null)
         {
             yield return new WaitForSeconds(attackInterval);
-
+            
             if (currentEnemy == null)
                 break;
 
@@ -164,6 +163,7 @@ public class Troops : MonoBehaviour
 
             if (currentEnemyHealth != null)
             {
+                 animator.SetTrigger("Attack");
                 currentEnemyHealth.TakeDamage(damage);
 
                 // Check immediately after damaging it

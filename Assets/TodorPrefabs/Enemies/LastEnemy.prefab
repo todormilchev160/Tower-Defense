@@ -207,8 +207,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 781b5d9ad94f00247883cc6b649f5de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  health: 100
+  maxHealth: 10
   isLastEnemy: 1
+  amountOfMoney: 0
+  healthbarFill: {fileID: 0}
+  damageText: {fileID: 0}
+  damagefeedbacktime: 1
+  animator: {fileID: 3889334038857041398, guid: 752b84fe4b2480645bd3415daa70a75e, type: 3}
 --- !u!114 &-6475173192323683375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,3 +228,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyCombat
   damage: 2
   attackInterval: 1
+  animator: {fileID: 0}
