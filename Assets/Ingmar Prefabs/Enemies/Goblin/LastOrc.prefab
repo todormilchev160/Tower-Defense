@@ -282,7 +282,7 @@ GameObject:
   - component: {fileID: -730345763526173280}
   - component: {fileID: 3889334038857041398}
   m_Layer: 3
-  m_Name: LastGoblin
+  m_Name: LastOrc
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -472,9 +472,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 781b5d9ad94f00247883cc6b649f5de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  maxHealth: 15
+  maxHealth: 30
   isLastEnemy: 1
-  amountOfMoney: 10
+  amountOfMoney: 25
   healthbarFill: {fileID: 1445252073108139028}
   damageText: {fileID: 2558749157472531735}
   damagefeedbacktime: 1
@@ -491,8 +491,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c20ed264f324b7f48b8fcb46c977fd93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyCombat
-  damage: 1
-  attackInterval: 1
+  damage: 10
+  attackInterval: 2
   animator: {fileID: 3889334038857041398}
 --- !u!95 &3889334038857041398
 Animator:
@@ -542,8 +542,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.70710576, z: -0, w: 0.7071078}
   m_LocalPosition: {x: 0, y: -1.3386223, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8311099349525784115}
   m_Father: {fileID: 4595309402670104187}
@@ -1485,7 +1485,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.3, y: 0.32}
+  m_AnchoredPosition: {x: 0.3, y: 1.5699999}
   m_SizeDelta: {x: 878, y: 854}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &4273569489503209348
@@ -1609,9 +1609,9 @@ Transform:
   m_GameObject: {fileID: 8655114189436009609}
   serializedVersion: 2
   m_LocalRotation: {x: -0.04345416, y: -0.003801859, z: -0.08707271, w: 0.9952465}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.0717069, y: -0.06004888, z: 0.045585897}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5300981840588182501}
   - {fileID: 2851088533619264587}
