@@ -3,6 +3,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using System.Collections;
 using System;
+using UnityEngine.UI;
+using TMPro;
 public class TowerUIManager : MonoBehaviour
 {
     [Header("UI")]
@@ -10,6 +12,12 @@ public class TowerUIManager : MonoBehaviour
     public GameObject slotButton;
     public GameObject towerOptions;
     public GameObject towerUI;
+    public TextMeshProUGUI archerTowerText;
+    public TextMeshProUGUI magicTowerText;
+    public TextMeshProUGUI bombTowerText;
+    public TextMeshProUGUI upgradeText;
+    public TextMeshProUGUI sellText;
+
 
     [Header("Tower Prefabs")]
     public GameObject[] archerTowers;
@@ -59,6 +67,24 @@ public class TowerUIManager : MonoBehaviour
 
     void Update()
     {
+        if(magic)
+        {
+            upgradeText.text="Upgrade"+magicUpgradePrice2;
+            sellText.text="Sell"+magicSellPrice2;
+        }
+        if(archer)
+        {
+            upgradeText.text="Upgrade"+archerUpgradePrice2;
+            sellText.text="Sell"+archerSellPrice2;
+        }
+        if(bomb)
+        {
+            upgradeText.text="Upgrade"+bombUpgradePrice2;
+            sellText.text="Sell"+bombSellPrice2;
+        }
+        archerTowerText.text="Archer Tower"+archerPrice;
+        magicTowerText.text ="Magic Tower"+magicPrice;
+        bombTowerText.text ="Bomb Tower"+bombPrice;
         if (!towerUIOpen)
             return;
        
@@ -247,7 +273,7 @@ public class TowerUIManager : MonoBehaviour
     }
     private void UpgradeArcherTower()
     {
-        Debug.Log("upgrade");
+        
         Destroy(tower);
         currentLevel+=1;
         SpawnTower(archerTowers[currentLevel]);
