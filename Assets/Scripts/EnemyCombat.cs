@@ -49,15 +49,11 @@ public class EnemyCombat : MonoBehaviour
     {
         while (engaged)
         {
+            animator.SetBool("IsAttacking",true);
             yield return new WaitForSeconds(attackInterval);
 
             if (currentTroop == null)
                 break;
-
-            if (animator != null)
-            {
-                animator.SetTrigger("Attack");
-            }
 
             currentTroop.TakeDamage(damage);
         }
@@ -65,9 +61,10 @@ public class EnemyCombat : MonoBehaviour
 
     public void TroopDied(Troops troop)
     {
+        
         if (troop != currentTroop)
             return;
-
+        animator.SetBool("IsAttacking",false);
         currentTroop = null;
         engaged = false;
 
@@ -79,7 +76,6 @@ public class EnemyCombat : MonoBehaviour
         }
     }
 
-    // Call this when this enemy dies
     public void Die()
     {
         if (currentTroop != null)

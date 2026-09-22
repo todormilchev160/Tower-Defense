@@ -139,10 +139,6 @@ public class Barracks : MonoBehaviour
     {
         if (troopPrefab == null)
         {
-            Debug.LogWarning(
-                "No troop prefab assigned to " +
-                gameObject.name
-            );
 
             return;
         }
@@ -166,10 +162,7 @@ public class Barracks : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning(
-                "Could not find NavMesh near " +
-                gameObject.name
-            );
+
         }
     }
 

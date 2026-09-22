@@ -180,9 +180,6 @@ public class Troops : MonoBehaviour
     {
         if (isDead)
             return;
-
-        Debug.Log("Enemy killed - looking for next enemy");
-
         engaged = false;
         currentEnemy = null;
         currentEnemyHealth = null;

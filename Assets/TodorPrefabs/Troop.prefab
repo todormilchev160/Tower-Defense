@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2533438065717766621}
   - component: {fileID: 1077408301671323133}
   - component: {fileID: 4378054689116438095}
+  - component: {fileID: -2159459474473322115}
   m_Layer: 0
   m_Name: Troop
   m_TagString: Untagged
@@ -132,3 +133,25 @@ MonoBehaviour:
   engagementDistance: 2
   enemyTag: Enemy
   detectionRange: 20
+--- !u!95 &-2159459474473322115
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5669702687351217581}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
