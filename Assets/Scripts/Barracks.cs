@@ -10,21 +10,25 @@ public class Barracks : MonoBehaviour
     [Header("Spawn Settings")]
     [SerializeField] private float spawnInterval = 5f;
 
+    [Tooltip("Maximum number of troops that can exist at once across ALL barracks")]
+    [SerializeField] private int maxTroops = 5;
+
     [Header("NavMesh")]
     [Tooltip("How far from this object Unity searches for a NavMesh")]
     [SerializeField] private float navMeshSearchDistance = 5f;
 
-    // Shared by ALL TroopSpawners
+    // Shared by ALL Barracks
     public static bool spawningUnlocked = false;
 
-    // Coroutine belonging to this individual spawner
+    // Number of troops currently alive
+    private static int currentTroops = 0;
+
+    // Coroutine belonging to this individual Barracks
     private Coroutine spawnCoroutine;
 
 
     void Start()
     {
-        // If spawning was already unlocked before
-        // this spawner was created, start spawning.
         if (spawningUnlocked)
         {
             StartSpawning();
@@ -33,7 +37,7 @@ public class Barracks : MonoBehaviour
 
 
     // =====================================================
-    // UNLOCK ALL SPAWNERS
+    // UNLOCK ALL BARRACKS
     // =====================================================
 
     public static void UnlockSpawning()
@@ -55,7 +59,7 @@ public class Barracks : MonoBehaviour
 
 
     // =====================================================
-    // LOCK ALL SPAWNERS
+    // LOCK ALL BARRACKS
     // =====================================================
 
     public static void LockSpawning()
@@ -77,12 +81,11 @@ public class Barracks : MonoBehaviour
 
 
     // =====================================================
-    // START THIS SPAWNER
+    // START THIS BARRACKS
     // =====================================================
 
     private void StartSpawning()
     {
-        // Don't start if globally locked
         if (!spawningUnlocked)
             return;
 
@@ -95,7 +98,7 @@ public class Barracks : MonoBehaviour
 
 
     // =====================================================
-    // STOP THIS SPAWNER
+    // STOP THIS BARRACKS
     // =====================================================
 
     private void StopSpawning()
@@ -103,7 +106,6 @@ public class Barracks : MonoBehaviour
         if (spawnCoroutine != null)
         {
             StopCoroutine(spawnCoroutine);
-
             spawnCoroutine = null;
         }
     }
@@ -119,12 +121,14 @@ public class Barracks : MonoBehaviour
         {
             yield return new WaitForSeconds(spawnInterval);
 
-            // Check again because spawning could have
-            // been locked while we were waiting.
             if (!spawningUnlocked)
                 break;
 
-            SpawnTroop();
+            // Only spawn if we haven't reached the cap
+            if (currentTroops < maxTroops)
+            {
+                SpawnTroop();
+            }
         }
 
         spawnCoroutine = null;
@@ -138,14 +142,11 @@ public class Barracks : MonoBehaviour
     void SpawnTroop()
     {
         if (troopPrefab == null)
-        {
-            Debug.LogWarning(
-                "No troop prefab assigned to " +
-                gameObject.name
-            );
-
             return;
-        }
+
+        // Safety check
+        if (currentTroops >= maxTroops)
+            return;
 
         NavMeshHit hit;
 
@@ -163,25 +164,32 @@ public class Barracks : MonoBehaviour
                 hit.position,
                 transform.rotation
             );
-        }
-        else
-        {
-            Debug.LogWarning(
-                "Could not find NavMesh near " +
-                gameObject.name
-            );
+
+            currentTroops++;
         }
     }
 
 
-    // =====================================================
-    // GAMEOBJECT ENABLE / DISABLE
-    // =====================================================
+  
 
+    public static void TroopDied()
+    {
+        currentTroops--;
+
+        if (currentTroops < 0)
+            currentTroops = 0;
+
+    }
+    
+    public static int GetCurrentTroops()
+    {
+        return currentTroops;
+    }
+
+
+    
     void OnEnable()
     {
-        // If this object gets enabled after spawning
-        // has already been unlocked, start it.
         if (spawningUnlocked)
         {
             StartSpawning();

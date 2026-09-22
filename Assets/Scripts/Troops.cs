@@ -1,11 +1,14 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class Troops : MonoBehaviour
 {
     [Header("Health")]
-    [SerializeField] private float health = 20f;
+    [SerializeField] private float maxHealth = 20f;
+    private float health;
+    [SerializeField] private Image healthbarfill;
 
     [Header("Combat")]
     [SerializeField] private float damage = 3f;
@@ -30,11 +33,14 @@ public class Troops : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
+        health=maxHealth;
     }
 
     void Update()
     {
+        healthbarfill.fillAmount=health/maxHealth;
+        
         if (isDead || engaged)
             return;
 
@@ -116,11 +122,14 @@ public class Troops : MonoBehaviour
 
             agent.isStopped = false;
             agent.SetDestination(currentEnemy.transform.position);
+            animator.SetBool("Walk",true);
         }
     }
 
     void StartFight()
     {
+        animator.SetBool("Walk",false);
+        animator.SetBool("Attack",true);
         if (currentEnemy == null)
             return;
 
@@ -163,7 +172,7 @@ public class Troops : MonoBehaviour
 
             if (currentEnemyHealth != null)
             {
-                 animator.SetTrigger("Attack");
+                 
                 currentEnemyHealth.TakeDamage(damage);
 
                 // Check immediately after damaging it
@@ -180,9 +189,7 @@ public class Troops : MonoBehaviour
     {
         if (isDead)
             return;
-
-        Debug.Log("Enemy killed - looking for next enemy");
-
+        animator.SetBool("Attack",false);
         engaged = false;
         currentEnemy = null;
         currentEnemyHealth = null;

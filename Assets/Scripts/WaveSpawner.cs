@@ -41,13 +41,13 @@ public class WaveSpawner : MonoBehaviour
     {
         while (currentWave < waves.Length)
         {
-            Barracks.LockSpawning();
-            clockticking=true;
+            if(currentWave!=0)
+            {
+                    clockticking=true;
             yield return new WaitUntil(()=>clockrunout);
             Barracks.UnlockSpawning();
             clockticking=false;
-
-
+            }
             yield return StartCoroutine(
                 SpawnWave(waves[currentWave])
             );
@@ -58,8 +58,6 @@ public class WaveSpawner : MonoBehaviour
 
 IEnumerator SpawnWave(Wave wave)
 {
-    GameManager.waveCleared = false;
-
     foreach (GameObject enemy in wave.enemies)
     {
         if (enemy != null)
