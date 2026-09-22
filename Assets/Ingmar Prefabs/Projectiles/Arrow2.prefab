@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8267346896941522380}
   - component: {fileID: 6218606444780166679}
   m_Layer: 0
-  m_Name: Arrow
+  m_Name: Arrow2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
   speed: 10
-  damage: 10
+  damage: 3
   lifeTime: 5
 --- !u!1001 &2911205981440569799
 PrefabInstance:

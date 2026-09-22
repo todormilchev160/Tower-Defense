@@ -321,7 +321,7 @@ GameObject:
   - component: {fileID: 8267346896941522380}
   - component: {fileID: 6720374569774677301}
   m_Layer: 0
-  m_Name: Magic
+  m_Name: MagicBolt3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -437,7 +437,7 @@ MonoBehaviour:
   acceleration: 80
   maxSpeed: 100
   lifeTime: 10
-  damage: 20
+  damage: 9
 --- !u!1 &6315308492553435932
 GameObject:
   m_ObjectHideFlags: 0

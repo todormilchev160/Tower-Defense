@@ -516,7 +516,7 @@ Transform:
   m_GameObject: {fileID: 837661529898395551}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.8, z: 0}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -537,9 +537,9 @@ MonoBehaviour:
   targetPoint: {fileID: 7063374376516148698}
   enemyTag: Enemy
   attackRange: 10
-  projectilePrefab: {fileID: 5627795090312600175, guid: 65627834211f77241a28127a5d7f597f, type: 3}
+  projectilePrefab: {fileID: 5627795090312600175, guid: a607572b358e9784480425f59a8b07af, type: 3}
   firePoint: {fileID: 5869329121082817242}
-  fireRate: 1
+  fireRate: 6
   fireDelay: 1
   animator: {fileID: 2393820666979787060}
   projectileType: 0
@@ -569,7 +569,7 @@ Transform:
   m_GameObject: {fileID: 871101314559885122}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.8, z: 0}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -590,9 +590,9 @@ MonoBehaviour:
   targetPoint: {fileID: 0}
   enemyTag: Enemy
   attackRange: 10
-  projectilePrefab: {fileID: 5627795090312600175, guid: 65627834211f77241a28127a5d7f597f, type: 3}
+  projectilePrefab: {fileID: 5627795090312600175, guid: a607572b358e9784480425f59a8b07af, type: 3}
   firePoint: {fileID: 5869329121082817242}
-  fireRate: 1
+  fireRate: 6
   fireDelay: 1
   animator: {fileID: 6077061373972807266}
   projectileType: 0
