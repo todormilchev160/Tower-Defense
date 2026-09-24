@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7043130568194207722}
   - component: {fileID: 8681370655673518174}
   m_Layer: 0
-  m_Name: ArchecrTower1Animated
+  m_Name: Barracks1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,6 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3146328526941340106}
-  - {fileID: 3845652337450658783}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &8681370655673518174
@@ -49,39 +48,8 @@ MonoBehaviour:
   troopPrefab: {fileID: 8482412719928716756, guid: a4db8be5b3cdf044893e86fa450db17f, type: 3}
   spawnInterval: 5
   maxTroops: 5
-  navMeshSearchDistance: 5
+  navMeshSearchDistance: 10
   rallyRange: 10
---- !u!1 &3813364067515503932
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3845652337450658783}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3845652337450658783
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3813364067515503932}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7043130568194207722}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &3179744048335889953
 PrefabInstance:
   m_ObjectHideFlags: 0

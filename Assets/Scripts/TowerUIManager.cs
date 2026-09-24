@@ -17,6 +17,7 @@ public class TowerUIManager : MonoBehaviour
     public TextMeshProUGUI bombTowerText;
     public TextMeshProUGUI upgradeText;
     public TextMeshProUGUI sellText;
+    public TextMeshProUGUI noMoneyText;
     public GameObject rallyPointButton;
 
 
@@ -129,6 +130,7 @@ public class TowerUIManager : MonoBehaviour
     {
         if(GameManager.currency<magicPrice)
         {
+            StartCoroutine(NoMoneyTextCoroutine());
             return;
         }
         else
@@ -143,6 +145,7 @@ public class TowerUIManager : MonoBehaviour
     {
         if(GameManager.currency<archerPrice)
         {
+            StartCoroutine(NoMoneyTextCoroutine());
             return;
         }
         else
@@ -157,6 +160,7 @@ public class TowerUIManager : MonoBehaviour
     {
         if(GameManager.currency<bombPrice)
         {
+            StartCoroutine(NoMoneyTextCoroutine());
             return;
         }
         else
@@ -236,6 +240,7 @@ public class TowerUIManager : MonoBehaviour
         {
             if(GameManager.currency<archerUpgradePrice2)
             {
+                StartCoroutine(NoMoneyTextCoroutine());
                 return;
             }
             else
@@ -251,6 +256,7 @@ public class TowerUIManager : MonoBehaviour
         {
             if(GameManager.currency<magicUpgradePrice2)
             {
+                StartCoroutine(NoMoneyTextCoroutine());
                 return;
             }
             else
@@ -265,6 +271,7 @@ public class TowerUIManager : MonoBehaviour
         {
             if(GameManager.currency < bombUpgradePrice2)
             {
+                StartCoroutine(NoMoneyTextCoroutine());
                 return;
             }
             else
@@ -294,5 +301,11 @@ public class TowerUIManager : MonoBehaviour
         Destroy(tower);
         currentLevel+=1;
         SpawnTower(bombTowers[currentLevel]);
+    }
+    private IEnumerator NoMoneyTextCoroutine()
+    {
+        noMoneyText.text="Insuficient funds";
+        yield return new WaitForSeconds(1);
+        noMoneyText.text="";
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
+
 public class Troops : MonoBehaviour
 {
     [Header("Health")]
@@ -72,8 +73,6 @@ public class Troops : MonoBehaviour
     {
         healthbarfill.fillAmount =
             health / maxHealth;
-
-
         if (isDead || engaged)
             return;
 
@@ -91,11 +90,6 @@ public class Troops : MonoBehaviour
                 return;
             }
         }
-
-
-        // =================================================
-        // ENEMY DEAD
-        // =================================================
 
         if (currentEnemy.IsDead())
         {
@@ -137,11 +131,6 @@ public class Troops : MonoBehaviour
         }
     }
 
-
-    // =====================================================
-    // BARRACKS OWNERSHIP
-    // =====================================================
-
     public void SetBarracks(
         Barracks newBarracks
     )
@@ -149,6 +138,7 @@ public class Troops : MonoBehaviour
         barracks =
             newBarracks;
     }
+    
 
 
     // =====================================================
@@ -157,7 +147,7 @@ public class Troops : MonoBehaviour
 
     void GoToRallyPoint()
     {
-        // This troop wasn't created by a Barracks
+       
         if (barracks == null)
         {
             animator.SetBool(
@@ -169,7 +159,7 @@ public class Troops : MonoBehaviour
         }
 
 
-        // Its Barracks doesn't have a rally point yet
+     
         if (!barracks.HasRallyPoint())
         {
             animator.SetBool(
@@ -227,11 +217,6 @@ public class Troops : MonoBehaviour
             true
         );
     }
-
-
-    // =====================================================
-    // FIND ENEMY
-    // =====================================================
 
     void FindNearestEnemy()
     {
@@ -378,11 +363,25 @@ public class Troops : MonoBehaviour
             AttackRoutine()
         );
     }
+    public void BarracksDestroyed()
+{
+    if (isDead)
+        return;
+
+    isDead = true;
+    engaged = false;
+
+    StopAllCoroutines();
+    if (currentEnemy != null)
+    {
+        currentEnemy.TroopDied(this);
+    }
+
+    Destroy(gameObject);
+}
 
 
-    // =====================================================
-    // ATTACK
-    // =====================================================
+
 
     IEnumerator AttackRoutine()
     {
@@ -406,7 +405,7 @@ public class Troops : MonoBehaviour
 
                 yield break;
             }
-
+     
 
             if (currentEnemyHealth != null)
             {
@@ -547,7 +546,7 @@ public class Troops : MonoBehaviour
         // Tell ONLY the Barracks that spawned us
         if (barracks != null)
         {
-            barracks.TroopDied();
+            barracks.TroopDied(this);
         }
 
 

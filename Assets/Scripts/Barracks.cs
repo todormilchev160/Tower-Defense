@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-
+using System.Collections.Generic;
 public class Barracks : MonoBehaviour
 {
     [Header("Troop")]
@@ -20,6 +20,8 @@ public class Barracks : MonoBehaviour
     [SerializeField] private float rallyRange = 15f;
 
     private int currentTroops = 0;
+        private List<Troops> spawnedTroops =
+    new List<Troops>();
 
     private Vector3 rallyPosition;
     private bool hasRallyPoint = false;
@@ -107,31 +109,34 @@ public class Barracks : MonoBehaviour
             );
 
 
-        Troops troopScript =
-            spawnedTroop.GetComponent<Troops>();
+    Troops troopScript =
+    spawnedTroop.GetComponent<Troops>();
 
+if (troopScript != null)
+{
+    troopScript.SetBarracks(this);
 
-        if (troopScript != null)
-        {
-            troopScript.SetBarracks(this);
-        }
+    spawnedTroops.Add(troopScript);
+}
 
 
         currentTroops++;
     }
 
 
-    // =====================================================
-    // TROOP DIED
-    // =====================================================
 
-    public void TroopDied()
+public void TroopDied(Troops troop)
+{
+    if (troop != null)
     {
-        currentTroops--;
-
-        if (currentTroops < 0)
-            currentTroops = 0;
+        spawnedTroops.Remove(troop);
     }
+
+    currentTroops--;
+
+    if (currentTroops < 0)
+        currentTroops = 0;
+}
 
 
     public int GetCurrentTroops()
@@ -176,11 +181,6 @@ public class Barracks : MonoBehaviour
         return rallyRange;
     }
 
-
-    // =====================================================
-    // DEBUG RANGE
-    // =====================================================
-
     void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireSphere(
@@ -188,11 +188,6 @@ public class Barracks : MonoBehaviour
             rallyRange
         );
     }
-
-
-    // =====================================================
-    // ENABLE / DISABLE
-    // =====================================================
 
     void OnEnable()
     {
@@ -204,4 +199,19 @@ public class Barracks : MonoBehaviour
     {
         StopSpawning();
     }
+    void OnDestroy()
+{
+    Troops[] troopsToDestroy =
+        spawnedTroops.ToArray();
+
+    foreach (Troops troop in troopsToDestroy)
+    {
+        if (troop != null)
+        {
+            troop.BarracksDestroyed();
+        }
+    }
+
+    spawnedTroops.Clear();
+}
 }

@@ -36,6 +36,11 @@ public class TroopRallyPoint : MonoBehaviour
 
     private Barracks currentBarracks;
 
+public bool IsSelectingRallyPoint
+{
+    get { return selectingRallyPoint; }
+}
+
 
     void Awake()
     {
@@ -56,6 +61,7 @@ public class TroopRallyPoint : MonoBehaviour
 
         navMeshVisual.SetActive(false);
     }
+    
 
 
     void Update()
