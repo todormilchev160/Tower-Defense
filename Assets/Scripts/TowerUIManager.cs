@@ -17,6 +17,7 @@ public class TowerUIManager : MonoBehaviour
     public TextMeshProUGUI bombTowerText;
     public TextMeshProUGUI upgradeText;
     public TextMeshProUGUI sellText;
+    public GameObject rallyPointButton;
 
 
     [Header("Tower Prefabs")]
@@ -192,6 +193,10 @@ public class TowerUIManager : MonoBehaviour
         towerUIOpen=true;
         towerOptions.SetActive(false);
         towerUI.SetActive(true);
+        if(!bomb)
+        {
+            rallyPointButton.SetActive(false);
+        }
     }
     public void SellTower()
     {

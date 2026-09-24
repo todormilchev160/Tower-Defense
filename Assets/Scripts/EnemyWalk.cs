@@ -9,6 +9,8 @@ public class EnemyWalk : MonoBehaviour
      { 
         agent = GetComponent<NavMeshAgent>(); 
         GameObject destinationObject = GameObject.FindGameObjectWithTag(destinationTag); 
+           int unwalkableArea = NavMesh.GetAreaFromName("Unwalkable");
+           agent.areaMask &= ~(1 << unwalkableArea);
         if (destinationObject != null) 
         {
              destination = destinationObject.transform; 

@@ -21,6 +21,10 @@ public class Troops : MonoBehaviour
     [SerializeField] private string enemyTag = "Enemy";
     [SerializeField] private float detectionRange = 10f;
 
+    [Header("Rally Point")]
+    [Tooltip("How close the troop needs to get to the rally point")]
+    [SerializeField] private float rallyStoppingDistance = 0.5f;
+
     private NavMeshAgent agent;
 
     private EnemyCombat currentEnemy;
@@ -29,18 +33,21 @@ public class Troops : MonoBehaviour
 
     private bool engaged = false;
     private bool isDead = false;
+    private Barracks barracks;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
-        health=maxHealth;
+
+        health = maxHealth;
     }
+
 
     void Update()
     {
-        healthbarfill.fillAmount=health/maxHealth;
-        
+        healthbarfill.fillAmount = health / maxHealth;
+
         if (isDead || engaged)
             return;
 
@@ -49,14 +56,27 @@ public class Troops : MonoBehaviour
             FindNearestEnemy();
 
             if (currentEnemy == null)
+            {
+                GoToRallyPoint();
                 return;
+            }
         }
+
+
+        // ==========================================
+        // CURRENT ENEMY DIED
+        // ==========================================
 
         if (currentEnemy.IsDead())
         {
             ClearEnemy();
             return;
         }
+
+
+        // ==========================================
+        // CHASE / FIGHT ENEMY
+        // ==========================================
 
         float distance = Vector3.Distance(
             transform.position,
@@ -70,9 +90,56 @@ public class Troops : MonoBehaviour
         else
         {
             agent.isStopped = false;
-            agent.SetDestination(currentEnemy.transform.position);
+
+            agent.SetDestination(
+                currentEnemy.transform.position
+            );
+
+            animator.SetBool("Walk", true);
         }
     }
+
+
+    // =====================================================
+    // RALLY POINT
+    // =====================================================
+
+    void GoToRallyPoint()
+    {
+        if (!TroopRallyPoint.HasRallyPoint)
+        {
+            animator.SetBool("Walk", false);
+            return;
+        }
+
+        float distance = Vector3.Distance(
+            transform.position,
+            TroopRallyPoint.RallyPosition
+        );
+
+        if (distance <= rallyStoppingDistance)
+        {
+            agent.isStopped = true;
+            agent.ResetPath();
+
+            animator.SetBool("Walk", false);
+
+            return;
+        }
+
+        agent.isStopped = false;
+
+        agent.SetDestination(
+            TroopRallyPoint.RallyPosition
+        );
+
+        animator.SetBool("Walk", true);
+    }
+
+
+    // =====================================================
+    // FIND ENEMY
+    // =====================================================
 
     void FindNearestEnemy()
     {
@@ -101,8 +168,6 @@ public class Troops : MonoBehaviour
                 enemyObject.transform.position
             );
 
-            // IMPORTANT:
-            // continue, NOT return
             if (distance > detectionRange)
                 continue;
 
@@ -121,15 +186,25 @@ public class Troops : MonoBehaviour
                 currentEnemy.GetComponent<EnemyHealth>();
 
             agent.isStopped = false;
-            agent.SetDestination(currentEnemy.transform.position);
-            animator.SetBool("Walk",true);
+
+            agent.SetDestination(
+                currentEnemy.transform.position
+            );
+
+            animator.SetBool("Walk", true);
         }
     }
 
+
+    // =====================================================
+    // START FIGHT
+    // =====================================================
+
     void StartFight()
     {
-        animator.SetBool("Walk",false);
-        animator.SetBool("Attack",true);
+        animator.SetBool("Walk", false);
+        animator.SetBool("Attack", true);
+
         if (currentEnemy == null)
             return;
 
@@ -155,12 +230,19 @@ public class Troops : MonoBehaviour
         StartCoroutine(AttackRoutine());
     }
 
+
+    // =====================================================
+    // ATTACK
+    // =====================================================
+
     IEnumerator AttackRoutine()
     {
         while (engaged && currentEnemy != null)
         {
-            yield return new WaitForSeconds(attackInterval);
-            
+            yield return new WaitForSeconds(
+                attackInterval
+            );
+
             if (currentEnemy == null)
                 break;
 
@@ -172,11 +254,10 @@ public class Troops : MonoBehaviour
 
             if (currentEnemyHealth != null)
             {
-                 
                 currentEnemyHealth.TakeDamage(damage);
 
-                // Check immediately after damaging it
-                if (currentEnemy == null || currentEnemy.IsDead())
+                if (currentEnemy == null ||
+                    currentEnemy.IsDead())
                 {
                     EnemyDied();
                     yield break;
@@ -185,11 +266,18 @@ public class Troops : MonoBehaviour
         }
     }
 
+
+    // =====================================================
+    // ENEMY DIED
+    // =====================================================
+
     public void EnemyDied()
     {
         if (isDead)
             return;
-        animator.SetBool("Attack",false);
+
+        animator.SetBool("Attack", false);
+
         engaged = false;
         currentEnemy = null;
         currentEnemyHealth = null;
@@ -197,11 +285,16 @@ public class Troops : MonoBehaviour
         agent.isStopped = false;
     }
 
+
+
+
     void ClearEnemy()
     {
         currentEnemy = null;
         currentEnemyHealth = null;
         engaged = false;
+
+        animator.SetBool("Attack", false);
 
         if (!isDead)
             agent.isStopped = false;
@@ -220,6 +313,8 @@ public class Troops : MonoBehaviour
         }
     }
 
+
+
     void Die()
     {
         if (isDead)
@@ -234,9 +329,13 @@ public class Troops : MonoBehaviour
         {
             currentEnemy.TroopDied(this);
         }
-
+        barracks.TroopDied();
         Destroy(gameObject);
     }
+    public void SetBarracks(Barracks newBarracks)
+{
+    barracks = newBarracks;
+}
 
     public bool IsEngaged()
     {
