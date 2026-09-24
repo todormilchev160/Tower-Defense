@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
-    public static int currency=1000;
+    public static int currency=200;
     public static bool waveCleared=true;
     public TextMeshProUGUI currencyText;
     public GameObject waveSpawner;

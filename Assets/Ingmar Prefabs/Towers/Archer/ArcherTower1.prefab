@@ -536,7 +536,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TowerAttack
   targetPoint: {fileID: 7063374376516148698}
   enemyTag: Enemy
-  attackRange: 10
+  attackRange: 13
   projectilePrefab: {fileID: 5627795090312600175, guid: 65627834211f77241a28127a5d7f597f, type: 3}
   firePoint: {fileID: 5869329121082817242}
   fireRate: 2
@@ -589,7 +589,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TowerAttack
   targetPoint: {fileID: 0}
   enemyTag: Enemy
-  attackRange: 10
+  attackRange: 13
   projectilePrefab: {fileID: 5627795090312600175, guid: 65627834211f77241a28127a5d7f597f, type: 3}
   firePoint: {fileID: 5869329121082817242}
   fireRate: 2
