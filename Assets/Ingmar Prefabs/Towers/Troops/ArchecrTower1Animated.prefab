@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7043130568194207722}
+  - component: {fileID: 8681370655673518174}
   m_Layer: 0
   m_Name: ArchecrTower1Animated
   m_TagString: Untagged
@@ -33,6 +34,23 @@ Transform:
   - {fileID: 3845652337450658783}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &8681370655673518174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3232792351999903638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57a71e3e1bbcf844b8f329d57e67b639, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Barracks
+  troopPrefab: {fileID: 8482412719928716756, guid: a4db8be5b3cdf044893e86fa450db17f, type: 3}
+  spawnInterval: 5
+  maxTroops: 5
+  navMeshSearchDistance: 5
+  rallyRange: 10
 --- !u!1 &3813364067515503932
 GameObject:
   m_ObjectHideFlags: 0
@@ -42,7 +60,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3845652337450658783}
-  - component: {fileID: 8923090967777869833}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -65,22 +82,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7043130568194207722}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8923090967777869833
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3813364067515503932}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57a71e3e1bbcf844b8f329d57e67b639, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Barracks
-  troopPrefab: {fileID: 8482412719928716756, guid: a4db8be5b3cdf044893e86fa450db17f, type: 3}
-  spawnInterval: 2
-  maxTroops: 2
-  navMeshSearchDistance: 5
 --- !u!1001 &3179744048335889953
 PrefabInstance:
   m_ObjectHideFlags: 0

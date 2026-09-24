@@ -10,15 +10,19 @@ public class Barracks : MonoBehaviour
     [Header("Spawn Settings")]
     [SerializeField] private float spawnInterval = 5f;
 
-    [Tooltip("Maximum troops THIS barracks can have alive")]
     [SerializeField] private int maxTroops = 5;
 
     [Header("NavMesh")]
     [SerializeField] private float navMeshSearchDistance = 5f;
 
-    // NOT STATIC anymore
-    // Each Barracks has its own count
+    [Header("Rally Point")]
+    [Tooltip("Maximum distance from this Barracks where a rally point can be placed")]
+    [SerializeField] private float rallyRange = 15f;
+
     private int currentTroops = 0;
+
+    private Vector3 rallyPosition;
+    private bool hasRallyPoint = false;
 
     private Coroutine spawnCoroutine;
 
@@ -29,12 +33,17 @@ public class Barracks : MonoBehaviour
     }
 
 
+    // =====================================================
+    // SPAWNING
+    // =====================================================
+
     private void StartSpawning()
     {
         if (spawnCoroutine != null)
             return;
 
-        spawnCoroutine = StartCoroutine(SpawnRoutine());
+        spawnCoroutine =
+            StartCoroutine(SpawnRoutine());
     }
 
 
@@ -43,6 +52,7 @@ public class Barracks : MonoBehaviour
         if (spawnCoroutine != null)
         {
             StopCoroutine(spawnCoroutine);
+
             spawnCoroutine = null;
         }
     }
@@ -52,7 +62,9 @@ public class Barracks : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(spawnInterval);
+            yield return new WaitForSeconds(
+                spawnInterval
+            );
 
             if (currentTroops < maxTroops)
             {
@@ -70,54 +82,55 @@ public class Barracks : MonoBehaviour
         if (currentTroops >= maxTroops)
             return;
 
+
         NavMeshHit hit;
 
-        bool foundNavMesh = NavMesh.SamplePosition(
-            transform.position,
-            out hit,
-            navMeshSearchDistance,
-            NavMesh.AllAreas
-        );
+
+        bool foundNavMesh =
+            NavMesh.SamplePosition(
+                transform.position,
+                out hit,
+                navMeshSearchDistance,
+                NavMesh.AllAreas
+            );
+
 
         if (!foundNavMesh)
             return;
 
-        GameObject spawnedTroop = Instantiate(
-            troopPrefab,
-            hit.position,
-            transform.rotation
-        );
 
-        // Get the Troops script
-        Troops troopScript = spawnedTroop.GetComponent<Troops>();
+        GameObject spawnedTroop =
+            Instantiate(
+                troopPrefab,
+                hit.position,
+                transform.rotation
+            );
+
+
+        Troops troopScript =
+            spawnedTroop.GetComponent<Troops>();
+
 
         if (troopScript != null)
         {
-            // Tell the troop which Barracks created it
             troopScript.SetBarracks(this);
         }
 
-        currentTroops++;
 
-        Debug.Log(
-            name + " troops: " +
-            currentTroops + "/" + maxTroops
-        );
+        currentTroops++;
     }
 
 
-    // Called ONLY by troops belonging to this Barracks
+    // =====================================================
+    // TROOP DIED
+    // =====================================================
+
     public void TroopDied()
     {
         currentTroops--;
 
         if (currentTroops < 0)
             currentTroops = 0;
-
-        Debug.Log(
-            name + " troops: " +
-            currentTroops + "/" + maxTroops
-        );
     }
 
 
@@ -126,6 +139,60 @@ public class Barracks : MonoBehaviour
         return currentTroops;
     }
 
+
+    // =====================================================
+    // RALLY POINT
+    // =====================================================
+
+    public void SetRallyPoint(Vector3 position)
+    {
+        rallyPosition = position;
+
+        hasRallyPoint = true;
+
+
+        Debug.Log(
+            name +
+            " rally point = " +
+            rallyPosition
+        );
+    }
+
+
+    public Vector3 GetRallyPosition()
+    {
+        return rallyPosition;
+    }
+
+
+    public bool HasRallyPoint()
+    {
+        return hasRallyPoint;
+    }
+
+
+    public float GetRallyRange()
+    {
+        return rallyRange;
+    }
+
+
+    // =====================================================
+    // DEBUG RANGE
+    // =====================================================
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(
+            transform.position,
+            rallyRange
+        );
+    }
+
+
+    // =====================================================
+    // ENABLE / DISABLE
+    // =====================================================
 
     void OnEnable()
     {
