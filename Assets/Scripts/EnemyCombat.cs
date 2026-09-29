@@ -42,10 +42,6 @@ public class EnemyCombat : MonoBehaviour
     private bool attackingBarricade = false;
 
 
-    // =====================================================
-    // START
-    // =====================================================
-
     void Start()
     {
         agent =
@@ -59,21 +55,10 @@ public class EnemyCombat : MonoBehaviour
             animator=GetComponentInChildren<Animator>();
     }
 
-
-    // =====================================================
-    // UPDATE
-    // =====================================================
-
     void Update()
     {
         if (IsDead())
             return;
-
-
-        // =================================================
-        // WE WERE ATTACKING A BARRICADE BUT IT WAS DESTROYED
-        // =================================================
-
         if (
             attackingBarricade &&
             currentBarricade == null
@@ -97,12 +82,6 @@ public class EnemyCombat : MonoBehaviour
             return;
         }
     }
-
-
-    // =====================================================
-    // TROOP COMBAT
-    // =====================================================
-
     public void Engage(Troops troop)
     {
         if (
@@ -153,10 +132,8 @@ public class EnemyCombat : MonoBehaviour
         {
             if (animator != null)
             {
-                animator.SetBool(
-                    "IsAttacking",
-                    true
-                );
+                Debug.Log("attaoy");
+                animator.SetTrigger("Attack");
             }
 
 
@@ -175,24 +152,10 @@ public class EnemyCombat : MonoBehaviour
         }
     }
 
-
-    // =====================================================
-    // TROOP DIED
-    // =====================================================
-
     public void TroopDied(Troops troop)
     {
         if (troop != currentTroop)
             return;
-
-
-        if (animator != null)
-        {
-            animator.SetBool(
-                "IsAttacking",
-                false
-            );
-        }
 
 
         currentTroop =
@@ -345,10 +308,7 @@ public class EnemyCombat : MonoBehaviour
 
         if (animator != null)
         {
-            animator.SetBool(
-                "IsAttacking",
-                true
-            );
+            animator.SetTrigger("Attack");
         }
 
 
@@ -427,13 +387,6 @@ public class EnemyCombat : MonoBehaviour
             false;
 
 
-        if (animator != null)
-        {
-            animator.SetBool(
-                "IsAttacking",
-                false
-            );
-        }
         if (
             enemyHealth != null &&
             !enemyHealth.IsDead()

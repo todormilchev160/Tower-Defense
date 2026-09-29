@@ -7,6 +7,7 @@ public class Barricade : MonoBehaviour
     [SerializeField] private float maxHealth = 100f;
 
     [SerializeField] private Image healthbarFill;
+    
 
     private float health;
     private bool isDead = false;

@@ -1388,9 +1388,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71e11aba8a9c21946a1e9c0f77237d12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Troops
-  maxHealth: 1
+  maxHealth: 6
   healthbarfill: {fileID: 1238567839156498789}
-  damage: 10
+  damage: 4
   attackInterval: 1
   engagementDistance: 2
   enemyTag: Enemy

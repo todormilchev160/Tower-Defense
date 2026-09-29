@@ -90,11 +90,6 @@ public bool IsSelectingRallyPoint
         TryPlaceRallyPoint();
     }
 
-
-    // =====================================================
-    // START SELECTION
-    // =====================================================
-
     public void StartRallyPointSelection(
         Barracks barracks
     )
@@ -106,21 +101,11 @@ public bool IsSelectingRallyPoint
         currentBarracks = barracks;
 
         selectingRallyPoint = true;
-
-
-        // Generate ONLY the NavMesh inside this
-        // Barracks' rally range
         GenerateRangeNavMesh();
 
 
         navMeshVisual.SetActive(true);
     }
-
-
-    // =====================================================
-    // PLACE RALLY POINT
-    // =====================================================
-
     void TryPlaceRallyPoint()
     {
         if (currentBarracks == null)
@@ -161,11 +146,6 @@ public bool IsSelectingRallyPoint
         if (!foundNavMesh)
             return;
 
-
-        // ==========================================
-        // RANGE CHECK
-        // ==========================================
-
         float distance =
             Vector3.Distance(
                 currentBarracks.transform.position,
@@ -185,11 +165,6 @@ public bool IsSelectingRallyPoint
             return;
         }
 
-
-        // ==========================================
-        // SET RALLY POINT
-        // ==========================================
-
         currentBarracks.SetRallyPoint(
             navHit.position
         );
@@ -202,11 +177,6 @@ public bool IsSelectingRallyPoint
 
         navMeshVisual.SetActive(false);
     }
-
-
-    // =====================================================
-    // CREATE VISUAL OBJECT
-    // =====================================================
 
     void CreateVisualObject()
     {
@@ -227,12 +197,6 @@ public bool IsSelectingRallyPoint
         renderer.material =
             navMeshMaterial;
     }
-
-
-    // =====================================================
-    // GENERATE NAVMESH INSIDE RANGE
-    // =====================================================
-
     void GenerateRangeNavMesh()
     {
         if (currentBarracks == null)
@@ -257,9 +221,6 @@ public bool IsSelectingRallyPoint
 
         float range =
             currentBarracks.GetRallyRange();
-
-
-        // Go through every NavMesh triangle
         for (
             int i = 0;
             i < triangulation.indices.Length;

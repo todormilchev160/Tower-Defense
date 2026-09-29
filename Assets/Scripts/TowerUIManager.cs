@@ -351,6 +351,12 @@ public class TowerUIManager : MonoBehaviour
         currentLevel+=1;
         SpawnTower(bombTowers[currentLevel]);
     }
+    private void UpgradeBarracks()
+    {
+         Destroy(tower);
+        currentLevel+=1;
+        SpawnTower(troopTowers[currentLevel]);
+    }
     private IEnumerator NoMoneyTextCoroutine()
     {
         noMoneyText.text="Insuficient funds";

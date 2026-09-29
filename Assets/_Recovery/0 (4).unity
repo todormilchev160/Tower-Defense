@@ -55654,11 +55654,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WaveSpawner
   waves:
   - enemies:
-    - {fileID: 605666533674246333, guid: 16a6932070825094c8beb0f9c5ea1650, type: 3}
-    - {fileID: 605666533674246333, guid: 16a6932070825094c8beb0f9c5ea1650, type: 3}
-    - {fileID: 605666533674246333, guid: 16a6932070825094c8beb0f9c5ea1650, type: 3}
-    - {fileID: 605666533674246333, guid: 16a6932070825094c8beb0f9c5ea1650, type: 3}
-    - {fileID: 605666533674246333, guid: 9d69c281912de3745b01e18d618f5ca0, type: 3}
+    - {fileID: 605666533674246333, guid: e6e1330913f788e4ab968b2d5f8c62c6, type: 3}
+    - {fileID: 605666533674246333, guid: e6e1330913f788e4ab968b2d5f8c62c6, type: 3}
+    - {fileID: 605666533674246333, guid: e6e1330913f788e4ab968b2d5f8c62c6, type: 3}
+    - {fileID: 605666533674246333, guid: e6e1330913f788e4ab968b2d5f8c62c6, type: 3}
+    - {fileID: 605666533674246333, guid: e6e1330913f788e4ab968b2d5f8c62c6, type: 3}
     timeBetweenEnemies: 0.5
   - enemies:
     - {fileID: 605666533674246333, guid: 16a6932070825094c8beb0f9c5ea1650, type: 3}

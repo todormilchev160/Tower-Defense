@@ -27,7 +27,6 @@ public class RallyButton : MonoBehaviour
             Mathf.Infinity;
 
 
-        // Find Barracks closest to THIS button
         foreach (Barracks barracks in allBarracks)
         {
             float distance =

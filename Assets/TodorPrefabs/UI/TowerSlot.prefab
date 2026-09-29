@@ -1418,7 +1418,7 @@ MonoBehaviour:
   bombTowerText: {fileID: 6289838525698921132}
   upgradeText: {fileID: 7923008683022701787}
   sellText: {fileID: 3478739549751471627}
-  noMoneyText: {fileID: 1120861923277488566, guid: 6f8ba92461338974e8211e595cb68b3f, type: 3}
+  noMoneyText: {fileID: 0}
   troopText: {fileID: 5239252551686727873}
   rallyPointButton: {fileID: 1177270981708540142}
   archerTowers:
@@ -1433,7 +1433,7 @@ MonoBehaviour:
   - {fileID: 3232792351999903638, guid: 93c978e5dd8062e4fac0a23156526be3, type: 3}
   - {fileID: 3232792351999903638, guid: 5de28fb39235d1b44982bebb3ce0834b, type: 3}
   bombTowers:
-  - {fileID: 3232792351999903638, guid: 93c978e5dd8062e4fac0a23156526be3, type: 3}
+  - {fileID: 762509113718945822, guid: c73811dc12aa5cf419b843bf70374277, type: 3}
   - {fileID: 3232792351999903638, guid: 5de28fb39235d1b44982bebb3ce0834b, type: 3}
   - {fileID: 3232792351999903638, guid: ce97bdab17c2df447a321dec7abc72f2, type: 3}
   spawnY: 0.6
