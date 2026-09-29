@@ -18,33 +18,43 @@ public class TowerUIManager : MonoBehaviour
     public TextMeshProUGUI upgradeText;
     public TextMeshProUGUI sellText;
     public TextMeshProUGUI noMoneyText;
+    public TextMeshProUGUI troopText;
     public GameObject rallyPointButton;
 
 
     [Header("Tower Prefabs")]
     public GameObject[] archerTowers;
     public GameObject[] magicTowers;
+    public GameObject[] troopTowers;
     public GameObject[] bombTowers;
 
     [Header("Spawn Settings")]
     [SerializeField] private float spawnY = 0f;
     [Header("Prices")]
+    [Header("Buy Prices")]
     public int archerPrice;
     public int magicPrice;
     public int bombPrice;
+    public int troopPrice=0;
+    [Header("Upgrade prices")]
     public int archerUpgradePrice;
     public int bombUpgradePrice;
     public int magicUpgradePrice;
+    public int troopUpgradePrice=0;
+    [Header("Sell prices")]
     public int archerSellPrice=80;
     public int bombSellPrice=240;
+    public int troopSellPrice=0;
     public int magicSellPrice=160;
     public int priceIncreaseAfterUgrade=50;
     private int archerSellPrice2;
     private int magicSellPrice2;
     private int bombSellPrice2;
+    private int troopSellPrice2;
     private int archerUpgradePrice2;
     private int bombUpgradePrice2;
     private int magicUpgradePrice2;
+    private int troopUpgradePrice2;
     private int currentLevel=0;
 
     private bool towerUIOpen = false;
@@ -53,16 +63,19 @@ public class TowerUIManager : MonoBehaviour
     private bool archer=false;
     private bool magic=false;
     private bool bomb=false;
+    private bool troop=false;
     private GameObject tower;
 
     void Start()
     {
+        troopUpgradePrice2=troopUpgradePrice;
         bombUpgradePrice2=bombUpgradePrice;
         archerUpgradePrice2=archerUpgradePrice;
         magicUpgradePrice2=magicUpgradePrice;
         archerSellPrice2=archerSellPrice;
         magicSellPrice2=magicSellPrice;
         bombSellPrice2=bombSellPrice;
+        troopSellPrice2=troopSellPrice;
         towerSelectionUI.SetActive(false);
         slotButton.SetActive(true);
     }
@@ -87,6 +100,7 @@ public class TowerUIManager : MonoBehaviour
         archerTowerText.text="Archer Tower"+archerPrice;
         magicTowerText.text ="Magic Tower"+magicPrice;
         bombTowerText.text ="Bomb Tower"+bombPrice;
+        troopText.text="Barracks" + troopPrice;
         if (!towerUIOpen)
             return;
        
@@ -170,6 +184,21 @@ public class TowerUIManager : MonoBehaviour
             SpawnTower(bombTowers[0]);
         }
     }
+    public void SpawnBarracks()
+    {
+                
+        if(GameManager.currency<troopPrice)
+        {
+            StartCoroutine(NoMoneyTextCoroutine());
+            return;
+        }
+        else
+        {
+            GameManager.currency-=troopPrice;
+            troop=true;
+            SpawnTower(troopTowers[0]);
+        }
+    }
     private void SpawnTower(GameObject towerPrefab)
     {
         if (towerPrefab == null || slotButton == null)
@@ -197,7 +226,7 @@ public class TowerUIManager : MonoBehaviour
         towerUIOpen=true;
         towerOptions.SetActive(false);
         towerUI.SetActive(true);
-        if(!bomb)
+        if(!troop)
         {
             rallyPointButton.SetActive(false);
         }
@@ -224,6 +253,12 @@ public class TowerUIManager : MonoBehaviour
             bombSellPrice2=bombSellPrice;
             bombUpgradePrice2=bombUpgradePrice;
         }
+        if(troop)
+        {
+            GameManager.currency+=troopSellPrice2;
+           troopSellPrice2=troopSellPrice;
+            troopUpgradePrice2=troopUpgradePrice;
+        }
       Destroy(tower);
       firstStage=true;
       secondStage=false;
@@ -249,8 +284,7 @@ public class TowerUIManager : MonoBehaviour
                 GameManager.currency-=archerUpgradePrice2;
                 archerUpgradePrice2+=priceIncreaseAfterUgrade;
                 UpgradeArcherTower();
-            }
-            
+            } 
         }
         if(magic)
         {
@@ -279,6 +313,21 @@ public class TowerUIManager : MonoBehaviour
                 bombSellPrice2+=bombUpgradePrice*8/10;
                 GameManager.currency -=bombUpgradePrice2;
                 bombUpgradePrice2+=priceIncreaseAfterUgrade;
+                UpgradeBombTower();
+            }
+        }
+        if(troop)
+        {
+            if(GameManager.currency < troopUpgradePrice2)
+            {
+                StartCoroutine(NoMoneyTextCoroutine());
+                return;
+            }
+            else
+            {
+                troopSellPrice2+=troopUpgradePrice*8/10;
+                GameManager.currency -=troopUpgradePrice2;
+                troopUpgradePrice2+=priceIncreaseAfterUgrade;
                 UpgradeBombTower();
             }
         }

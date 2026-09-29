@@ -588,6 +588,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyCombat
   damage: 1
   attackInterval: 1
+  barricadeDetectionRange: 5
+  barricadeAttackDistance: 2
+  barricadeDamage: 5
+  barricadeAttackInterval: 1
   animator: {fileID: 3889334038857041398}
 --- !u!95 &3889334038857041398
 Animator:
