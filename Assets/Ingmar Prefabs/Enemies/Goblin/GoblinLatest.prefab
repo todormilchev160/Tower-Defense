@@ -477,7 +477,7 @@ MonoBehaviour:
   healthbarFill: {fileID: 1445252073108139028}
   damageText: {fileID: 2558749157472531735}
   damagefeedbacktime: 1
-  animator: {fileID: 0}
+  animator: {fileID: 5380731251874181237}
 --- !u!114 &-730345763526173280
 MonoBehaviour:
   m_ObjectHideFlags: 0

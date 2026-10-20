@@ -9,6 +9,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2558021797467041590, guid: 415e21684bec9cb418d761e0c821d77f, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2558021797467041590, guid: 415e21684bec9cb418d761e0c821d77f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10.1
       objectReference: {fileID: 0}
@@ -61,6 +65,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1158175294324322527}
     - target: {fileID: 3984578358989256018, guid: 415e21684bec9cb418d761e0c821d77f, type: 3}
+      propertyPath: towerTop
+      value: 
+      objectReference: {fileID: 920490821083896067}
+    - target: {fileID: 3984578358989256018, guid: 415e21684bec9cb418d761e0c821d77f, type: 3}
       propertyPath: targetPoint
       value: 
       objectReference: {fileID: 325111080236345537, guid: 011884cb52f5058499d59736d762586a, type: 3}
@@ -107,3 +115,8 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!4 &920490821083896067 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2558021797467041590, guid: 415e21684bec9cb418d761e0c821d77f, type: 3}
+  m_PrefabInstance: {fileID: 3439015926904403509}
+  m_PrefabAsset: {fileID: 0}
