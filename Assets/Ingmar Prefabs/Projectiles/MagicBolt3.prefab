@@ -437,7 +437,7 @@ MonoBehaviour:
   acceleration: 80
   maxSpeed: 100
   lifeTime: 10
-  damage: 9
+  damage: 15
 --- !u!1 &6315308492553435932
 GameObject:
   m_ObjectHideFlags: 0

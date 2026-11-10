@@ -534,12 +534,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0afe959ca9b8c654aaca875b98a0d489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TowerAttack
+  towerTop: {fileID: 0}
+  rotationSpeed: 5
   targetPoint: {fileID: 7063374376516148698}
   enemyTag: Enemy
-  attackRange: 15
+  attackRange: 18
   projectilePrefab: {fileID: 5627795090312600175, guid: a607572b358e9784480425f59a8b07af, type: 3}
   firePoint: {fileID: 5869329121082817242}
-  fireRate: 6
+  fireRate: 3
   fireDelay: 1
   animator: {fileID: 2393820666979787060}
   projectileType: 0
@@ -587,12 +589,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0afe959ca9b8c654aaca875b98a0d489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TowerAttack
+  towerTop: {fileID: 0}
+  rotationSpeed: 5
   targetPoint: {fileID: 0}
   enemyTag: Enemy
-  attackRange: 15
+  attackRange: 18
   projectilePrefab: {fileID: 5627795090312600175, guid: a607572b358e9784480425f59a8b07af, type: 3}
   firePoint: {fileID: 5869329121082817242}
-  fireRate: 6
+  fireRate: 3
   fireDelay: 1
   animator: {fileID: 6077061373972807266}
   projectileType: 0
