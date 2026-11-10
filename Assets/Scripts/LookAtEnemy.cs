@@ -37,7 +37,6 @@ public class TowerLookAtEnemy : MonoBehaviour
             );
 
 
-            // Prioritize enemy closest to targetPoint
             float distanceToPoint = Vector3.Distance(
                 targetPoint.position,
                 enemy.transform.position
@@ -57,7 +56,6 @@ public class TowerLookAtEnemy : MonoBehaviour
     {
         Vector3 direction = currentTarget.position - transform.position;
 
-        // Don't tilt up/down
         direction.y = 0f;
 
         if (direction.sqrMagnitude < 0.001f)

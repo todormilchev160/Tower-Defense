@@ -383,7 +383,7 @@ MonoBehaviour:
   healthbarFill: {fileID: 1445252073108139028}
   damageText: {fileID: 2558749157472531735}
   damagefeedbacktime: 1
-  animator: {fileID: 7548443096832050138}
+  animator: {fileID: 0}
 --- !u!114 &-730345763526173280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -396,9 +396,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c20ed264f324b7f48b8fcb46c977fd93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyCombat
-  damage: 1
+  damage: 5
   attackInterval: 1
-  animator: {fileID: 7548443096832050138}
+  barricadeDetectionRange: 5
+  barricadeAttackDistance: 2
+  barricadeDamage: 5
+  barricadeAttackInterval: 1
 --- !u!1 &726168828101081025
 GameObject:
   m_ObjectHideFlags: 0
@@ -1139,7 +1142,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8256040452408489682}
-  - component: {fileID: 7548443096832050138}
+  - component: {fileID: 4254568043318936987}
   m_Layer: 3
   m_Name: Enemy1_Animated
   m_TagString: Untagged
@@ -1169,7 +1172,7 @@ Transform:
   - {fileID: 7753129164330727405}
   m_Father: {fileID: 4595309402670104187}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
---- !u!95 &7548443096832050138
+--- !u!95 &4254568043318936987
 Animator:
   serializedVersion: 7
   m_ObjectHideFlags: 0

@@ -45,7 +45,6 @@ public class WaveSpawner : MonoBehaviour
             {
                     clockticking=true;
             yield return new WaitUntil(()=>clockrunout);
-            Barracks.UnlockSpawning();
             clockticking=false;
             }
             yield return StartCoroutine(

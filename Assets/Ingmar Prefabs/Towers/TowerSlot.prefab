@@ -938,7 +938,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &5405562342762324089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -972,6 +972,12 @@ MonoBehaviour:
   slotButton: {fileID: 3031371168832941483}
   towerOptions: {fileID: 7410191093620876610}
   towerUI: {fileID: 8430648736680183442}
+  archerTowerText: {fileID: 0}
+  magicTowerText: {fileID: 0}
+  bombTowerText: {fileID: 0}
+  upgradeText: {fileID: 0}
+  sellText: {fileID: 0}
+  rallyPointButton: {fileID: 0}
   archerTowers:
   - {fileID: 3232792351999903638, guid: 6b26eed7d8644e24c86cb87dfeffc12e, type: 3}
   - {fileID: 3232792351999903638, guid: 9d5b75c6efa59734792332ba0fe9da68, type: 3}

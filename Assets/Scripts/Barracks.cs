@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-
+using System.Collections.Generic;
 public class Barracks : MonoBehaviour
 {
     [Header("Troop")]
@@ -10,190 +10,188 @@ public class Barracks : MonoBehaviour
     [Header("Spawn Settings")]
     [SerializeField] private float spawnInterval = 5f;
 
-    [Tooltip("Maximum number of troops that can exist at once across ALL barracks")]
     [SerializeField] private int maxTroops = 5;
 
     [Header("NavMesh")]
-    [Tooltip("How far from this object Unity searches for a NavMesh")]
     [SerializeField] private float navMeshSearchDistance = 5f;
 
-    // Shared by ALL Barracks
-    public static bool spawningUnlocked = false;
+    [Header("Rally Point")]
+    [Tooltip("Maximum distance from this Barracks where a rally point can be placed")]
+    [SerializeField] private float rallyRange = 15f;
 
-    // Number of troops currently alive
-    private static int currentTroops = 0;
+    private int currentTroops = 0;
+        private List<Troops> spawnedTroops =
+    new List<Troops>();
 
-    // Coroutine belonging to this individual Barracks
+    private Vector3 rallyPosition;
+    private bool hasRallyPoint = false;
+
     private Coroutine spawnCoroutine;
 
 
     void Start()
     {
-        if (spawningUnlocked)
-        {
-            StartSpawning();
-        }
+        StartSpawning();
     }
 
 
     // =====================================================
-    // UNLOCK ALL BARRACKS
-    // =====================================================
-
-    public static void UnlockSpawning()
-    {
-        spawningUnlocked = true;
-
-        Barracks[] spawners =
-            FindObjectsByType<Barracks>(
-                FindObjectsSortMode.None
-            );
-
-        foreach (Barracks spawner in spawners)
-        {
-            spawner.StartSpawning();
-        }
-
-        Debug.Log("Troop spawning UNLOCKED");
-    }
-
-
-    // =====================================================
-    // LOCK ALL BARRACKS
-    // =====================================================
-
-    public static void LockSpawning()
-    {
-        spawningUnlocked = false;
-
-        Barracks[] spawners =
-            FindObjectsByType<Barracks>(
-                FindObjectsSortMode.None
-            );
-
-        foreach (Barracks spawner in spawners)
-        {
-            spawner.StopSpawning();
-        }
-
-        Debug.Log("Troop spawning LOCKED");
-    }
-
-
-    // =====================================================
-    // START THIS BARRACKS
+    // SPAWNING
     // =====================================================
 
     private void StartSpawning()
     {
-        if (!spawningUnlocked)
-            return;
-
-        // Prevent multiple spawn coroutines
         if (spawnCoroutine != null)
             return;
 
-        spawnCoroutine = StartCoroutine(SpawnRoutine());
+        spawnCoroutine =
+            StartCoroutine(SpawnRoutine());
     }
 
-
-    // =====================================================
-    // STOP THIS BARRACKS
-    // =====================================================
 
     private void StopSpawning()
     {
         if (spawnCoroutine != null)
         {
             StopCoroutine(spawnCoroutine);
+
             spawnCoroutine = null;
         }
     }
 
 
-    // =====================================================
-    // SPAWN LOOP
-    // =====================================================
-
     IEnumerator SpawnRoutine()
     {
-        while (spawningUnlocked)
+        while (true)
         {
-            yield return new WaitForSeconds(spawnInterval);
+            yield return new WaitForSeconds(
+                spawnInterval
+            );
 
-            if (!spawningUnlocked)
-                break;
-
-            // Only spawn if we haven't reached the cap
             if (currentTroops < maxTroops)
             {
                 SpawnTroop();
             }
         }
-
-        spawnCoroutine = null;
     }
 
-
-    // =====================================================
-    // SPAWN TROOP
-    // =====================================================
 
     void SpawnTroop()
     {
         if (troopPrefab == null)
             return;
 
-        // Safety check
         if (currentTroops >= maxTroops)
             return;
 
+
         NavMeshHit hit;
 
-        bool foundNavMesh = NavMesh.SamplePosition(
-            transform.position,
-            out hit,
-            navMeshSearchDistance,
-            NavMesh.AllAreas
-        );
 
-        if (foundNavMesh)
-        {
+        bool foundNavMesh =
+            NavMesh.SamplePosition(
+                transform.position,
+                out hit,
+                navMeshSearchDistance,
+                NavMesh.AllAreas
+            );
+
+
+        if (!foundNavMesh)
+            return;
+
+
+        GameObject spawnedTroop =
             Instantiate(
                 troopPrefab,
                 hit.position,
                 transform.rotation
             );
 
-            currentTroops++;
-        }
+
+    Troops troopScript =
+    spawnedTroop.GetComponent<Troops>();
+
+if (troopScript != null)
+{
+    troopScript.SetBarracks(this);
+
+    spawnedTroops.Add(troopScript);
+}
+
+
+        currentTroops++;
     }
 
 
-  
 
-    public static void TroopDied()
+public void TroopDied(Troops troop)
+{
+    if (troop != null)
     {
-        currentTroops--;
-
-        if (currentTroops < 0)
-            currentTroops = 0;
-
+        spawnedTroops.Remove(troop);
     }
-    
-    public static int GetCurrentTroops()
+
+    currentTroops--;
+
+    if (currentTroops < 0)
+        currentTroops = 0;
+}
+
+
+    public int GetCurrentTroops()
     {
         return currentTroops;
     }
 
 
-    
+    // =====================================================
+    // RALLY POINT
+    // =====================================================
+
+    public void SetRallyPoint(Vector3 position)
+    {
+        rallyPosition = position;
+
+        hasRallyPoint = true;
+
+
+        Debug.Log(
+            name +
+            " rally point = " +
+            rallyPosition
+        );
+    }
+
+
+    public Vector3 GetRallyPosition()
+    {
+        return rallyPosition;
+    }
+
+
+    public bool HasRallyPoint()
+    {
+        return hasRallyPoint;
+    }
+
+
+    public float GetRallyRange()
+    {
+        return rallyRange;
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(
+            transform.position,
+            rallyRange
+        );
+    }
+
     void OnEnable()
     {
-        if (spawningUnlocked)
-        {
-            StartSpawning();
-        }
+        StartSpawning();
     }
 
 
@@ -201,4 +199,19 @@ public class Barracks : MonoBehaviour
     {
         StopSpawning();
     }
+    void OnDestroy()
+{
+    Troops[] troopsToDestroy =
+        spawnedTroops.ToArray();
+
+    foreach (Troops troop in troopsToDestroy)
+    {
+        if (troop != null)
+        {
+            troop.BarracksDestroyed();
+        }
+    }
+
+    spawnedTroops.Clear();
+}
 }

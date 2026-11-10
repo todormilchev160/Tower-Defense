@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class CameraDrag : MonoBehaviour
 {
@@ -14,65 +15,111 @@ public class CameraDrag : MonoBehaviour
     private Vector2 lastMousePosition;
     private bool dragging;
 
+
     void Start()
     {
         initialPosition = transform.position;
     }
+
 
     void Update()
     {
         if (Mouse.current == null)
             return;
 
-        // Start dragging
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+
+        // =================================================
+        // DON'T MOVE CAMERA WHILE SELECTING RALLY POINT
+        // =================================================
+
+        if (
+            TroopRallyPoint.Instance != null &&
+            TroopRallyPoint.Instance.IsSelectingRallyPoint
+        )
         {
-            dragging = true;
-            lastMousePosition = Mouse.current.position.ReadValue();
+            dragging = false;
+            return;
         }
 
-        // Stop dragging
+
+        // =================================================
+        // DON'T START DRAGGING WHEN CLICKING UI
+        // =================================================
+
+        if (Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            if (
+                EventSystem.current != null &&
+                EventSystem.current.IsPointerOverGameObject()
+            )
+            {
+                return;
+            }
+
+            dragging = true;
+
+            lastMousePosition =
+                Mouse.current.position.ReadValue();
+        }
+
+
+        // =================================================
+        // STOP DRAGGING
+        // =================================================
+
         if (Mouse.current.leftButton.wasReleasedThisFrame)
         {
             dragging = false;
         }
+
+
+        // =================================================
+        // DRAG
+        // =================================================
 
         if (dragging)
         {
             Vector2 currentMousePosition =
                 Mouse.current.position.ReadValue();
 
-            Vector2 mouseDelta =
-                currentMousePosition - lastMousePosition;
 
-            // Mouse X -> World X
-            // Mouse Y -> World Z
-            Vector3 movement = new Vector3(
-                -mouseDelta.x * dragSpeed,
-                0f,
-                -mouseDelta.y * dragSpeed
-            );
+            Vector2 mouseDelta =
+                currentMousePosition -
+                lastMousePosition;
+
+
+            Vector3 movement =
+                new Vector3(
+                    -mouseDelta.x * dragSpeed,
+                    0f,
+                    -mouseDelta.y * dragSpeed
+                );
+
 
             transform.position += movement;
 
-            // Clamp camera position
-            transform.position = new Vector3(
-                Mathf.Clamp(
-                    transform.position.x,
-                    initialPosition.x - maxXDistance,
-                    initialPosition.x + maxXDistance
-                ),
 
-                initialPosition.y,
+            // Clamp camera
+            transform.position =
+                new Vector3(
+                    Mathf.Clamp(
+                        transform.position.x,
+                        initialPosition.x - maxXDistance,
+                        initialPosition.x + maxXDistance
+                    ),
 
-                Mathf.Clamp(
-                    transform.position.z,
-                    initialPosition.z - maxZDistance,
-                    initialPosition.z + maxZDistance
-                )
-            );
+                    initialPosition.y,
 
-            lastMousePosition = currentMousePosition;
+                    Mathf.Clamp(
+                        transform.position.z,
+                        initialPosition.z - maxZDistance,
+                        initialPosition.z + maxZDistance
+                    )
+                );
+
+
+            lastMousePosition =
+                currentMousePosition;
         }
     }
 }

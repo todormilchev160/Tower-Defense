@@ -10,7 +10,9 @@ public class TowerAttack : MonoBehaviour
         Magic,
         Bomb
     }
-
+[Header("Bomb Tower Rotation")]
+public Transform towerTop;
+public float rotationSpeed = 5f;
     [Header("Targeting")]
     public Transform targetPoint;
     public string enemyTag = "Enemy";
@@ -29,16 +31,22 @@ public class TowerAttack : MonoBehaviour
     private Transform currentTarget;
     private float nextFireTime;
 
-    void Update()
-    {
-        FindClosestEnemy();
+void Update()
+{
+    FindClosestEnemy();
 
-        if (currentTarget != null && Time.time >= nextFireTime)
-        {
-            StartCoroutine(Shoot());
-            nextFireTime = Time.time + 1f / fireRate;
-        }
+    // Only rotate the Bomb Tower
+    if (projectileType == ProjectileType.Bomb)
+    {
+        RotateBombTower();
     }
+
+    if (currentTarget != null && Time.time >= nextFireTime)
+    {
+        StartCoroutine(Shoot());
+        nextFireTime = Time.time + 1f / fireRate;
+    }
+}
 
     void FindClosestEnemy()
     {
@@ -231,4 +239,25 @@ public class TowerAttack : MonoBehaviour
             attackRange
         );
     }
+    void RotateBombTower()
+{
+    if (towerTop == null || currentTarget == null)
+        return;
+
+    Vector3 direction = currentTarget.position - towerTop.position;
+
+    // Prevent the tower from tilting up or down
+    direction.y = 0f;
+
+    if (direction.sqrMagnitude < 0.001f)
+        return;
+
+    Quaternion targetRotation = Quaternion.LookRotation(direction);
+
+    towerTop.rotation = Quaternion.Slerp(
+        towerTop.rotation,
+        targetRotation,
+        rotationSpeed * Time.deltaTime
+    );
+}
 }
