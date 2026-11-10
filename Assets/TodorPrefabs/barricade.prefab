@@ -84,6 +84,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5361345149972967480}
+  - component: {fileID: 7549197175606443919}
   m_Layer: 0
   m_Name: barricade
   m_TagString: Untagged
@@ -107,6 +108,20 @@ Transform:
   - {fileID: 6849256829676926413}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7549197175606443919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7513897845709617314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e453a13278146174fa1819cb282eddf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Barricade
+  maxHealth: 100
+  healthbarFill: {fileID: 1833878624470003560}
 --- !u!1 &8382087182025362155
 GameObject:
   m_ObjectHideFlags: 0
@@ -296,7 +311,6 @@ GameObject:
   - component: {fileID: 6849256829676926413}
   - component: {fileID: 4116709835172892304}
   - component: {fileID: 2087931161913454043}
-  - component: {fileID: 7434340745816073535}
   m_Layer: 0
   m_Name: barrickade
   m_TagString: Untagged
@@ -377,17 +391,3 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &7434340745816073535
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8993166881614672574}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e453a13278146174fa1819cb282eddf1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Barricade
-  maxHealth: 100
-  healthbarFill: {fileID: 1833878624470003560}

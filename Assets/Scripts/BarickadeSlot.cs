@@ -25,7 +25,7 @@ public class BarickadeSlot : MonoBehaviour
        if(GameManager.currency<barickadePrice)
        return;
        GameManager.currency-=barickadePrice;
-           Vector3 spawnPosition=new Vector3(transform.position.x,spawnHeight,transform.position.z);
+        Vector3 spawnPosition=new Vector3(transform.position.x,spawnHeight,transform.position.z);
         Instantiate(barickadePrefab,spawnPosition,transform.rotation,transform); 
         slotButton.SetActive(false);
     }
