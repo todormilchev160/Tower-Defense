@@ -25,14 +25,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3232792351999903638}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 10.117856, y: 0, z: 15.339877}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3146328526941340106}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8681370655673518174
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57a71e3e1bbcf844b8f329d57e67b639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Barracks
-  troopPrefab: {fileID: 8482412719928716756, guid: a4db8be5b3cdf044893e86fa450db17f, type: 3}
+  troopPrefab: {fileID: 512511040866667331, guid: 741a0875130c614419e1c18a4a5e3059, type: 3}
   spawnInterval: 5
   maxTroops: 2
   navMeshSearchDistance: 10
