@@ -3,7 +3,12 @@ guid: 19ddd6cce05e9784a97bbb93191a9cc8
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Baracks.png
+    second: {fileID: 2100000, guid: ebce570f11186384cbd56b771f128a34, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
