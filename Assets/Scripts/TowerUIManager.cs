@@ -211,28 +211,39 @@ public class TowerUIManager : MonoBehaviour
             SpawnTower(troopTowers[0]);
         }
     }
-    private void SpawnTower(GameObject towerPrefab)
+    
+private void SpawnTower(GameObject towerPrefab)
+{
+    if (towerPrefab == null || slotButton == null)
+        return;
+
+    Vector3 spawnPosition = new Vector3(
+        slotButton.transform.position.x,
+        spawnY,
+        slotButton.transform.position.z
+    );
+
+    tower = Instantiate(
+        towerPrefab,
+        spawnPosition,
+        Quaternion.identity
+    );
+
+    // Assign this tower its original TowerSlot
+    TowerHover towerHover = tower.GetComponent<TowerHover>();
+
+    if (towerHover != null)
     {
-        if (towerPrefab == null || slotButton == null)
-            return;
-
-        Vector3 spawnPosition = new Vector3(
-            slotButton.transform.position.x,
-            spawnY,
-            slotButton.transform.position.z
-        );
-
-        tower=Instantiate(
-            towerPrefab,
-            spawnPosition,
-            Quaternion.identity
-        );
-        towerUI.SetActive(false);
-        towerSelectionUI.SetActive(false);
-        towerOptions.SetActive(true);
-        firstStage=false;
-        secondStage=true;
+        towerHover.AssignTowerSlot(towerSlot);
     }
+
+    towerUI.SetActive(false);
+    towerSelectionUI.SetActive(false);
+    towerOptions.SetActive(true);
+
+    firstStage = false;
+    secondStage = true;
+}
     public void ShowTowerOptions()
     {
         HoverActivation.selecting=true;

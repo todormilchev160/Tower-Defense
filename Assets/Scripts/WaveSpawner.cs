@@ -1,6 +1,8 @@
+
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+
 public class WaveSpawner : MonoBehaviour
 {
     [System.Serializable]
@@ -22,84 +24,99 @@ public class WaveSpawner : MonoBehaviour
     [Header("Spawn Point")]
     public Transform leftSpawnPoint;
     public Transform rightSpawnPoint;
+
     [Header("ClockVisualisation")]
     public Image clock;
+
+    [Header("Object To Disable")]
+    [SerializeField] private GameObject objectToDisable;
+
     private float clocktime;
     private float maxClockTime;
     private int currentWave = 0;
-    private bool clockrunout=false;
-    private bool clockticking=false;
+    private bool clockrunout = false;
+    private bool clockticking = false;
 
     void Start()
     {
-        clocktime=timeBetweenWaves;
-        maxClockTime=timeBetweenWaves;
+        clocktime = timeBetweenWaves;
+        maxClockTime = timeBetweenWaves;
         StartCoroutine(StartWaves());
     }
 
     IEnumerator StartWaves()
     {
+        // Disable assigned GameObject when waves start
+        if (objectToDisable != null)
+        {
+            objectToDisable.SetActive(false);
+        }
+
         while (currentWave < waves.Length)
         {
-            if(currentWave!=0)
+            if (currentWave != 0)
             {
-                    clockticking=true;
-            yield return new WaitUntil(()=>clockrunout);
-            clockticking=false;
+                clockticking = true;
+                yield return new WaitUntil(() => clockrunout);
+                clockticking = false;
             }
+
             yield return StartCoroutine(
                 SpawnWave(waves[currentWave])
             );
+
             currentWave++;
-            
         }
     }
 
-IEnumerator SpawnWave(Wave wave)
-{
-    foreach (GameObject enemy in wave.enemies)
+    IEnumerator SpawnWave(Wave wave)
     {
-        if (enemy != null)
+        foreach (GameObject enemy in wave.enemies)
         {
-            float randomX = Random.Range(
-                leftSpawnPoint.position.x,
-                rightSpawnPoint.position.x
-            );
+            if (enemy != null)
+            {
+                float randomX = Random.Range(
+                    leftSpawnPoint.position.x,
+                    rightSpawnPoint.position.x
+                );
 
-            Vector3 spawnPosition = new Vector3(
-                randomX,
-                leftSpawnPoint.position.y,
-                leftSpawnPoint.position.z
-            );
+                Vector3 spawnPosition = new Vector3(
+                    randomX,
+                    leftSpawnPoint.position.y,
+                    leftSpawnPoint.position.z
+                );
 
-            Instantiate(
-                enemy,
-                spawnPosition,
-                leftSpawnPoint.rotation
-            );
+                Instantiate(
+                    enemy,
+                    spawnPosition,
+                    leftSpawnPoint.rotation
+                );
+            }
+
+            yield return new WaitForSeconds(wave.timeBetweenEnemies);
         }
-
-        yield return new WaitForSeconds(wave.timeBetweenEnemies);
     }
-}
-void Update()
+
+    void Update()
     {
-        clock.fillAmount=clocktime/maxClockTime;
-        if(clocktime==0)
+        clock.fillAmount = clocktime / maxClockTime;
+
+        if (clocktime == 0)
         {
-            clockrunout=true;
+            clockrunout = true;
         }
         else
         {
-            clockrunout=false;
+            clockrunout = false;
         }
-        if(clockticking)
+
+        if (clockticking)
         {
             clocktime--;
         }
         else
         {
-            clocktime=maxClockTime;
+            clocktime = maxClockTime;
         }
     }
 }
