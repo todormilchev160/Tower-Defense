@@ -7,6 +7,12 @@ public class CameraMovement : MonoBehaviour
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 0.02f;
 
+    [Header("Movement Boundaries")]
+    [SerializeField] private float minX = -10f;
+    [SerializeField] private float maxX = 10f;
+    [SerializeField] private float minZ = -10f;
+    [SerializeField] private float maxZ = 10f;
+
     [Header("Rotation")]
     [SerializeField] private Transform rotationTarget;
     [SerializeField] private float rotationSpeed = 0.2f;
@@ -37,6 +43,7 @@ public class CameraMovement : MonoBehaviour
     void Start()
     {
         cam = GetComponent<Camera>();
+        RemoveTilt();
     }
 
     void Update()
@@ -47,6 +54,12 @@ public class CameraMovement : MonoBehaviour
         HandleMovement();
         HandleRotation();
         HandleZoom();
+
+        // Keep the camera inside the movement boundaries
+        ClampPosition();
+
+        // Prevent unwanted camera roll
+        RemoveTilt();
     }
 
     void HandleMovement()
@@ -88,17 +101,13 @@ public class CameraMovement : MonoBehaviour
         if (rotationTarget == null)
             return;
 
-        // Reset axis when right-click begins
         if (Mouse.current.rightButton.wasPressedThisFrame)
         {
             lastMousePosition = Mouse.current.position.ReadValue();
-
             rotationStartMousePosition = lastMousePosition;
-
             activeRotationAxis = RotationAxis.None;
         }
 
-        // Reset axis when right-click ends
         if (Mouse.current.rightButton.wasReleasedThisFrame)
         {
             activeRotationAxis = RotationAxis.None;
@@ -111,7 +120,6 @@ public class CameraMovement : MonoBehaviour
         Vector2 currentMousePosition =
             Mouse.current.position.ReadValue();
 
-        // Determine the initial dragging direction
         if (activeRotationAxis == RotationAxis.None)
         {
             Vector2 totalMovement =
@@ -138,10 +146,6 @@ public class CameraMovement : MonoBehaviour
 
         Vector3 pivot = rotationTarget.position;
 
-        // ===================================
-        // HORIZONTAL ROTATION ONLY
-        // ===================================
-
         if (activeRotationAxis == RotationAxis.Horizontal)
         {
             transform.RotateAround(
@@ -150,15 +154,9 @@ public class CameraMovement : MonoBehaviour
                 mouseDelta.x * rotationSpeed
             );
         }
-
-        // ===================================
-        // VERTICAL ROTATION ONLY
-        // ===================================
-
         else if (activeRotationAxis == RotationAxis.Vertical)
         {
-            Vector3 offset =
-                transform.position - pivot;
+            Vector3 offset = transform.position - pivot;
 
             float horizontalDistance =
                 new Vector2(offset.x, offset.z).magnitude;
@@ -174,31 +172,34 @@ public class CameraMovement : MonoBehaviour
                 maxVerticalAngle
             );
 
-            float angleChange =
-                desiredAngle - currentAngle;
+            float distance = offset.magnitude;
 
-            Vector3 horizontalDirection = new Vector3(
-                offset.x,
-                0f,
-                offset.z
-            );
+            float angleRad = desiredAngle * Mathf.Deg2Rad;
 
-            if (horizontalDirection.sqrMagnitude > 0.000001f)
-            {
-                Vector3 orbitRight = Vector3.Cross(
-                    Vector3.up,
-                    horizontalDirection.normalized
-                ).normalized;
+            Vector3 horizontalDirection =
+                new Vector3(offset.x, 0f, offset.z).normalized;
 
-                transform.RotateAround(
-                    pivot,
-                    orbitRight,
-                    -angleChange
-                );
-            }
+            Vector3 newOffset =
+                horizontalDirection *
+                (Mathf.Cos(angleRad) * distance);
+
+            newOffset.y = Mathf.Sin(angleRad) * distance;
+
+            transform.position = pivot + newOffset;
         }
 
-        lastMousePosition = currentMousePosition;
+       // Always look towards the rotation target after orbiting
+Vector3 lookDirection = rotationTarget.position - transform.position;
+
+if (lookDirection.sqrMagnitude > 0.000001f)
+{
+    transform.rotation = Quaternion.LookRotation(
+        lookDirection,
+        Vector3.up
+    );
+}
+
+lastMousePosition = currentMousePosition;
     }
 
     void HandleZoom()
@@ -211,15 +212,57 @@ public class CameraMovement : MonoBehaviour
         if (cam != null && cam.orthographic)
         {
             cam.orthographicSize = Mathf.Clamp(
-                cam.orthographicSize - scroll * zoomSpeed * 0.01f,
+                cam.orthographicSize -
+                scroll * zoomSpeed * 0.01f,
                 minZoom,
                 maxZoom
             );
         }
-        else
+        else if (rotationTarget != null)
         {
-            transform.position +=
-                transform.forward * scroll * zoomSpeed * 0.01f;
+            Vector3 direction =
+                (transform.position -
+                 rotationTarget.position).normalized;
+
+            float distance = Vector3.Distance(
+                transform.position,
+                rotationTarget.position
+            );
+
+            float newDistance = Mathf.Clamp(
+                distance - scroll * zoomSpeed * 0.01f,
+                minZoom,
+                maxZoom
+            );
+
+            transform.position =
+                rotationTarget.position +
+                direction * newDistance;
+        }
+    }
+
+    void ClampPosition()
+    {
+        Vector3 position = transform.position;
+
+        position.x = Mathf.Clamp(position.x, minX, maxX);
+        position.z = Mathf.Clamp(position.z, minZ, maxZ);
+
+        transform.position = position;
+    }
+
+    void RemoveTilt()
+    {
+        Vector3 forward = transform.forward;
+
+        if (forward.sqrMagnitude > 0.000001f &&
+            Vector3.Cross(Vector3.up, forward).sqrMagnitude
+            > 0.000001f)
+        {
+            transform.rotation = Quaternion.LookRotation(
+                forward,
+                Vector3.up
+            );
         }
     }
 }

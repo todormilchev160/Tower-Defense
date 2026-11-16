@@ -115,4 +115,9 @@ public class SceneLoader : MonoBehaviour
         color.a = alpha;
         fadeImage.color = color;
     }
+    public void QuitGame()
+{
+    Debug.Log("Quitting Game...");
+    Application.Quit();
+}
 }
