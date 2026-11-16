@@ -436,6 +436,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7556968088604506064}
     m_Modifications:
+    - target: {fileID: 1177270981708540142, guid: 248930af80154554b814b3294ee6f63b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1312037011173741624, guid: 248930af80154554b814b3294ee6f63b, type: 3}
       propertyPath: sellText
       value: 
@@ -642,7 +646,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ButtonHover
   objectToActivate: {fileID: 0}
-  prefabToBeSpawned: {fileID: 0}
 --- !u!224 &4814069663623620231 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8321309326419317617, guid: 248930af80154554b814b3294ee6f63b, type: 3}
