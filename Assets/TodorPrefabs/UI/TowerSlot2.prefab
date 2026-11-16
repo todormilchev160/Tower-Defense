@@ -62,6 +62,8 @@ MonoBehaviour:
   bombTowerText: {fileID: 6570658748713973123}
   upgradeText: {fileID: 7030818215585788916}
   sellText: {fileID: 4332641725353330980}
+  noMoneyText: {fileID: 0}
+  troopText: {fileID: 0}
   rallyPointButton: {fileID: 2031356776287145921}
   archerTowers:
   - {fileID: 3232792351999903638, guid: 6b26eed7d8644e24c86cb87dfeffc12e, type: 3}
@@ -71,6 +73,7 @@ MonoBehaviour:
   - {fileID: 2678849289999552043, guid: 608994b4f25ad1c42ac41f7d66c5410b, type: 3}
   - {fileID: 2678849289999552043, guid: 75de388cfd7e27840a085fecd0ad0226, type: 3}
   - {fileID: 2678849289999552043, guid: a2bebc0dccdc63941a89aacd7dc3b128, type: 3}
+  troopTowers: []
   bombTowers:
   - {fileID: 3232792351999903638, guid: 93c978e5dd8062e4fac0a23156526be3, type: 3}
   - {fileID: 3232792351999903638, guid: f8f22c554ec92bc45b7bbbfd5c6dabc0, type: 3}
@@ -79,11 +82,14 @@ MonoBehaviour:
   archerPrice: 70
   magicPrice: 100
   bombPrice: 120
+  troopPrice: 0
   archerUpgradePrice: 50
   bombUpgradePrice: 150
   magicUpgradePrice: 100
+  troopUpgradePrice: 0
   archerSellPrice: 80
   bombSellPrice: 240
+  troopSellPrice: 0
   magicSellPrice: 160
   priceIncreaseAfterUgrade: 50
 --- !u!114 &3939855821883971576
@@ -147,7 +153,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &3401158600761520548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,6 +278,10 @@ PrefabInstance:
     - target: {fileID: 3741437510430956355, guid: 248930af80154554b814b3294ee6f63b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3995827928989937767, guid: 248930af80154554b814b3294ee6f63b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4584508315240113368, guid: 248930af80154554b814b3294ee6f63b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target

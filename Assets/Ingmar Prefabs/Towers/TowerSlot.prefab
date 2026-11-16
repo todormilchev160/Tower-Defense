@@ -938,7 +938,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &5405562342762324089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -977,6 +977,8 @@ MonoBehaviour:
   bombTowerText: {fileID: 0}
   upgradeText: {fileID: 0}
   sellText: {fileID: 0}
+  noMoneyText: {fileID: 0}
+  troopText: {fileID: 0}
   rallyPointButton: {fileID: 0}
   archerTowers:
   - {fileID: 3232792351999903638, guid: 6b26eed7d8644e24c86cb87dfeffc12e, type: 3}
@@ -986,6 +988,7 @@ MonoBehaviour:
   - {fileID: 2678849289999552043, guid: 608994b4f25ad1c42ac41f7d66c5410b, type: 3}
   - {fileID: 2678849289999552043, guid: 75de388cfd7e27840a085fecd0ad0226, type: 3}
   - {fileID: 2678849289999552043, guid: a2bebc0dccdc63941a89aacd7dc3b128, type: 3}
+  troopTowers: []
   bombTowers:
   - {fileID: 0}
   - {fileID: 0}
@@ -994,11 +997,14 @@ MonoBehaviour:
   archerPrice: 100
   magicPrice: 200
   bombPrice: 300
+  troopPrice: 0
   archerUpgradePrice: 50
   bombUpgradePrice: 150
   magicUpgradePrice: 100
+  troopUpgradePrice: 0
   archerSellPrice: 80
   bombSellPrice: 240
+  troopSellPrice: 0
   magicSellPrice: 160
   priceIncreaseAfterUgrade: 50
 --- !u!1 &5783116733166489867

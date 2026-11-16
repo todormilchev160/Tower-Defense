@@ -277,10 +277,10 @@ GameObject:
   - component: {fileID: 4711379639874773927}
   - component: {fileID: 2265909077724198099}
   - component: {fileID: 6328083443125927003}
-  - component: {fileID: 2770559634751900350}
   - component: {fileID: 5987076761869410117}
   - component: {fileID: -730345763526173280}
   - component: {fileID: 3889334038857041398}
+  - component: {fileID: 4696692800492674748}
   m_Layer: 3
   m_Name: Goblin
   m_TagString: Enemy
@@ -298,7 +298,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.08, y: 2.93, z: 22.99}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3838735236420061615}
@@ -377,7 +377,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 8
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -394,7 +394,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 605666533674246333}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.2
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -432,34 +432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e8fb8a417d043a488d1caa80fc9d097, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyDamageBase
-  damageDealtOnBase: 10
---- !u!54 &2770559634751900350
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 605666533674246333}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 8
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  damageDealtOnBase: 2
 --- !u!114 &5987076761869410117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -474,7 +447,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   maxHealth: 10
   isLastEnemy: 0
-  amountOfMoney: 10
+  amountOfMoney: 20
   healthbarFill: {fileID: 1445252073108139028}
   damageText: {fileID: 2558749157472531735}
   damagefeedbacktime: 1
@@ -491,9 +464,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c20ed264f324b7f48b8fcb46c977fd93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyCombat
-  damage: 1
+  damage: 5
   attackInterval: 1
-  animator: {fileID: 3889334038857041398}
+  barricadeDetectionRange: 5
+  barricadeAttackDistance: 2
+  barricadeDamage: 5
+  barricadeAttackInterval: 1
+  animator: {fileID: 8676941879701166690}
 --- !u!95 &3889334038857041398
 Animator:
   serializedVersion: 7
@@ -516,6 +493,33 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!54 &4696692800492674748
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 605666533674246333}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1053708213700355643
 GameObject:
   m_ObjectHideFlags: 0
@@ -1592,7 +1596,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8311099349525784115}
-  - component: {fileID: 5380731251874181237}
+  - component: {fileID: 8676941879701166690}
   m_Layer: 0
   m_Name: Goblin
   m_TagString: Untagged
@@ -1618,7 +1622,7 @@ Transform:
   - {fileID: 3189079981726638011}
   m_Father: {fileID: 3838735236420061615}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &5380731251874181237
+--- !u!95 &8676941879701166690
 Animator:
   serializedVersion: 7
   m_ObjectHideFlags: 0

@@ -20,7 +20,7 @@ public class EnemyCombat : MonoBehaviour
 
 
 
-    private Animator animator;
+    public Animator animator;
 
 
     private NavMeshAgent agent;
@@ -52,7 +52,6 @@ public class EnemyCombat : MonoBehaviour
 
         enemyHealth =
             GetComponent<EnemyHealth>();
-            animator=GetComponentInChildren<Animator>();
     }
 
     void Update()
@@ -132,8 +131,7 @@ public class EnemyCombat : MonoBehaviour
         {
             if (animator != null)
             {
-                Debug.Log("attaoy");
-                animator.SetTrigger("Attack");
+                animator.SetBool("Attack",true);
             }
 
 
@@ -164,6 +162,7 @@ public class EnemyCombat : MonoBehaviour
 
         engaged =
             false;
+            animator.SetBool("Attack",false);
 
 
         StopAllCoroutines();

@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.UI;
 public class BaseHealth : MonoBehaviour
 {
+    public Image healthbar;
     private float baseHealth;
     public int amountOfHealthIncreasedOnUpgrade;
     [Header("Prices")]
@@ -19,7 +20,7 @@ public class BaseHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(baseHealth);
+        healthbar.fillAmount=baseHealth/maxHealth;
     }
     void OnTriggerEnter(Collider other)
     {

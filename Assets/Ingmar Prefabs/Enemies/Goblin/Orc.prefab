@@ -273,7 +273,6 @@ GameObject:
   - component: {fileID: 4595309402670104187}
   - component: {fileID: 3885567837707676244}
   - component: {fileID: 929801854491143197}
-  - component: {fileID: 1671009051300718680}
   - component: {fileID: 4711379639874773927}
   - component: {fileID: 2265909077724198099}
   - component: {fileID: 6328083443125927003}
@@ -281,6 +280,7 @@ GameObject:
   - component: {fileID: 5987076761869410117}
   - component: {fileID: -730345763526173280}
   - component: {fileID: 3889334038857041398}
+  - component: {fileID: 3591519655594955360}
   m_Layer: 3
   m_Name: Orc
   m_TagString: Enemy
@@ -298,7 +298,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.08, y: 2.93, z: 22.99}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3838735236420061615}
@@ -362,29 +362,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &1671009051300718680
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 605666533674246333}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 8
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!195 &4711379639874773927
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -394,7 +371,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 605666533674246333}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.2
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -455,8 +432,8 @@ Rigidbody:
     m_Bits: 8
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -493,7 +470,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyCombat
   damage: 10
   attackInterval: 2
-  animator: {fileID: 3889334038857041398}
+  barricadeDetectionRange: 5
+  barricadeAttackDistance: 2
+  barricadeDamage: 5
+  barricadeAttackInterval: 1
 --- !u!95 &3889334038857041398
 Animator:
   serializedVersion: 7
@@ -516,6 +496,29 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!136 &3591519655594955360
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 605666533674246333}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.49999997
+  m_Height: 1.9999999
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1053708213700355643
 GameObject:
   m_ObjectHideFlags: 0

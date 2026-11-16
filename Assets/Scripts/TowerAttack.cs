@@ -1,8 +1,9 @@
+
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class TowerAttack : MonoBehaviour
+public class TroopAttack : MonoBehaviour
 {
     public enum ProjectileType
     {
@@ -10,9 +11,11 @@ public class TowerAttack : MonoBehaviour
         Magic,
         Bomb
     }
-[Header("Bomb Tower Rotation")]
-public Transform towerTop;
-public float rotationSpeed = 5f;
+
+    [Header("Rotation")]
+    public Transform troopModel;
+    public float rotationSpeed = 5f;
+
     [Header("Targeting")]
     public Transform targetPoint;
     public string enemyTag = "Enemy";
@@ -22,51 +25,89 @@ public float rotationSpeed = 5f;
     public GameObject projectilePrefab;
     public Transform firePoint;
     public float fireRate = 1f;
-    public float fireDelay=1;
+    public float fireDelay = 1f;
     public Animator animator;
 
-    [Header("Projectile Script")]
+    [Header("Projectile Type")]
     public ProjectileType projectileType;
+
+    [Header("Model Rotation Offset")]
+    [SerializeField] private float modelRotationOffset = 0f;
 
     private Transform currentTarget;
     private float nextFireTime;
+    private bool isShooting;
 
-void Update()
-{
-    FindClosestEnemy();
-
-    // Only rotate the Bomb Tower
-    if (projectileType == ProjectileType.Bomb)
+    void Update()
     {
-        RotateBombTower();
-    }
+        FindClosestEnemy();
 
-    if (currentTarget != null && Time.time >= nextFireTime)
-    {
-        StartCoroutine(Shoot());
-        nextFireTime = Time.time + 1f / fireRate;
+        if (currentTarget == null)
+            return;
+
+        RotateTowardsEnemy();
+
+        Transform objectToRotate =
+            troopModel != null ? troopModel : transform;
+
+        Vector3 direction =
+            currentTarget.position - objectToRotate.position;
+
+        direction.y = 0f;
+
+        if (direction.sqrMagnitude < 0.001f)
+            return;
+
+        Quaternion targetRotation =
+            Quaternion.LookRotation(direction);
+
+        targetRotation *= Quaternion.Euler(
+            0f,
+            modelRotationOffset,
+            0f
+        );
+
+        float angle = Quaternion.Angle(
+            objectToRotate.rotation,
+            targetRotation
+        );
+
+        if (!isShooting &&
+            Time.time >= nextFireTime &&
+            angle <= 10f)
+        {
+            StartCoroutine(Shoot());
+
+            nextFireTime =
+                Time.time + 1f / Mathf.Max(fireRate, 0.01f);
+        }
     }
-}
 
     void FindClosestEnemy()
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
+        GameObject[] enemies =
+            GameObject.FindGameObjectsWithTag(enemyTag);
 
         float closestDistanceToPoint = Mathf.Infinity;
         Transform closestEnemy = null;
 
+        Vector3 referencePosition =
+            targetPoint != null
+            ? targetPoint.position
+            : transform.position;
+
         foreach (GameObject enemy in enemies)
         {
-            float distanceFromTower = Vector3.Distance(
+            float distanceFromTroop = Vector3.Distance(
                 transform.position,
                 enemy.transform.position
             );
 
-            if (distanceFromTower > attackRange)
+            if (distanceFromTroop > attackRange)
                 continue;
 
             float distanceToPoint = Vector3.Distance(
-                targetPoint.position,
+                referencePosition,
                 enemy.transform.position
             );
 
@@ -80,12 +121,66 @@ void Update()
         currentTarget = closestEnemy;
     }
 
-     IEnumerator Shoot()
+    void RotateTowardsEnemy()
     {
         if (currentTarget == null)
+            return;
+
+        Transform objectToRotate =
+            troopModel != null ? troopModel : transform;
+
+        Vector3 direction =
+            currentTarget.position - objectToRotate.position;
+
+        direction.y = 0f;
+
+        if (direction.sqrMagnitude < 0.001f)
+            return;
+
+        Quaternion targetRotation =
+            Quaternion.LookRotation(direction);
+
+        targetRotation *= Quaternion.Euler(
+            0f,
+            modelRotationOffset,
+            0f
+        );
+
+        objectToRotate.rotation = Quaternion.RotateTowards(
+            objectToRotate.rotation,
+            targetRotation,
+            rotationSpeed * Time.deltaTime
+        );
+    }
+
+    IEnumerator Shoot()
+    {
+        isShooting = true;
+
+        if (currentTarget == null ||
+            projectilePrefab == null ||
+            firePoint == null)
+        {
+            isShooting = false;
             yield break;
-        animator.SetBool("IsFiring",true);
+        }
+
+        Transform shotTarget = currentTarget;
+
+        if (animator != null)
+            animator.SetBool("IsFiring", true);
+
         yield return new WaitForSeconds(fireDelay);
+
+        if (shotTarget == null)
+        {
+            if (animator != null)
+                animator.SetBool("IsFiring", false);
+
+            isShooting = false;
+            yield break;
+        }
+
         GameObject projectile = Instantiate(
             projectilePrefab,
             firePoint.position,
@@ -94,92 +189,166 @@ void Update()
 
         switch (projectileType)
         {
+            // ========================
+            // BOMB
+            // ========================
+
             case ProjectileType.Bomb:
+            {
+                Bomb bomb = projectile.GetComponent<Bomb>();
 
-    Bomb bomb = projectile.GetComponent<Bomb>();
+                if (bomb != null)
+                {
+                    Vector3 predictedPosition =
+                        PredictEnemyPosition(
+                            shotTarget,
+                            bomb.TravelTime
+                        );
 
-    if (bomb != null)
-    {
-        Vector3 predictedPosition = currentTarget.position;
+                    bomb.SetTargetPosition(predictedPosition);
+                }
 
-        NavMeshAgent enemyAgent =
-            currentTarget.GetComponent<NavMeshAgent>();
-
-        if (enemyAgent != null)
-        {
-            predictedPosition =
-                currentTarget.position +
-                enemyAgent.velocity * bomb.TravelTime;
-        }
-
-        bomb.SetTargetPosition(predictedPosition);
-    }
-
-    break;
+                break;
+            }
 
             // ========================
             // ARROW
             // ========================
 
             case ProjectileType.Arrow:
-
+            {
                 Arrow arrow = projectile.GetComponent<Arrow>();
 
                 if (arrow != null)
                 {
-                    arrow.SetTarget(currentTarget);
+                    arrow.SetTarget(shotTarget);
                 }
 
                 break;
-
+            }
 
             // ========================
             // MAGIC
             // ========================
 
             case ProjectileType.Magic:
-
+            {
                 Magic magic = projectile.GetComponent<Magic>();
 
                 if (magic != null)
                 {
-                    Vector3 predictedPosition = currentTarget.position;
+                    // Get the center of the enemy's collider
+                    Collider enemyCollider =
+                        shotTarget.GetComponentInChildren<Collider>();
 
-                    NavMeshAgent enemyAgent =
-                        currentTarget.GetComponent<NavMeshAgent>();
+                    Vector3 targetOffset =
+                        enemyCollider != null
+                        ? enemyCollider.bounds.center - shotTarget.position
+                        : Vector3.up * 0.5f;
 
-                    if (enemyAgent != null)
+                    Vector3 predictedPosition =
+                        shotTarget.position;
+
+                    // Iteratively calculate where the enemy
+                    // will be when the projectile arrives
+                    for (int i = 0; i < 5; i++)
                     {
-                        for (int i = 0; i < 4; i++)
-                        {
-                            float distance = Vector3.Distance(
-                                firePoint.position,
-                                predictedPosition
-                            );
+                        Vector3 aimPoint =
+                            predictedPosition + targetOffset;
 
-                            float travelTime = CalculateTravelTime(
-                                distance,
-                                magic.startingSpeed,
-                                magic.acceleration,
-                                magic.maxSpeed
-                            );
+                        float distance = Vector3.Distance(
+                            firePoint.position,
+                            aimPoint
+                        );
 
-                            predictedPosition =
-                                currentTarget.position +
-                                enemyAgent.velocity * travelTime;
-                        }
+                        float travelTime = CalculateTravelTime(
+                            distance,
+                            magic.startingSpeed,
+                            magic.acceleration,
+                            magic.maxSpeed
+                        );
+
+                        predictedPosition = PredictEnemyPosition(
+                            shotTarget,
+                            travelTime
+                        );
                     }
 
+                    Vector3 finalAimPoint =
+                        predictedPosition + targetOffset;
+
                     Vector3 direction =
-                        (predictedPosition - firePoint.position).normalized;
+                        (finalAimPoint - firePoint.position).normalized;
 
                     magic.SetDirection(direction);
                 }
 
                 break;
+            }
         }
-        animator.SetBool("IsFiring",false);
+
+        if (animator != null)
+            animator.SetBool("IsFiring", false);
+
+        isShooting = false;
     }
+
+    // ========================
+    // NAVMESH PATH PREDICTION
+    // ========================
+
+    Vector3 PredictEnemyPosition(
+        Transform enemy,
+        float travelTime)
+    {
+        NavMeshAgent agent =
+            enemy.GetComponent<NavMeshAgent>();
+
+        if (agent == null ||
+            !agent.enabled ||
+            !agent.isOnNavMesh ||
+            !agent.hasPath ||
+            agent.isStopped)
+        {
+            return enemy.position;
+        }
+
+        float remainingDistance =
+            agent.speed * travelTime;
+
+        Vector3 position = enemy.position;
+
+        Vector3[] corners = agent.path.corners;
+
+        foreach (Vector3 corner in corners)
+        {
+            float distance = Vector3.Distance(
+                position,
+                corner
+            );
+
+            if (distance <= 0.001f)
+                continue;
+
+            if (remainingDistance <= distance)
+            {
+                return Vector3.MoveTowards(
+                    position,
+                    corner,
+                    remainingDistance
+                );
+            }
+
+            remainingDistance -= distance;
+            position = corner;
+        }
+
+        return position;
+    }
+
+    // ========================
+    // PROJECTILE TRAVEL TIME
+    // ========================
 
     float CalculateTravelTime(
         float distance,
@@ -187,30 +356,24 @@ void Update()
         float acceleration,
         float maxSpeed)
     {
-        if (acceleration <= 0f)
+        startingSpeed = Mathf.Max(startingSpeed, 0.01f);
+        maxSpeed = Mathf.Max(maxSpeed, 0.01f);
+
+        if (acceleration <= 0f || startingSpeed >= maxSpeed)
         {
-            return distance / Mathf.Max(startingSpeed, 0.01f);
+            return distance / Mathf.Min(startingSpeed, maxSpeed);
         }
 
         float timeToMaxSpeed =
             (maxSpeed - startingSpeed) / acceleration;
 
-        timeToMaxSpeed = Mathf.Max(0f, timeToMaxSpeed);
-
-        // How far it travels while accelerating
         float distanceWhileAccelerating =
             startingSpeed * timeToMaxSpeed +
             0.5f * acceleration *
             timeToMaxSpeed * timeToMaxSpeed;
 
-        // Target is reached BEFORE max speed
         if (distance <= distanceWhileAccelerating)
         {
-            // Solve:
-            //
-            // distance = startingSpeed * t
-            //          + 0.5 * acceleration * t²
-
             float discriminant =
                 startingSpeed * startingSpeed +
                 2f * acceleration * distance;
@@ -220,44 +383,30 @@ void Update()
                 / acceleration;
         }
 
-        else
-        {
-            float remainingDistance =
-                distance - distanceWhileAccelerating;
+        float remainingDistance =
+            distance - distanceWhileAccelerating;
 
-            float timeAtMaxSpeed =
-                remainingDistance / maxSpeed;
-
-            return timeToMaxSpeed + timeAtMaxSpeed;
-        }
+        return timeToMaxSpeed +
+               remainingDistance / maxSpeed;
     }
 
     void OnDrawGizmosSelected()
     {
+        Gizmos.color = Color.red;
+
         Gizmos.DrawWireSphere(
             transform.position,
             attackRange
         );
     }
-    void RotateBombTower()
+    void Start()
 {
-    if (towerTop == null || currentTarget == null)
-        return;
+    TroopRangeVisualizer rangeVisualizer =
+        GetComponent<TroopRangeVisualizer>();
 
-    Vector3 direction = currentTarget.position - towerTop.position;
-
-    // Prevent the tower from tilting up or down
-    direction.y = 0f;
-
-    if (direction.sqrMagnitude < 0.001f)
-        return;
-
-    Quaternion targetRotation = Quaternion.LookRotation(direction);
-
-    towerTop.rotation = Quaternion.Slerp(
-        towerTop.rotation,
-        targetRotation,
-        rotationSpeed * Time.deltaTime
-    );
+    if (rangeVisualizer != null)
+    {
+        rangeVisualizer.SetRange(attackRange);
+    }
 }
 }
