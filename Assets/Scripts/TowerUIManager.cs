@@ -28,18 +28,20 @@ public class TowerUIManager : MonoBehaviour
     public int archerPrice;
     public int magicPrice;
     public int bombPrice;
-    public int troopPrice=0;
+    public int troopPrice = 0;
     [Header("Upgrade prices")]
     public int archerUpgradePrice;
     public int bombUpgradePrice;
     public int magicUpgradePrice;
-    public int troopUpgradePrice=0;
+    public int troopUpgradePrice = 0;
+    [Header("Barrack settings")]
+    public int maxbarracks = 1;
     [Header("Sell prices")]
-    public int archerSellPrice=80;
-    public int bombSellPrice=240;
-    public int troopSellPrice=0;
-    public int magicSellPrice=160;
-    public int priceIncreaseAfterUgrade=50;
+    public int archerSellPrice = 80;
+    public int bombSellPrice = 240;
+    public int troopSellPrice = 0;
+    public int magicSellPrice = 160;
+    public int priceIncreaseAfterUgrade = 50;
     private int archerSellPrice2;
     private int magicSellPrice2;
     private int bombSellPrice2;
@@ -48,15 +50,15 @@ public class TowerUIManager : MonoBehaviour
     private int bombUpgradePrice2;
     private int magicUpgradePrice2;
     private int troopUpgradePrice2;
-    private int currentLevel=0;
+    private int currentLevel = 0;
 
     private bool towerUIOpen = false;
-    private bool firstStage=true;
-    private bool secondStage=false;
-    private bool archer=false;
-    private bool magic=false;
-    private bool bomb=false;
-    private bool troop=false;
+    private bool firstStage = true;
+    private bool secondStage = false;
+    private bool archer = false;
+    private bool magic = false;
+    private bool bomb = false;
+    private bool troop = false;
     private GameObject tower;
     private HoverActivation hoverActivation;
     public TextMeshProUGUI upgradePriceText;
@@ -66,48 +68,49 @@ public class TowerUIManager : MonoBehaviour
     public TextMeshProUGUI bombPriceText;
     public TextMeshProUGUI troopPriceText;
     public GameObject cross;
+    public static int currentbarrackscount = 0;
 
     void Start()
     {
-        
-        troopPriceText.text=""+troopPrice;
-        hoverActivation=GetComponentInParent<HoverActivation>();
-        troopUpgradePrice2=troopUpgradePrice;
-        bombUpgradePrice2=bombUpgradePrice;
-        archerUpgradePrice2=archerUpgradePrice;
-        magicUpgradePrice2=magicUpgradePrice;
-        archerSellPrice2=archerSellPrice;
-        magicSellPrice2=magicSellPrice;
-        bombSellPrice2=bombSellPrice;
-        troopSellPrice2=troopSellPrice;
+
+        troopPriceText.text = "" + troopPrice;
+        hoverActivation = GetComponentInParent<HoverActivation>();
+        troopUpgradePrice2 = troopUpgradePrice;
+        bombUpgradePrice2 = bombUpgradePrice;
+        archerUpgradePrice2 = archerUpgradePrice;
+        magicUpgradePrice2 = magicUpgradePrice;
+        archerSellPrice2 = archerSellPrice;
+        magicSellPrice2 = magicSellPrice;
+        bombSellPrice2 = bombSellPrice;
+        troopSellPrice2 = troopSellPrice;
         towerSelectionUI.SetActive(false);
         slotButton.SetActive(true);
-        archerPriceText.text=""+archerPrice;
-        magicPriceText.text=""+magicPrice;
-        bombPriceText.text=""+bombPrice;
+        archerPriceText.text = "" + archerPrice;
+        magicPriceText.text = "" + magicPrice;
+        bombPriceText.text = "" + bombPrice;
     }
 
     void Update()
     {
-         if(archer)
+        if (archer)
         {
-            upgradePriceText.text=""+archerUpgradePrice2;
-            sellPriceText.text=""+archerSellPrice2;
+            upgradePriceText.text = "" + archerUpgradePrice2;
+            sellPriceText.text = "" + archerSellPrice2;
         }
-        if(magic)
+        if (magic)
         {
-            upgradePriceText.text=""+magicUpgradePrice2;
-            sellPriceText.text=""+magicSellPrice2;
+            upgradePriceText.text = "" + magicUpgradePrice2;
+            sellPriceText.text = "" + magicSellPrice2;
         }
-        if(bomb)
+        if (bomb)
         {
-            upgradePriceText.text=""+bombUpgradePrice2;
-            sellPriceText.text=""+bombSellPrice2;
+            upgradePriceText.text = "" + bombUpgradePrice2;
+            sellPriceText.text = "" + bombSellPrice2;
         }
 
         if (!towerUIOpen)
             return;
-       
+
         if (Mouse.current != null &&
             Mouse.current.leftButton.wasPressedThisFrame)
         {
@@ -122,7 +125,7 @@ public class TowerUIManager : MonoBehaviour
     }
     public void ShowTowerUI()
     {
-        HoverActivation.selecting=true;
+        HoverActivation.selecting = true;
         towerSelectionUI.SetActive(true);
         slotButton.SetActive(false);
 
@@ -131,259 +134,260 @@ public class TowerUIManager : MonoBehaviour
 
     public void CloseTowerUI()
     {
-        if(firstStage)
+        if (firstStage)
         {
-        towerSelectionUI.SetActive(false);
-        slotButton.SetActive(true);
-        towerSlot.SetActive(false);
-        towerUIOpen = false;
-        HoverActivation.selecting=false;
+            towerSelectionUI.SetActive(false);
+            slotButton.SetActive(true);
+            towerSlot.SetActive(false);
+            towerUIOpen = false;
+            HoverActivation.selecting = false;
         }
-        if(secondStage)
+        if (secondStage)
         {
-        towerSlot.SetActive(false);
-        HoverActivation.selecting=false;      
-        towerOptions.SetActive(true);
-        towerUI.SetActive(false);
-        towerUIOpen = false;
+            towerSlot.SetActive(false);
+            HoverActivation.selecting = false;
+            towerOptions.SetActive(true);
+            towerUI.SetActive(false);
+            towerUIOpen = false;
         }
     }
 
     public void SpawnMagicTower()
     {
-        if(GameManager.currency<magicPrice)
+        if (GameManager.currency < magicPrice)
         {
             StartCoroutine(NoMoneyTextCoroutine());
             return;
         }
         else
         {
-            GameManager.currency-=magicPrice;
-             magic=true;
+            GameManager.currency -= magicPrice;
+            magic = true;
             SpawnTower(magicTowers[0]);
-            HoverActivation.selecting=false;
+            HoverActivation.selecting = false;
         }
     }
 
     public void SpawnArcherTower()
     {
-        if(GameManager.currency<archerPrice)
+        if (GameManager.currency < archerPrice)
         {
             StartCoroutine(NoMoneyTextCoroutine());
             return;
         }
         else
         {
-            GameManager.currency-=archerPrice;
-            archer=true;
+            GameManager.currency -= archerPrice;
+            archer = true;
             SpawnTower(archerTowers[0]);
-            HoverActivation.selecting=false;
+            HoverActivation.selecting = false;
         }
     }
 
     public void SpawnBombTower()
     {
-        if(GameManager.currency<bombPrice)
+        if (GameManager.currency < bombPrice)
         {
             StartCoroutine(NoMoneyTextCoroutine());
             return;
         }
         else
         {
-            GameManager.currency-=bombPrice;
-            bomb=true;
+            GameManager.currency -= bombPrice;
+            bomb = true;
             SpawnTower(bombTowers[0]);
-            HoverActivation.selecting=false;
+            HoverActivation.selecting = false;
         }
     }
     public void SpawnBarracks()
     {
-                
-        if(GameManager.currency<troopPrice)
+
+        if (GameManager.currency < troopPrice || currentbarrackscount == maxbarracks)
         {
             StartCoroutine(NoMoneyTextCoroutine());
             return;
         }
         else
         {
-            GameManager.currency-=troopPrice;
-            troop=true;
+            currentbarrackscount += 1;
+            GameManager.currency -= troopPrice;
+            troop = true;
             SpawnTower(troopTowers[0]);
         }
     }
-    
-private void SpawnTower(GameObject towerPrefab)
-{
-    if (towerPrefab == null || slotButton == null)
-        return;
 
-    Vector3 spawnPosition = new Vector3(
-        slotButton.transform.position.x,
-        spawnY,
-        slotButton.transform.position.z
-    );
-
-    tower = Instantiate(
-        towerPrefab,
-        spawnPosition,
-        Quaternion.identity
-    );
-
-    // Assign this tower its original TowerSlot
-    TowerHover towerHover = tower.GetComponent<TowerHover>();
-
-    if (towerHover != null)
+    private void SpawnTower(GameObject towerPrefab)
     {
-        towerHover.AssignTowerSlot(towerSlot);
+        if (towerPrefab == null || slotButton == null)
+            return;
+
+        Vector3 spawnPosition = new Vector3(
+            slotButton.transform.position.x,
+            spawnY,
+            slotButton.transform.position.z
+        );
+
+        tower = Instantiate(
+            towerPrefab,
+            spawnPosition,
+            Quaternion.identity
+        );
+
+        // Assign this tower its original TowerSlot
+        TowerHover towerHover = tower.GetComponent<TowerHover>();
+
+        if (towerHover != null)
+        {
+            towerHover.AssignTowerSlot(towerSlot);
+        }
+
+        towerUI.SetActive(false);
+        towerSelectionUI.SetActive(false);
+        towerOptions.SetActive(true);
+
+        firstStage = false;
+        secondStage = true;
     }
-
-    towerUI.SetActive(false);
-    towerSelectionUI.SetActive(false);
-    towerOptions.SetActive(true);
-
-    firstStage = false;
-    secondStage = true;
-}
     public void ShowTowerOptions()
     {
-        HoverActivation.selecting=true;
-        towerUIOpen=true;
+        HoverActivation.selecting = true;
+        towerUIOpen = true;
         towerOptions.SetActive(false);
         towerUI.SetActive(true);
-        if(!troop)
+        if (!troop)
         {
             rallyPointButton.SetActive(false);
         }
     }
     public void SellTower()
     {
-        currentLevel=0;
-        
-      if(magic)
+        currentLevel = 0;
+
+        if (magic)
         {
-            GameManager.currency+=magicSellPrice2;
-            magicSellPrice2=magicSellPrice;
-            magicUpgradePrice2=magicUpgradePrice;
+            GameManager.currency += magicSellPrice2;
+            magicSellPrice2 = magicSellPrice;
+            magicUpgradePrice2 = magicUpgradePrice;
         }
-      else if(archer)
+        else if (archer)
         {
-            GameManager.currency+=archerSellPrice2;
-            archerSellPrice2=archerSellPrice;
-            archerUpgradePrice2=archerUpgradePrice;
+            GameManager.currency += archerSellPrice2;
+            archerSellPrice2 = archerSellPrice;
+            archerUpgradePrice2 = archerUpgradePrice;
         }
-        if(bomb)
+        if (bomb)
         {
-            GameManager.currency+=bombSellPrice2;
-            bombSellPrice2=bombSellPrice;
-            bombUpgradePrice2=bombUpgradePrice;
+            GameManager.currency += bombSellPrice2;
+            bombSellPrice2 = bombSellPrice;
+            bombUpgradePrice2 = bombUpgradePrice;
         }
-        if(troop)
+        if (troop)
         {
-            GameManager.currency+=troopSellPrice2;
-           troopSellPrice2=troopSellPrice;
-            troopUpgradePrice2=troopUpgradePrice;
+            GameManager.currency += troopSellPrice2;
+            troopSellPrice2 = troopSellPrice;
+            troopUpgradePrice2 = troopUpgradePrice;
         }
-      HoverActivation.selecting=false;
-      Destroy(tower);
-      firstStage=true;
-      secondStage=false;
-      slotButton.SetActive(true);
-      towerUI.SetActive(false);
-      bomb=false;
-      magic=false;
-      archer=false;
+        HoverActivation.selecting = false;
+        Destroy(tower);
+        firstStage = true;
+        secondStage = false;
+        slotButton.SetActive(true);
+        towerUI.SetActive(false);
+        bomb = false;
+        magic = false;
+        archer = false;
 
     }
     public void UpgradeTower()
     {
-        if(archer)
+        if (archer)
         {
-            if(GameManager.currency<archerUpgradePrice2)
+            if (GameManager.currency < archerUpgradePrice2)
             {
                 StartCoroutine(NoMoneyTextCoroutine());
                 return;
             }
             else
             {
-                HoverActivation.selecting=false;
-                archerSellPrice2+=archerUpgradePrice*8/10;
-                GameManager.currency-=archerUpgradePrice2;
-                archerUpgradePrice2+=priceIncreaseAfterUgrade;
+                HoverActivation.selecting = false;
+                archerSellPrice2 += archerUpgradePrice * 8 / 10;
+                GameManager.currency -= archerUpgradePrice2;
+                archerUpgradePrice2 += priceIncreaseAfterUgrade;
                 UpgradeArcherTower();
-            } 
+            }
         }
-        if(magic)
+        if (magic)
         {
-            if(GameManager.currency<magicUpgradePrice2)
+            if (GameManager.currency < magicUpgradePrice2)
             {
                 StartCoroutine(NoMoneyTextCoroutine());
                 return;
             }
             else
             {
-                HoverActivation.selecting=false;
-                magicSellPrice2+=magicUpgradePrice*8/10;
-                GameManager.currency-=magicUpgradePrice2;
-                magicUpgradePrice2+=priceIncreaseAfterUgrade;
+                HoverActivation.selecting = false;
+                magicSellPrice2 += magicUpgradePrice * 8 / 10;
+                GameManager.currency -= magicUpgradePrice2;
+                magicUpgradePrice2 += priceIncreaseAfterUgrade;
                 UpgradeMagicTower();
             }
         }
-        if(bomb)
+        if (bomb)
         {
-            if(GameManager.currency < bombUpgradePrice2)
+            if (GameManager.currency < bombUpgradePrice2)
             {
                 StartCoroutine(NoMoneyTextCoroutine());
                 return;
             }
             else
             {
-                HoverActivation.selecting=false;
-                bombSellPrice2+=bombUpgradePrice*8/10;
-                GameManager.currency -=bombUpgradePrice2;
-                bombUpgradePrice2+=priceIncreaseAfterUgrade;
+                HoverActivation.selecting = false;
+                bombSellPrice2 += bombUpgradePrice * 8 / 10;
+                GameManager.currency -= bombUpgradePrice2;
+                bombUpgradePrice2 += priceIncreaseAfterUgrade;
                 UpgradeBombTower();
             }
         }
-        if(troop)
+        if (troop)
         {
-            if(GameManager.currency < troopUpgradePrice2)
+            if (GameManager.currency < troopUpgradePrice2)
             {
                 StartCoroutine(NoMoneyTextCoroutine());
                 return;
             }
             else
             {
-                HoverActivation.selecting=false;
-                troopSellPrice2+=troopUpgradePrice*8/10;
-                GameManager.currency -=troopUpgradePrice2;
-                troopUpgradePrice2+=priceIncreaseAfterUgrade;
-                UpgradeBombTower();
+                HoverActivation.selecting = false;
+                troopSellPrice2 += troopUpgradePrice * 8 / 10;
+                GameManager.currency -= troopUpgradePrice2;
+                troopUpgradePrice2 += priceIncreaseAfterUgrade;
+                UpgradeBarracks();
             }
         }
     }
     private void UpgradeArcherTower()
     {
-        
+
         Destroy(tower);
-        currentLevel+=1;
+        currentLevel += 1;
         SpawnTower(archerTowers[currentLevel]);
     }
     private void UpgradeMagicTower()
     {
         Destroy(tower);
-        currentLevel+=1;
+        currentLevel += 1;
         SpawnTower(magicTowers[currentLevel]);
     }
     private void UpgradeBombTower()
     {
         Destroy(tower);
-        currentLevel+=1;
+        currentLevel += 1;
         SpawnTower(bombTowers[currentLevel]);
     }
     private void UpgradeBarracks()
     {
-         Destroy(tower);
-        currentLevel+=1;
+        Destroy(tower);
+        currentLevel += 1;
         SpawnTower(troopTowers[currentLevel]);
     }
     private IEnumerator NoMoneyTextCoroutine()
@@ -391,13 +395,13 @@ private void SpawnTower(GameObject towerPrefab)
         cross.SetActive(true);
         yield return new WaitForSeconds(0.2f);
         cross.SetActive(false);
-          yield return new WaitForSeconds(0.2f);
-            cross.SetActive(true);
+        yield return new WaitForSeconds(0.2f);
+        cross.SetActive(true);
         yield return new WaitForSeconds(0.2f);
         cross.SetActive(false);
-          yield return new WaitForSeconds(0.2f);
-           cross.SetActive(true);
         yield return new WaitForSeconds(0.2f);
-         cross.SetActive(false);
+        cross.SetActive(true);
+        yield return new WaitForSeconds(0.2f);
+        cross.SetActive(false);
     }
 }

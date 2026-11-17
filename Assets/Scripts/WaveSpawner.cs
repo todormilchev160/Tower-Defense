@@ -1,8 +1,7 @@
-
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
 public class WaveSpawner : MonoBehaviour
 {
     [System.Serializable]
@@ -25,8 +24,9 @@ public class WaveSpawner : MonoBehaviour
     public Transform leftSpawnPoint;
     public Transform rightSpawnPoint;
 
-    [Header("ClockVisualisation")]
+    [Header("UI elements")]
     public Image clock;
+    public TextMeshProUGUI wavecounter;
 
     [Header("Object To Disable")]
     [SerializeField] private GameObject objectToDisable;
@@ -36,6 +36,7 @@ public class WaveSpawner : MonoBehaviour
     private int currentWave = 0;
     private bool clockrunout = false;
     private bool clockticking = false;
+    private int wavenumber = 1;
 
     void Start()
     {
@@ -46,7 +47,7 @@ public class WaveSpawner : MonoBehaviour
 
     IEnumerator StartWaves()
     {
-        // Disable assigned GameObject when waves start
+
         if (objectToDisable != null)
         {
             objectToDisable.SetActive(false);
@@ -66,6 +67,7 @@ public class WaveSpawner : MonoBehaviour
             );
 
             currentWave++;
+            wavenumber++;
         }
     }
 
@@ -99,6 +101,7 @@ public class WaveSpawner : MonoBehaviour
 
     void Update()
     {
+        wavecounter.text = "Wave" + wavenumber;
         clock.fillAmount = clocktime / maxClockTime;
 
         if (clocktime == 0)

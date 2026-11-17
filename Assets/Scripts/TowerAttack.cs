@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class TroopAttack : MonoBehaviour
+public class TowerAttack : MonoBehaviour
 {
     public enum ProjectileType
     {
@@ -12,9 +12,18 @@ public class TroopAttack : MonoBehaviour
         Bomb
     }
 
+    public enum FacingDirection
+    {
+        ZForward,
+        XForward
+    }
+
     [Header("Rotation")]
     public Transform troopModel;
-    public float rotationSpeed = 5f;
+    public float rotationSpeed = 180f;
+
+    [Header("Facing Direction")]
+    public FacingDirection facingDirection = FacingDirection.ZForward;
 
     [Header("Targeting")]
     public Transform targetPoint;
@@ -31,12 +40,20 @@ public class TroopAttack : MonoBehaviour
     [Header("Projectile Type")]
     public ProjectileType projectileType;
 
-    [Header("Model Rotation Offset")]
-    [SerializeField] private float modelRotationOffset = 0f;
-
     private Transform currentTarget;
     private float nextFireTime;
     private bool isShooting;
+
+    void Start()
+    {
+        TroopRangeVisualizer rangeVisualizer =
+            GetComponent<TroopRangeVisualizer>();
+
+        if (rangeVisualizer != null)
+        {
+            rangeVisualizer.SetRange(attackRange);
+        }
+    }
 
     void Update()
     {
@@ -59,13 +76,7 @@ public class TroopAttack : MonoBehaviour
             return;
 
         Quaternion targetRotation =
-            Quaternion.LookRotation(direction);
-
-        targetRotation *= Quaternion.Euler(
-            0f,
-            modelRotationOffset,
-            0f
-        );
+            GetTargetRotation(direction);
 
         float angle = Quaternion.Angle(
             objectToRotate.rotation,
@@ -81,6 +92,45 @@ public class TroopAttack : MonoBehaviour
             nextFireTime =
                 Time.time + 1f / Mathf.Max(fireRate, 0.01f);
         }
+    }
+
+    Quaternion GetTargetRotation(Vector3 direction)
+    {
+        Quaternion targetRotation =
+            Quaternion.LookRotation(direction, Vector3.up);
+
+        if (facingDirection == FacingDirection.XForward)
+        {
+            targetRotation *= Quaternion.Euler(0f, -90f, 0f);
+        }
+
+        return targetRotation;
+    }
+
+    void RotateTowardsEnemy()
+    {
+        if (currentTarget == null)
+            return;
+
+        Transform objectToRotate =
+            troopModel != null ? troopModel : transform;
+
+        Vector3 direction =
+            currentTarget.position - objectToRotate.position;
+
+        direction.y = 0f;
+
+        if (direction.sqrMagnitude < 0.001f)
+            return;
+
+        Quaternion targetRotation =
+            GetTargetRotation(direction);
+
+        objectToRotate.rotation = Quaternion.RotateTowards(
+            objectToRotate.rotation,
+            targetRotation,
+            rotationSpeed * Time.deltaTime
+        );
     }
 
     void FindClosestEnemy()
@@ -121,38 +171,6 @@ public class TroopAttack : MonoBehaviour
         currentTarget = closestEnemy;
     }
 
-    void RotateTowardsEnemy()
-    {
-        if (currentTarget == null)
-            return;
-
-        Transform objectToRotate =
-            troopModel != null ? troopModel : transform;
-
-        Vector3 direction =
-            currentTarget.position - objectToRotate.position;
-
-        direction.y = 0f;
-
-        if (direction.sqrMagnitude < 0.001f)
-            return;
-
-        Quaternion targetRotation =
-            Quaternion.LookRotation(direction);
-
-        targetRotation *= Quaternion.Euler(
-            0f,
-            modelRotationOffset,
-            0f
-        );
-
-        objectToRotate.rotation = Quaternion.RotateTowards(
-            objectToRotate.rotation,
-            targetRotation,
-            rotationSpeed * Time.deltaTime
-        );
-    }
-
     IEnumerator Shoot()
     {
         isShooting = true;
@@ -189,102 +207,87 @@ public class TroopAttack : MonoBehaviour
 
         switch (projectileType)
         {
-            // ========================
-            // BOMB
-            // ========================
-
             case ProjectileType.Bomb:
-            {
-                Bomb bomb = projectile.GetComponent<Bomb>();
-
-                if (bomb != null)
                 {
-                    Vector3 predictedPosition =
-                        PredictEnemyPosition(
-                            shotTarget,
-                            bomb.TravelTime
-                        );
+                    Bomb bomb = projectile.GetComponent<Bomb>();
 
-                    bomb.SetTargetPosition(predictedPosition);
-                }
-
-                break;
-            }
-
-            // ========================
-            // ARROW
-            // ========================
-
-            case ProjectileType.Arrow:
-            {
-                Arrow arrow = projectile.GetComponent<Arrow>();
-
-                if (arrow != null)
-                {
-                    arrow.SetTarget(shotTarget);
-                }
-
-                break;
-            }
-
-            // ========================
-            // MAGIC
-            // ========================
-
-            case ProjectileType.Magic:
-            {
-                Magic magic = projectile.GetComponent<Magic>();
-
-                if (magic != null)
-                {
-                    // Get the center of the enemy's collider
-                    Collider enemyCollider =
-                        shotTarget.GetComponentInChildren<Collider>();
-
-                    Vector3 targetOffset =
-                        enemyCollider != null
-                        ? enemyCollider.bounds.center - shotTarget.position
-                        : Vector3.up * 0.5f;
-
-                    Vector3 predictedPosition =
-                        shotTarget.position;
-
-                    // Iteratively calculate where the enemy
-                    // will be when the projectile arrives
-                    for (int i = 0; i < 5; i++)
+                    if (bomb != null)
                     {
-                        Vector3 aimPoint =
-                            predictedPosition + targetOffset;
+                        Vector3 predictedPosition =
+                            PredictEnemyPosition(
+                                shotTarget,
+                                bomb.TravelTime
+                            );
 
-                        float distance = Vector3.Distance(
-                            firePoint.position,
-                            aimPoint
-                        );
-
-                        float travelTime = CalculateTravelTime(
-                            distance,
-                            magic.startingSpeed,
-                            magic.acceleration,
-                            magic.maxSpeed
-                        );
-
-                        predictedPosition = PredictEnemyPosition(
-                            shotTarget,
-                            travelTime
-                        );
+                        bomb.SetTargetPosition(predictedPosition);
                     }
 
-                    Vector3 finalAimPoint =
-                        predictedPosition + targetOffset;
-
-                    Vector3 direction =
-                        (finalAimPoint - firePoint.position).normalized;
-
-                    magic.SetDirection(direction);
+                    break;
                 }
 
-                break;
-            }
+            case ProjectileType.Arrow:
+                {
+                    Arrow arrow = projectile.GetComponent<Arrow>();
+
+                    if (arrow != null)
+                    {
+                        arrow.SetTarget(shotTarget);
+                    }
+
+                    break;
+                }
+
+            case ProjectileType.Magic:
+                {
+                    Magic magic = projectile.GetComponent<Magic>();
+
+                    if (magic != null)
+                    {
+                        Collider enemyCollider =
+                            shotTarget.GetComponentInChildren<Collider>();
+
+                        Vector3 targetOffset =
+                            enemyCollider != null
+                            ? enemyCollider.bounds.center - shotTarget.position
+                            : Vector3.up * 0.5f;
+
+                        Vector3 predictedPosition =
+                            shotTarget.position;
+
+                        for (int i = 0; i < 5; i++)
+                        {
+                            Vector3 aimPoint =
+                                predictedPosition + targetOffset;
+
+                            float distance = Vector3.Distance(
+                                firePoint.position,
+                                aimPoint
+                            );
+
+                            float travelTime = CalculateTravelTime(
+                                distance,
+                                magic.startingSpeed,
+                                magic.acceleration,
+                                magic.maxSpeed
+                            );
+
+                            predictedPosition = PredictEnemyPosition(
+                                shotTarget,
+                                travelTime
+                            );
+                        }
+
+                        Vector3 finalAimPoint =
+                            predictedPosition + targetOffset;
+
+                        Vector3 direction =
+                            (finalAimPoint - firePoint.position).normalized;
+
+                        magic.SetDirection(direction);
+                    }
+
+                    break;
+                }
         }
 
         if (animator != null)
@@ -292,10 +295,6 @@ public class TroopAttack : MonoBehaviour
 
         isShooting = false;
     }
-
-    // ========================
-    // NAVMESH PATH PREDICTION
-    // ========================
 
     Vector3 PredictEnemyPosition(
         Transform enemy,
@@ -346,10 +345,6 @@ public class TroopAttack : MonoBehaviour
         return position;
     }
 
-    // ========================
-    // PROJECTILE TRAVEL TIME
-    // ========================
-
     float CalculateTravelTime(
         float distance,
         float startingSpeed,
@@ -399,14 +394,4 @@ public class TroopAttack : MonoBehaviour
             attackRange
         );
     }
-    void Start()
-{
-    TroopRangeVisualizer rangeVisualizer =
-        GetComponent<TroopRangeVisualizer>();
-
-    if (rangeVisualizer != null)
-    {
-        rangeVisualizer.SetRange(attackRange);
-    }
-}
 }

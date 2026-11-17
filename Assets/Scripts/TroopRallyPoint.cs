@@ -36,10 +36,10 @@ public class TroopRallyPoint : MonoBehaviour
 
     private Barracks currentBarracks;
 
-public bool IsSelectingRallyPoint
-{
-    get { return selectingRallyPoint; }
-}
+    public bool IsSelectingRallyPoint
+    {
+        get { return selectingRallyPoint; }
+    }
 
 
     void Awake()
@@ -61,7 +61,7 @@ public bool IsSelectingRallyPoint
 
         navMeshVisual.SetActive(false);
     }
-    
+
 
 
     void Update()
@@ -108,74 +108,116 @@ public bool IsSelectingRallyPoint
     }
     void TryPlaceRallyPoint()
     {
-        if (currentBarracks == null)
+        if (currentBarracks == null || mainCamera == null)
             return;
 
+        Vector2 mousePosition = Mouse.current.position.ReadValue();
 
-        Vector2 mousePosition =
-            Mouse.current.position.ReadValue();
+        Ray ray = mainCamera.ScreenPointToRay(mousePosition);
 
+        // First try to hit the NavMesh directly
+        NavMeshTriangulation triangulation = NavMesh.CalculateTriangulation();
 
-        Ray ray =
-            mainCamera.ScreenPointToRay(
-                mousePosition
-            );
+        Mesh mesh = new Mesh();
+        mesh.vertices = triangulation.vertices;
+        mesh.triangles = triangulation.indices;
 
+        Vector3[] vertices = mesh.vertices;
+        int[] triangles = mesh.triangles;
 
-        if (!Physics.Raycast(
-            ray,
-            out RaycastHit hit
-        ))
+        float closestDistance = Mathf.Infinity;
+        Vector3 closestPoint = Vector3.zero;
+        bool found = false;
+
+        for (int i = 0; i < triangles.Length; i += 3)
+        {
+            Vector3 a = vertices[triangles[i]];
+            Vector3 b = vertices[triangles[i + 1]];
+            Vector3 c = vertices[triangles[i + 2]];
+
+            if (RayIntersectsTriangle(ray, a, b, c, out float distance))
+            {
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestPoint = ray.GetPoint(distance);
+                    found = true;
+                }
+            }
+        }
+
+        if (!found)
+        {
+            Debug.LogWarning("No NavMesh under mouse!");
+            return;
+        }
+
+        if (!NavMesh.SamplePosition(
+            closestPoint,
+            out NavMeshHit navHit,
+            navMeshSearchDistance,
+            NavMesh.AllAreas))
         {
             return;
         }
 
+        Vector3 barracksPosition = currentBarracks.transform.position;
+        Vector3 rallyPosition = navHit.position;
 
-        NavMeshHit navHit;
+        barracksPosition.y = 0f;
+        rallyPosition.y = 0f;
 
+        float distanceToBarracks =
+            Vector3.Distance(barracksPosition, rallyPosition);
 
-        bool foundNavMesh =
-            NavMesh.SamplePosition(
-                hit.point,
-                out navHit,
-                navMeshSearchDistance,
-                NavMesh.AllAreas
-            );
-
-
-        if (!foundNavMesh)
-            return;
-
-        float distance =
-            Vector3.Distance(
-                currentBarracks.transform.position,
-                navHit.position
-            );
-
-
-        if (
-            distance >
-            currentBarracks.GetRallyRange()
-        )
+        if (distanceToBarracks > currentBarracks.GetRallyRange())
         {
-            Debug.Log(
-                "Rally point is outside the allowed range!"
-            );
-
+            Debug.LogWarning("Rally point outside range!");
             return;
         }
 
-        currentBarracks.SetRallyPoint(
-            navHit.position
-        );
-
+        currentBarracks.SetRallyPoint(navHit.position);
 
         selectingRallyPoint = false;
-
         currentBarracks = null;
 
-
         navMeshVisual.SetActive(false);
+    }
+    bool RayIntersectsTriangle(
+        Ray ray,
+        Vector3 a,
+        Vector3 b,
+        Vector3 c,
+        out float distance)
+    {
+        distance = 0f;
+
+        Vector3 edge1 = b - a;
+        Vector3 edge2 = c - a;
+
+        Vector3 h = Vector3.Cross(ray.direction, edge2);
+        float determinant = Vector3.Dot(edge1, h);
+
+        if (Mathf.Abs(determinant) < 0.000001f)
+            return false;
+
+        float inverse = 1f / determinant;
+
+        Vector3 s = ray.origin - a;
+        float u = inverse * Vector3.Dot(s, h);
+
+        if (u < 0f || u > 1f)
+            return false;
+
+        Vector3 q = Vector3.Cross(s, edge1);
+        float v = inverse * Vector3.Dot(ray.direction, q);
+
+        if (v < 0f || u + v > 1f)
+            return false;
+
+        distance = inverse * Vector3.Dot(edge2, q);
+
+        return distance > 0f;
     }
 
     void CreateVisualObject()

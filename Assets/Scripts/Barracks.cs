@@ -9,6 +9,7 @@ public class Barracks : MonoBehaviour
 
     [Header("Spawn Settings")]
     [SerializeField] private float spawnInterval = 5f;
+    [SerializeField] private float intervalBetweenFirstSpawn;
 
     [SerializeField] private int maxTroops = 5;
 
@@ -20,13 +21,14 @@ public class Barracks : MonoBehaviour
     [SerializeField] private float rallyRange = 15f;
 
     private int currentTroops = 0;
-        private List<Troops> spawnedTroops =
-    new List<Troops>();
+    private List<Troops> spawnedTroops =
+new List<Troops>();
 
     private Vector3 rallyPosition;
     private bool hasRallyPoint = false;
 
     private Coroutine spawnCoroutine;
+    private bool firstspawn = true;
 
 
     void Start()
@@ -35,14 +37,12 @@ public class Barracks : MonoBehaviour
     }
 
 
-    // =====================================================
-    // SPAWNING
-    // =====================================================
-
     private void StartSpawning()
     {
         if (spawnCoroutine != null)
             return;
+
+
 
         spawnCoroutine =
             StartCoroutine(SpawnRoutine());
@@ -64,13 +64,31 @@ public class Barracks : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(
-                spawnInterval
-            );
-
-            if (currentTroops < maxTroops)
+            if (firstspawn)
             {
-                SpawnTroop();
+
+                if (currentTroops == maxTroops)
+                {
+                    firstspawn = false;
+                }
+                else if (currentTroops < maxTroops)
+                {
+                    yield return new WaitForSeconds(intervalBetweenFirstSpawn);
+                    SpawnTroop();
+                    yield return new WaitForSeconds(intervalBetweenFirstSpawn);
+
+                }
+            }
+            else
+            {
+                yield return new WaitForSeconds(
+           spawnInterval
+       );
+
+                if (currentTroops < maxTroops)
+                {
+                    SpawnTroop();
+                }
             }
         }
     }
@@ -109,15 +127,15 @@ public class Barracks : MonoBehaviour
             );
 
 
-    Troops troopScript =
-    spawnedTroop.GetComponent<Troops>();
+        Troops troopScript =
+        spawnedTroop.GetComponent<Troops>();
 
-if (troopScript != null)
-{
-    troopScript.SetBarracks(this);
+        if (troopScript != null)
+        {
+            troopScript.SetBarracks(this);
 
-    spawnedTroops.Add(troopScript);
-}
+            spawnedTroops.Add(troopScript);
+        }
 
 
         currentTroops++;
@@ -125,18 +143,18 @@ if (troopScript != null)
 
 
 
-public void TroopDied(Troops troop)
-{
-    if (troop != null)
+    public void TroopDied(Troops troop)
     {
-        spawnedTroops.Remove(troop);
+        if (troop != null)
+        {
+            spawnedTroops.Remove(troop);
+        }
+
+        currentTroops--;
+
+        if (currentTroops < 0)
+            currentTroops = 0;
     }
-
-    currentTroops--;
-
-    if (currentTroops < 0)
-        currentTroops = 0;
-}
 
 
     public int GetCurrentTroops()
@@ -200,18 +218,18 @@ public void TroopDied(Troops troop)
         StopSpawning();
     }
     void OnDestroy()
-{
-    Troops[] troopsToDestroy =
-        spawnedTroops.ToArray();
-
-    foreach (Troops troop in troopsToDestroy)
     {
-        if (troop != null)
-        {
-            troop.BarracksDestroyed();
-        }
-    }
+        Troops[] troopsToDestroy =
+            spawnedTroops.ToArray();
 
-    spawnedTroops.Clear();
-}
+        foreach (Troops troop in troopsToDestroy)
+        {
+            if (troop != null)
+            {
+                troop.BarracksDestroyed();
+            }
+        }
+
+        spawnedTroops.Clear();
+    }
 }

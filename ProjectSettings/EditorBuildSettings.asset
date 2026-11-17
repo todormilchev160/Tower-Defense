@@ -6,14 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/TodorScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Scenes/FV DEMO 1/MainMenu Demo 1.unity
+    guid: becad68cc18b03f4493a49172671d892
   - enabled: 1
-    path: Assets/Scenes/MainMenuDemo1.unity
-    guid: 6201459c332a4c646bb2447d3690c8d6
-  - enabled: 1
-    path: Assets/Scenes/Demo1.unity
-    guid: 8da72656297f1e546af25070a28d071d
+    path: Assets/Scenes/FV DEMO 1/Level 1.unity
+    guid: d4fee9b7b4d450c4b924f099456aab5a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
