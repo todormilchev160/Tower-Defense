@@ -2,6 +2,8 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
+using System.Collections.Generic;
 public class WaveSpawner : MonoBehaviour
 {
     [System.Serializable]
@@ -37,9 +39,11 @@ public class WaveSpawner : MonoBehaviour
     private bool clockrunout = false;
     private bool clockticking = false;
     private int wavenumber = 1;
+    private int maxwaves;
 
     void Start()
     {
+        maxwaves=waves.Length;
         clocktime = timeBetweenWaves;
         maxClockTime = timeBetweenWaves;
         StartCoroutine(StartWaves());
@@ -101,7 +105,7 @@ public class WaveSpawner : MonoBehaviour
 
     void Update()
     {
-        wavecounter.text = "Wave" + wavenumber;
+        wavecounter.text ="Wave " +wavenumber+"/"+maxwaves;
         clock.fillAmount = clocktime / maxClockTime;
 
         if (clocktime == 0)

@@ -1,3 +1,5 @@
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -10,9 +12,20 @@ public class SpawnElites : MonoBehaviour
 
     [Header("NavMesh")]
     public float navMeshSearchDistance = 5f;
+    [Header("Prices")]
+    public int elitesPrice;
+    public TextMeshProUGUI priceText;
+    void Update()
+    {
+        priceText.text=""+ elitesPrice;
+    }
 
     public void SpawnTroops()
     {
+       
+        if(GameManager.currency<elitesPrice)
+        return;
+         GameManager.currency-=elitesPrice;
         for (int i = 0; i < spawnAmount; i++)
         {
             // Create an offset for each troop

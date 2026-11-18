@@ -50,6 +50,7 @@ MonoBehaviour:
   acceleration: 8
   maxSpeed: 35
   lifeTime: 8
+  collisionRadius: 0.35
   damage: 6
   hitLayers:
     serializedVersion: 2

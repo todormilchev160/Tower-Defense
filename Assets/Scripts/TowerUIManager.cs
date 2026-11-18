@@ -13,7 +13,6 @@ public class TowerUIManager : MonoBehaviour
     public GameObject towerOptions;
     public GameObject towerUI;
     public GameObject rallyPointButton;
-    public GameObject towerSlot;
 
     [Header("Tower Prefabs")]
     public GameObject[] archerTowers;
@@ -83,7 +82,6 @@ public class TowerUIManager : MonoBehaviour
         magicSellPrice2 = magicSellPrice;
         bombSellPrice2 = bombSellPrice;
         troopSellPrice2 = troopSellPrice;
-        towerSelectionUI.SetActive(false);
         slotButton.SetActive(true);
         archerPriceText.text = "" + archerPrice;
         magicPriceText.text = "" + magicPrice;
@@ -128,29 +126,33 @@ public class TowerUIManager : MonoBehaviour
         HoverActivation.selecting = true;
         towerSelectionUI.SetActive(true);
         slotButton.SetActive(false);
-
         towerUIOpen = true;
     }
 
+    
     public void CloseTowerUI()
+{
+    if (firstStage)
     {
-        if (firstStage)
-        {
-            towerSelectionUI.SetActive(false);
-            slotButton.SetActive(true);
-            towerSlot.SetActive(false);
-            towerUIOpen = false;
-            HoverActivation.selecting = false;
-        }
-        if (secondStage)
-        {
-            towerSlot.SetActive(false);
-            HoverActivation.selecting = false;
-            towerOptions.SetActive(true);
-            towerUI.SetActive(false);
-            towerUIOpen = false;
-        }
+        towerSelectionUI.SetActive(false);
+        slotButton.SetActive(true);
     }
+
+    if (secondStage)
+    {
+        towerUI.SetActive(false);
+        towerOptions.SetActive(true);
+    }
+
+    towerUIOpen = false;
+    
+
+   
+    if (hoverActivation != null)
+        hoverActivation.UnlockHover();
+
+    HoverActivation.selecting = false;
+}
 
     public void SpawnMagicTower()
     {
@@ -236,10 +238,7 @@ public class TowerUIManager : MonoBehaviour
         // Assign this tower its original TowerSlot
         TowerHover towerHover = tower.GetComponent<TowerHover>();
 
-        if (towerHover != null)
-        {
-            towerHover.AssignTowerSlot(towerSlot);
-        }
+        
 
         towerUI.SetActive(false);
         towerSelectionUI.SetActive(false);
@@ -248,18 +247,22 @@ public class TowerUIManager : MonoBehaviour
         firstStage = false;
         secondStage = true;
     }
-    public void ShowTowerOptions()
-    {
-        HoverActivation.selecting = true;
-        towerUIOpen = true;
-        towerOptions.SetActive(false);
-        towerUI.SetActive(true);
-        if (!troop)
-        {
-            rallyPointButton.SetActive(false);
-        }
-    }
-    public void SellTower()
+public void ShowTowerOptions()
+{
+  
+    if (hoverActivation != null)
+        hoverActivation.LockHover();
+
+    HoverActivation.selecting = true;
+ 
+    towerOptions.SetActive(false);
+    towerUI.SetActive(true);
+
+    towerUIOpen = true;
+
+    if (rallyPointButton != null)
+        rallyPointButton.SetActive(troop);
+}    public void SellTower()
     {
         currentLevel = 0;
 
@@ -287,7 +290,13 @@ public class TowerUIManager : MonoBehaviour
             troopSellPrice2 = troopSellPrice;
             troopUpgradePrice2 = troopUpgradePrice;
         }
-        HoverActivation.selecting = false;
+       if (hoverActivation != null)
+    hoverActivation.UnlockHover();
+
+towerUIOpen = false;
+
+
+HoverActivation.selecting = false;
         Destroy(tower);
         firstStage = true;
         secondStage = false;

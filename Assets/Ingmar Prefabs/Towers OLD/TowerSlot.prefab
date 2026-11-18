@@ -972,14 +972,8 @@ MonoBehaviour:
   slotButton: {fileID: 3031371168832941483}
   towerOptions: {fileID: 7410191093620876610}
   towerUI: {fileID: 8430648736680183442}
-  archerTowerText: {fileID: 0}
-  magicTowerText: {fileID: 0}
-  bombTowerText: {fileID: 0}
-  upgradeText: {fileID: 0}
-  sellText: {fileID: 0}
-  noMoneyText: {fileID: 0}
-  troopText: {fileID: 0}
   rallyPointButton: {fileID: 0}
+  towerSlot: {fileID: 0}
   archerTowers:
   - {fileID: 3232792351999903638, guid: 6b26eed7d8644e24c86cb87dfeffc12e, type: 3}
   - {fileID: 3232792351999903638, guid: 9d5b75c6efa59734792332ba0fe9da68, type: 3}
@@ -1002,11 +996,19 @@ MonoBehaviour:
   bombUpgradePrice: 150
   magicUpgradePrice: 100
   troopUpgradePrice: 0
+  maxbarracks: 1
   archerSellPrice: 80
   bombSellPrice: 240
   troopSellPrice: 0
   magicSellPrice: 160
   priceIncreaseAfterUgrade: 50
+  upgradePriceText: {fileID: 0}
+  sellPriceText: {fileID: 0}
+  archerPriceText: {fileID: 0}
+  magicPriceText: {fileID: 0}
+  bombPriceText: {fileID: 0}
+  troopPriceText: {fileID: 0}
+  cross: {fileID: 0}
 --- !u!1 &5783116733166489867
 GameObject:
   m_ObjectHideFlags: 0

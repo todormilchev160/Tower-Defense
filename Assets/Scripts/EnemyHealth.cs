@@ -39,7 +39,7 @@ public class EnemyHealth : MonoBehaviour
         damageText.text="";
     }
 
-    void Die()
+    public void Die()
     {
         animator.SetTrigger("Die");
         GameManager.currency+=amountOfMoney;
@@ -56,7 +56,7 @@ if (combat != null)
 {
     combat.Die();
 }
-
+        
         Destroy(gameObject);
     }
 

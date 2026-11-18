@@ -12,6 +12,7 @@ public class BaseHealth : MonoBehaviour
     public int moneyAfterDowngrade;
     [SerializeField]private float maxHealth=100;
     private EnemyDamageBase enemyDamageBase;
+    private EnemyHealth enemy;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -24,14 +25,12 @@ public class BaseHealth : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Enemy"))
-        {
-          enemyDamageBase=other.GetComponent<EnemyDamageBase>();
-          baseHealth-=enemyDamageBase.damageDealtOnBase;
-          Destroy(other.gameObject);
-        }
+      
         enemyDamageBase=other.GetComponent<EnemyDamageBase>();
+        enemy=other.GetComponentInParent<EnemyHealth>();
+      
         baseHealth-=enemyDamageBase.damageDealtOnBase;
+          enemy.Die();
         if(baseHealth<=0)
         {
             SceneManager.LoadScene("TodorScene");

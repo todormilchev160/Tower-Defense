@@ -1,13 +1,19 @@
+
 using UnityEngine;
 
 public class Arrow : MonoBehaviour
 {
+    [Header("Projectile Settings")]
     public float speed = 10f;
     public float damage = 10f;
+
+    [Header("Lifetime")]
     public float lifeTime = 5f;
-    private EnemyHealth enemyHealth;
 
     private Transform target;
+    private Vector3 lastDirection;
+
+    private bool hasHit = false;
 
     void Start()
     {
@@ -17,35 +23,76 @@ public class Arrow : MonoBehaviour
     public void SetTarget(Transform newTarget)
     {
         target = newTarget;
+
+        if (target != null)
+        {
+            lastDirection =
+                (target.position - transform.position).normalized;
+        }
+        else
+        {
+            lastDirection = transform.forward;
+        }
     }
 
     void Update()
     {
-        // Enemy was destroyed before projectile reached it
-        if (target == null)
-        {
-            Destroy(gameObject);
+        if (hasHit)
             return;
+
+        // Follow the target while it exists
+        if (target != null)
+        {
+            Vector3 direction =
+                target.position - transform.position;
+
+            if (direction.sqrMagnitude > 0.001f)
+            {
+                lastDirection = direction.normalized;
+            }
         }
 
-        Vector3 direction = (target.position - transform.position).normalized;
+        // Continue flying in the last direction
+        // if the target has been destroyed
+        transform.position +=
+            lastDirection * speed * Time.deltaTime;
 
-        transform.position += direction * speed * Time.deltaTime;
-
-        // Optional: make projectile face target
-        if (direction != Vector3.zero)
+        if (lastDirection.sqrMagnitude > 0.001f)
         {
-            transform.rotation = Quaternion.LookRotation(direction);
+            transform.rotation =
+                Quaternion.LookRotation(lastDirection);
         }
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Enemy"))
-        {
-        enemyHealth=other.GetComponent<EnemyHealth>();
+        HitEnemy(other);
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        HitEnemy(collision.collider);
+    }
+
+    void HitEnemy(Collider other)
+    {
+        if (hasHit)
+            return;
+
+        EnemyHealth enemyHealth =
+            other.GetComponentInParent<EnemyHealth>();
+
+        if (enemyHealth == null)
+            return;
+
+        if (enemyHealth.IsDead())
+            return;
+
+        hasHit = true;
+
         enemyHealth.TakeDamage(damage);
+
+        // Destroy ONLY when hitting a living enemy
         Destroy(gameObject);
-        }
     }
 }

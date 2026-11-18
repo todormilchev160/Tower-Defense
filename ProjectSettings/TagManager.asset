@@ -8,6 +8,7 @@ TagManager:
   - EnemyDestination
   - Ground
   - EnemyHitPoint
+  - EnemyBomber
   layers:
   - Default
   - TransparentFX

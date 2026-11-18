@@ -1,3 +1,4 @@
+
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
@@ -8,442 +9,354 @@ public class EnemyCombat : MonoBehaviour
     [SerializeField] private float damage = 2f;
     [SerializeField] private float attackInterval = 1f;
 
-
     [Header("Barricade Combat")]
     [SerializeField] private float barricadeDetectionRange = 5f;
-
     [SerializeField] private float barricadeAttackDistance = 2f;
-
     [SerializeField] private float barricadeDamage = 5f;
-
     [SerializeField] private float barricadeAttackInterval = 1f;
 
-
-
     public Animator animator;
-
 
     private NavMeshAgent agent;
     private EnemyWalk enemyWalk;
     private EnemyHealth enemyHealth;
 
-
-    // Troop combat
     private Troops currentTroop;
-
     private bool engaged = false;
 
-
-    // Barricade combat
     private Barricade currentBarricade;
-
     private Coroutine barricadeAttackCoroutine;
-
     private bool attackingBarricade = false;
-
 
     void Start()
     {
-        agent =
-            GetComponent<NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
+        enemyWalk = GetComponent<EnemyWalk>();
+        enemyHealth = GetComponent<EnemyHealth>();
 
-        enemyWalk =
-            GetComponent<EnemyWalk>();
-
-        enemyHealth =
-            GetComponent<EnemyHealth>();
+        if (agent != null)
+        {
+            agent.avoidancePriority = 50;
+            agent.obstacleAvoidanceType =
+                ObstacleAvoidanceType.HighQualityObstacleAvoidance;
+        }
     }
 
     void Update()
     {
         if (IsDead())
             return;
-        if (
-            attackingBarricade &&
-            currentBarricade == null
-        )
+
+        if (attackingBarricade && currentBarricade == null)
         {
             FinishBarricadeAttack();
-
             return;
         }
+
         if (engaged)
             return;
 
-
         FindNearestBarricade();
-
 
         if (currentBarricade != null)
         {
             HandleBarricade();
-
-            return;
         }
     }
-    public void Engage(Troops troop)
+
+    // ==========================================
+    // NAVMESH COMBAT CONTROL
+    // ==========================================
+
+    void StopForCombat()
     {
-        if (
-            enemyHealth == null ||
-            enemyHealth.IsDead()
-        )
+        if (agent == null || !agent.enabled)
+            return;
+
+        if (agent.isOnNavMesh)
         {
+            agent.isStopped = true;
+            agent.ResetPath();
+        }
+
+        // Other agents no longer avoid this enemy
+        agent.enabled = false;
+    }
+
+    void ResumeAfterCombat()
+    {
+        if (agent == null)
+            return;
+
+        if (!agent.enabled)
+            agent.enabled = true;
+
+        if (!agent.isOnNavMesh)
+        {
+            Debug.LogWarning(
+                "Enemy could not resume: not on NavMesh!"
+            );
             return;
         }
 
+        agent.isStopped = false;
 
-        if (engaged)
+        if (enemyWalk != null)
+        {
+            enemyWalk.ResumeMovement();
+        }
+    }
+
+    // ==========================================
+    // ENGAGE TROOP
+    // ==========================================
+
+    public void Engage(Troops troop)
+    {
+        if (IsDead())
             return;
 
-
-        if (attackingBarricade)
+        if (engaged || attackingBarricade)
             return;
-
 
         if (troop == null)
             return;
 
+        currentTroop = troop;
+        engaged = true;
 
-        currentTroop =
-            troop;
+        StopForCombat();
 
+        if (animator != null)
+        {
+            animator.SetBool("Attack", true);
+        }
 
-        engaged =
-            true;
-
-
-        agent.isStopped =
-            true;
-
-
-        agent.ResetPath();
-
-
-        StartCoroutine(
-            AttackRoutine()
-        );
+        StartCoroutine(AttackRoutine());
     }
-
 
     IEnumerator AttackRoutine()
     {
         while (engaged)
         {
-            if (animator != null)
-            {
-                animator.SetBool("Attack",true);
-            }
-
-
             yield return new WaitForSeconds(
                 attackInterval
             );
 
-
             if (currentTroop == null)
                 break;
 
-
-            currentTroop.TakeDamage(
-                damage
-            );
+            currentTroop.TakeDamage(damage);
         }
     }
+
+    // ==========================================
+    // TROOP DIED
+    // ==========================================
 
     public void TroopDied(Troops troop)
     {
         if (troop != currentTroop)
             return;
 
+        currentTroop = null;
+        engaged = false;
 
-        currentTroop =
-            null;
-
-
-        engaged =
-            false;
-            animator.SetBool("Attack",false);
-
+        if (animator != null)
+        {
+            animator.SetBool("Attack", false);
+        }
 
         StopAllCoroutines();
 
-
-        if (
-            enemyHealth != null &&
-            !enemyHealth.IsDead()
-        )
+        if (!IsDead())
         {
-            enemyWalk.ResumeMovement();
+            ResumeAfterCombat();
         }
     }
 
+    // ==========================================
+    // FIND BARRICADE
+    // ==========================================
+
     void FindNearestBarricade()
     {
-        // Already have one
         if (currentBarricade != null)
             return;
-
 
         Barricade[] barricades =
             FindObjectsByType<Barricade>(
                 FindObjectsSortMode.None
             );
 
-
-        float closestDistance =
-            Mathf.Infinity;
-
-
-        Barricade closestBarricade =
-            null;
-
+        float closestDistance = Mathf.Infinity;
+        Barricade closestBarricade = null;
 
         foreach (Barricade barricade in barricades)
         {
             if (barricade == null)
                 continue;
 
-
             if (barricade.IsDead())
                 continue;
 
+            float distance = Vector3.Distance(
+                transform.position,
+                barricade.transform.position
+            );
 
-            float distance =
-                Vector3.Distance(
-                    transform.position,
-                    barricade.transform.position
-                );
-
-
-            if (
-                distance >
-                barricadeDetectionRange
-            )
-            {
+            if (distance > barricadeDetectionRange)
                 continue;
-            }
-
 
             if (distance < closestDistance)
             {
-                closestDistance =
-                    distance;
-
-
-                closestBarricade =
-                    barricade;
+                closestDistance = distance;
+                closestBarricade = barricade;
             }
         }
 
-
-        currentBarricade =
-            closestBarricade;
+        currentBarricade = closestBarricade;
     }
 
-
-    // =====================================================
+    // ==========================================
     // HANDLE BARRICADE
-    // =====================================================
+    // ==========================================
 
     void HandleBarricade()
     {
         if (currentBarricade == null)
         {
             if (attackingBarricade)
-            {
                 FinishBarricadeAttack();
+
+            return;
+        }
+
+        if (currentBarricade.IsDead())
+        {
+            FinishBarricadeAttack();
+            return;
+        }
+
+        float distance = Vector3.Distance(
+            transform.position,
+            currentBarricade.transform.position
+        );
+
+        // Move toward barricade
+        if (distance > barricadeAttackDistance)
+        {
+            if (!agent.enabled)
+                agent.enabled = true;
+
+            if (agent.isOnNavMesh)
+            {
+                agent.isStopped = false;
+
+                agent.SetDestination(
+                    currentBarricade.transform.position
+                );
             }
 
             return;
         }
 
-
-        if (currentBarricade.IsDead())
+        // Stop when within attack range
+        if (!attackingBarricade)
         {
-            FinishBarricadeAttack();
+            attackingBarricade = true;
 
-            return;
-        }
+            StopForCombat();
 
+            if (animator != null)
+            {
+                animator.SetTrigger("Attack");
+            }
 
-        float distance =
-            Vector3.Distance(
-                transform.position,
-                currentBarricade.transform.position
-            );
-
-
-        // =================================================
-        // MOVE TOWARD BARRICADE
-        // =================================================
-
-        if (
-            distance >
-            barricadeAttackDistance
-        )
-        {
-            agent.isStopped =
-                false;
-
-
-            agent.SetDestination(
-                currentBarricade.transform.position
-            );
-
-
-            return;
-        }
-
-        agent.isStopped =
-            true;
-
-
-        agent.ResetPath();
-
-
-        attackingBarricade =
-            true;
-
-
-        if (animator != null)
-        {
-            animator.SetTrigger("Attack");
-        }
-
-
-        if (
-            barricadeAttackCoroutine ==
-            null
-        )
-        {
             barricadeAttackCoroutine =
-                StartCoroutine(
-                    AttackBarricadeRoutine()
-                );
+                StartCoroutine(AttackBarricadeRoutine());
         }
     }
 
-
-    // =====================================================
+    // ==========================================
     // ATTACK BARRICADE
-    // =====================================================
+    // ==========================================
 
     IEnumerator AttackBarricadeRoutine()
     {
-        while (true)
+        while (attackingBarricade)
         {
             yield return new WaitForSeconds(
                 barricadeAttackInterval
             );
 
-
-            // Barricade was destroyed
-            if (currentBarricade == null)
+            if (currentBarricade == null ||
+                currentBarricade.IsDead())
             {
                 FinishBarricadeAttack();
-
                 yield break;
             }
-
-
-            if (currentBarricade.IsDead())
-            {
-                FinishBarricadeAttack();
-
-                yield break;
-            }
-
 
             currentBarricade.TakeDamage(
                 barricadeDamage
             );
 
-
-            // Our attack may have killed it
-            if (
-                currentBarricade == null ||
-                currentBarricade.IsDead()
-            )
+            if (currentBarricade == null ||
+                currentBarricade.IsDead())
             {
                 FinishBarricadeAttack();
-
                 yield break;
             }
         }
     }
 
+    // ==========================================
+    // FINISH BARRICADE ATTACK
+    // ==========================================
+
     void FinishBarricadeAttack()
     {
-        currentBarricade =
-            null;
+        currentBarricade = null;
+        barricadeAttackCoroutine = null;
+        attackingBarricade = false;
 
-
-        barricadeAttackCoroutine =
-            null;
-
-
-        attackingBarricade =
-            false;
-
-
-        if (
-            enemyHealth != null &&
-            !enemyHealth.IsDead()
-        )
+        if (!IsDead())
         {
-            enemyWalk.ResumeMovement();
+            ResumeAfterCombat();
         }
     }
 
+    // ==========================================
+    // DEATH
+    // ==========================================
+
     public void Die()
     {
-        attackingBarricade =
-            false;
+        attackingBarricade = false;
+        currentBarricade = null;
+        barricadeAttackCoroutine = null;
 
+        engaged = false;
 
-        currentBarricade =
-            null;
-
-
-        barricadeAttackCoroutine =
-            null;
-
+        StopAllCoroutines();
 
         if (currentTroop != null)
         {
-            Troops troop =
-                currentTroop;
-
-
-            currentTroop =
-                null;
-
-
-            engaged =
-                false;
-
-
-            StopAllCoroutines();
-
+            Troops troop = currentTroop;
+            currentTroop = null;
 
             troop.EnemyDied();
-        }
-        else
-        {
-            StopAllCoroutines();
         }
     }
 
     public bool IsEngaged()
     {
-        return engaged;
+        return engaged || attackingBarricade;
     }
-
 
     public bool IsDead()
     {
-        return
-            enemyHealth == null ||
-            enemyHealth.IsDead();
+        return enemyHealth == null ||
+               enemyHealth.IsDead();
     }
 }

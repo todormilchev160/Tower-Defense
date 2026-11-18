@@ -1,114 +1,95 @@
+
 using System.Collections;
-using System.Threading;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
-
 
 public class Troops : MonoBehaviour
 {
     [Header("Health")]
     [SerializeField] private float maxHealth = 20f;
+    [SerializeField] private Image healthbarfill;
 
     private float health;
     private Barracks barracks;
 
-    [SerializeField]
-    private Image healthbarfill;
-
-
     [Header("Combat")]
     [SerializeField] private float damage = 3f;
-
-    [SerializeField]
-    private float attackInterval = 1f;
-
-    [SerializeField]
-    private float engagementDistance = 2f;
-
+    [SerializeField] private float attackInterval = 1f;
+    [SerializeField] private float engagementDistance = 2f;
 
     [Header("Targeting")]
-    [SerializeField]
-    private string enemyTag = "Enemy";
-
-    [SerializeField]
-    private float detectionRange = 10f;
-
+    [SerializeField] private string enemyTag = "Enemy";
+    [SerializeField] private float detectionRange = 10f;
 
     [Header("Rally Point")]
-    [SerializeField]
-    private float rallyStoppingDistance = 1f;
+    [SerializeField] private float rallyStoppingDistance = 1f;
 
+    [Header("Rotation")]
+    [SerializeField] private Transform troopModel;
+    [SerializeField] private float rotationSpeed = 5f;
 
     private NavMeshAgent agent;
-
     private EnemyCombat currentEnemy;
-
     private EnemyHealth currentEnemyHealth;
-
     private Animator animator;
 
-
     private bool engaged = false;
-
     private bool isDead = false;
-
 
     void Start()
     {
-        agent =
-            GetComponent<NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
+        animator = GetComponentInChildren<Animator>();
 
+        health = maxHealth;
 
-        animator =
-            GetComponentInChildren<Animator>();
-
-
-        health =
-            maxHealth;
+        if (agent != null)
+        {
+            agent.avoidancePriority = 50;
+            agent.obstacleAvoidanceType =
+                ObstacleAvoidanceType.HighQualityObstacleAvoidance;
+        }
     }
-
 
     void Update()
     {
-        healthbarfill.fillAmount =
-            health / maxHealth;
-        if (isDead || engaged)
+        if (healthbarfill != null)
+        {
+            healthbarfill.fillAmount =
+                health / maxHealth;
+        }
+
+        if (isDead)
             return;
 
+        RotateTowardsEnemy();
 
-      
+        if (engaged)
+            return;
+
         if (currentEnemy == null)
         {
             FindNearestEnemy();
 
-
             if (currentEnemy == null)
             {
                 GoToRallyPoint();
-
                 return;
             }
         }
 
-        if (currentEnemy.IsDead())
+        if (currentEnemy.IsDead() ||
+            currentEnemy.IsEngaged())
         {
             ClearEnemy();
-
             return;
         }
 
-
-        // =================================================
-        // CHASE / ATTACK
-        // =================================================
-
-        float distance =
-            Vector3.Distance(
-                transform.position,
-                currentEnemy.transform.position
-            );
-
+        float distance = Vector3.Distance(
+            transform.position,
+            currentEnemy.transform.position
+        );
 
         if (distance <= engagementDistance)
         {
@@ -116,396 +97,330 @@ public class Troops : MonoBehaviour
         }
         else
         {
-            agent.isStopped = false;
+            if (agent.enabled && agent.isOnNavMesh)
+            {
+                agent.isStopped = false;
 
+                agent.SetDestination(
+                    currentEnemy.transform.position
+                );
+            }
 
-            agent.SetDestination(
-                currentEnemy.transform.position
-            );
-
-
-            animator.SetBool(
-                "Walk",
-                true
-            );
+            if (animator != null)
+            {
+                animator.SetBool("Walk", true);
+            }
         }
     }
 
-    public void SetBarracks(
-        Barracks newBarracks
-    )
+    // ==========================================
+    // NAVMESH COMBAT CONTROL
+    // ==========================================
+
+    void StopForCombat()
     {
-        barracks =
-            newBarracks;
+        if (agent == null || !agent.enabled)
+            return;
+
+        if (agent.isOnNavMesh)
+        {
+            agent.isStopped = true;
+            agent.ResetPath();
+        }
+
+        // Remove troop from NavMesh avoidance
+        agent.enabled = false;
     }
-    
 
+    void ResumeAfterCombat()
+    {
+        if (agent == null)
+            return;
 
-    // =====================================================
+        if (!agent.enabled)
+            agent.enabled = true;
+
+        if (!agent.isOnNavMesh)
+        {
+            Debug.LogWarning(
+                "Troop could not resume: not on NavMesh!"
+            );
+            return;
+        }
+
+        agent.isStopped = false;
+    }
+
+    // ==========================================
+    // BARRACKS
+    // ==========================================
+
+    public void SetBarracks(Barracks newBarracks)
+    {
+        barracks = newBarracks;
+    }
+
+    // ==========================================
     // RALLY POINT
-    // =====================================================
+    // ==========================================
 
     void GoToRallyPoint()
     {
-       
-        if (barracks == null)
+        if (barracks == null ||
+            !barracks.HasRallyPoint())
         {
-            animator.SetBool(
-                "Walk",
-                false
-            );
+            if (animator != null)
+                animator.SetBool("Walk", false);
 
             return;
         }
-
-
-     
-        if (!barracks.HasRallyPoint())
-        {
-            animator.SetBool(
-                "Walk",
-                false
-            );
-
-            return;
-        }
-
 
         Vector3 rallyPosition =
             barracks.GetRallyPosition();
 
+        float distance = Vector3.Distance(
+            transform.position,
+            rallyPosition
+        );
 
-        float distance =
-            Vector3.Distance(
-                transform.position,
-                rallyPosition
-            );
-
-
-        // We reached the rally point
         if (distance <= rallyStoppingDistance)
         {
-            agent.isStopped =
-                true;
+            if (agent.enabled && agent.isOnNavMesh)
+            {
+                agent.isStopped = true;
+                agent.ResetPath();
+            }
 
-
-            agent.ResetPath();
-
-
-            animator.SetBool(
-                "Walk",
-                false
-            );
-
+            if (animator != null)
+                animator.SetBool("Walk", false);
 
             return;
         }
 
+        if (agent.enabled && agent.isOnNavMesh)
+        {
+            agent.isStopped = false;
+            agent.SetDestination(rallyPosition);
+        }
 
-        // Walk toward our Barracks' rally point
-        agent.isStopped =
-            false;
-
-
-        agent.SetDestination(
-            rallyPosition
-        );
-
-
-        animator.SetBool(
-            "Walk",
-            true
-        );
+        if (animator != null)
+            animator.SetBool("Walk", true);
     }
+
+    // ==========================================
+    // FIND NEAREST ENEMY
+    // ==========================================
 
     void FindNearestEnemy()
     {
         GameObject[] enemies =
-            GameObject.FindGameObjectsWithTag(
-                enemyTag
-            );
+            GameObject.FindGameObjectsWithTag(enemyTag);
 
+        float closestDistance = Mathf.Infinity;
+        EnemyCombat closestEnemy = null;
 
-        float closestDistance =
-            Mathf.Infinity;
-
-
-        EnemyCombat closestEnemy =
-            null;
-
-
-        foreach (
-            GameObject enemyObject
-            in enemies
-        )
+        foreach (GameObject enemyObject in enemies)
         {
             EnemyCombat enemy =
                 enemyObject.GetComponent<EnemyCombat>();
 
-
             if (enemy == null)
                 continue;
-
 
             if (enemy.IsDead())
                 continue;
 
-
             if (enemy.IsEngaged())
                 continue;
 
-
-            float distance =
-                Vector3.Distance(
-                    transform.position,
-                    enemyObject.transform.position
-                );
-
+            float distance = Vector3.Distance(
+                transform.position,
+                enemyObject.transform.position
+            );
 
             if (distance > detectionRange)
                 continue;
 
-
             if (distance < closestDistance)
             {
-                closestDistance =
-                    distance;
-
-
-                closestEnemy =
-                    enemy;
+                closestDistance = distance;
+                closestEnemy = enemy;
             }
         }
 
-
-        currentEnemy =
-            closestEnemy;
-
+        currentEnemy = closestEnemy;
 
         if (currentEnemy != null)
         {
             currentEnemyHealth =
                 currentEnemy.GetComponent<EnemyHealth>();
 
+            if (agent.enabled && agent.isOnNavMesh)
+            {
+                agent.isStopped = false;
 
-            agent.isStopped =
-                false;
+                agent.SetDestination(
+                    currentEnemy.transform.position
+                );
+            }
 
-
-            agent.SetDestination(
-                currentEnemy.transform.position
-            );
-
-
-            animator.SetBool(
-                "Walk",
-                true
-            );
+            if (animator != null)
+                animator.SetBool("Walk", true);
         }
     }
 
-
-    // =====================================================
+    // ==========================================
     // START FIGHT
-    // =====================================================
+    // ==========================================
 
     void StartFight()
     {
-        animator.SetBool(
-            "Walk",
-            false
-        );
-
-
-        animator.SetBool(
-            "Attack",
-            true
-        );
-
-
         if (currentEnemy == null)
             return;
 
-
-        if (currentEnemy.IsDead())
+        if (currentEnemy.IsDead() ||
+            currentEnemy.IsEngaged())
         {
             ClearEnemy();
-
             return;
         }
 
+        engaged = true;
 
-        if (currentEnemy.IsEngaged())
+        StopForCombat();
+
+        if (animator != null)
         {
-            ClearEnemy();
-
-            return;
+            animator.SetBool("Walk", false);
+            animator.SetBool("Attack", true);
         }
 
+        currentEnemy.Engage(this);
 
-        agent.isStopped =
-            true;
-
-
-        agent.ResetPath();
-
-
-        engaged =
-            true;
-
-
-        currentEnemy.Engage(
-            this
-        );
-
-
-        StartCoroutine(
-            AttackRoutine()
-        );
-    }
-    public void BarracksDestroyed()
-{
-    if (isDead)
-        return;
-
-    isDead = true;
-    engaged = false;
-
-    StopAllCoroutines();
-    if (currentEnemy != null)
-    {
-        currentEnemy.TroopDied(this);
+        StartCoroutine(AttackRoutine());
     }
 
-    Destroy(gameObject);
-}
-
-
-
+    // ==========================================
+    // ATTACK ENEMY
+    // ==========================================
 
     IEnumerator AttackRoutine()
     {
-        while (
-            engaged &&
-            currentEnemy != null
-        )
+        while (engaged && currentEnemy != null)
         {
             yield return new WaitForSeconds(
                 attackInterval
             );
 
-
             if (currentEnemy == null)
                 break;
-
 
             if (currentEnemy.IsDead())
             {
                 EnemyDied();
-
                 yield break;
             }
-     
 
             if (currentEnemyHealth != null)
             {
-                currentEnemyHealth.TakeDamage(
-                    damage
-                );
+                currentEnemyHealth.TakeDamage(damage);
 
-
-                if (
-                    currentEnemy == null ||
-                    currentEnemy.IsDead()
-                )
+                if (currentEnemy == null ||
+                    currentEnemy.IsDead())
                 {
                     EnemyDied();
-
                     yield break;
                 }
             }
         }
     }
 
-
-    // =====================================================
+    // ==========================================
     // ENEMY DIED
-    // =====================================================
+    // ==========================================
 
     public void EnemyDied()
     {
         if (isDead)
             return;
 
+        engaged = false;
 
-        animator.SetBool(
-            "Attack",
-            false
-        );
+        currentEnemy = null;
+        currentEnemyHealth = null;
 
+        if (animator != null)
+        {
+            animator.SetBool("Attack", false);
+        }
 
-        engaged =
-            false;
-
-
-        currentEnemy =
-            null;
-
-
-        currentEnemyHealth =
-            null;
-
-
-        agent.isStopped =
-            false;
+        ResumeAfterCombat();
     }
 
-
-    // =====================================================
+    // ==========================================
     // CLEAR ENEMY
-    // =====================================================
+    // ==========================================
 
     void ClearEnemy()
     {
-        currentEnemy =
-            null;
+        currentEnemy = null;
+        currentEnemyHealth = null;
+        engaged = false;
 
-
-        currentEnemyHealth =
-            null;
-
-
-        engaged =
-            false;
-
-
-        animator.SetBool(
-            "Attack",
-            false
-        );
-
+        if (animator != null)
+        {
+            animator.SetBool("Attack", false);
+        }
 
         if (!isDead)
         {
-            agent.isStopped =
-                false;
+            ResumeAfterCombat();
         }
     }
 
+    // ==========================================
+    // ROTATE TOWARD ENEMY
+    // ==========================================
 
-    // =====================================================
+    void RotateTowardsEnemy()
+    {
+        if (!engaged || currentEnemy == null)
+            return;
+
+        Transform objectToRotate =
+            troopModel != null ? troopModel : transform;
+
+        Vector3 direction =
+            currentEnemy.transform.position -
+            objectToRotate.position;
+
+        direction.y = 0f;
+
+        if (direction.sqrMagnitude < 0.001f)
+            return;
+
+        // Model faces along positive X-axis
+        Quaternion targetRotation =
+            Quaternion.LookRotation(direction) *
+            Quaternion.Euler(0f, -90f, 0f);
+
+        objectToRotate.rotation = Quaternion.Slerp(
+            objectToRotate.rotation,
+            targetRotation,
+            rotationSpeed * Time.deltaTime
+        );
+    }
+
+    // ==========================================
     // DAMAGE
-    // =====================================================
+    // ==========================================
 
     public void TakeDamage(float damage)
     {
         if (isDead)
             return;
 
-
-        health -=
-            damage;
-
+        health -= damage;
 
         if (health <= 0)
         {
@@ -513,48 +428,54 @@ public class Troops : MonoBehaviour
         }
     }
 
+    // ==========================================
+    // BARRACKS DESTROYED
+    // ==========================================
 
-    // =====================================================
+    public void BarracksDestroyed()
+    {
+        if (isDead)
+            return;
+
+        isDead = true;
+        engaged = false;
+
+        StopAllCoroutines();
+
+        if (currentEnemy != null)
+        {
+            currentEnemy.TroopDied(this);
+        }
+
+        Destroy(gameObject);
+    }
+
+    // ==========================================
     // DIE
-    // =====================================================
+    // ==========================================
 
     void Die()
     {
         if (isDead)
             return;
 
-
-        isDead =
-            true;
-
-
-        engaged =
-            false;
-
+        isDead = true;
+        engaged = false;
 
         StopAllCoroutines();
 
-
         if (currentEnemy != null)
         {
-            currentEnemy.TroopDied(
-                this
-            );
+            currentEnemy.TroopDied(this);
         }
 
-
-        // Tell ONLY the Barracks that spawned us
         if (barracks != null)
         {
             barracks.TroopDied(this);
         }
 
-
-        Destroy(
-            gameObject
-        );
+        Destroy(gameObject);
     }
-
 
     public bool IsEngaged()
     {

@@ -1322,14 +1322,14 @@ MonoBehaviour:
   - {fileID: 3232792351999903638, guid: 9d5b75c6efa59734792332ba0fe9da68, type: 3}
   - {fileID: 3232792351999903638, guid: 9cf224a80523afe4f973a8af85c0d301, type: 3}
   magicTowers:
-  - {fileID: 1491597432366577627, guid: 31780f0e3b3c83d488022ee46e4c03f3, type: 3}
+  - {fileID: 1973278718706418458, guid: 00d87b1aec6fd174c9779dd0eeaa9165, type: 3}
   - {fileID: 2678849289999552043, guid: 75de388cfd7e27840a085fecd0ad0226, type: 3}
   - {fileID: 2678849289999552043, guid: a2bebc0dccdc63941a89aacd7dc3b128, type: 3}
   troopTowers:
   - {fileID: 3232792351999903638, guid: 93c978e5dd8062e4fac0a23156526be3, type: 3}
   - {fileID: 3232792351999903638, guid: 5de28fb39235d1b44982bebb3ce0834b, type: 3}
   bombTowers:
-  - {fileID: 6629539971442076870, guid: cab50664a56480b4a903038fcd84746d, type: 3}
+  - {fileID: 7320143391709119594, guid: 32486a5e944c7ef45bae821c3f380cb7, type: 3}
   - {fileID: 3232792351999903638, guid: 5de28fb39235d1b44982bebb3ce0834b, type: 3}
   - {fileID: 3232792351999903638, guid: ce97bdab17c2df447a321dec7abc72f2, type: 3}
   spawnY: 0.6
@@ -1341,6 +1341,7 @@ MonoBehaviour:
   bombUpgradePrice: 150
   magicUpgradePrice: 100
   troopUpgradePrice: 120
+  maxbarracks: 1
   archerSellPrice: 80
   bombSellPrice: 240
   troopSellPrice: 200

@@ -997,7 +997,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &5405562342762324089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1031,8 +1031,6 @@ MonoBehaviour:
   slotButton: {fileID: 3031371168832941483}
   towerOptions: {fileID: 7410191093620876610}
   towerUI: {fileID: 8430648736680183442}
-  upgradeText: {fileID: 7923008683022701787}
-  sellText: {fileID: 3478739549751471627}
   rallyPointButton: {fileID: 1177270981708540142}
   towerSlot: {fileID: 0}
   archerTowers:
@@ -1059,11 +1057,19 @@ MonoBehaviour:
   bombUpgradePrice: 150
   magicUpgradePrice: 100
   troopUpgradePrice: 120
+  maxbarracks: 1
   archerSellPrice: 80
   bombSellPrice: 240
   troopSellPrice: 200
   magicSellPrice: 160
   priceIncreaseAfterUgrade: 50
+  upgradePriceText: {fileID: 0}
+  sellPriceText: {fileID: 0}
+  archerPriceText: {fileID: 0}
+  magicPriceText: {fileID: 0}
+  bombPriceText: {fileID: 0}
+  troopPriceText: {fileID: 0}
+  cross: {fileID: 0}
 --- !u!1 &5705359525528970452
 GameObject:
   m_ObjectHideFlags: 0

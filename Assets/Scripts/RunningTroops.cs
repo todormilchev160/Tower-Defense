@@ -35,11 +35,8 @@ void Update()
 
     if (!navMeshAgent.isOnNavMesh)
         return;
-
-    // Keep following the target
     navMeshAgent.SetDestination(target.position);
 
-    // Check if the soldier has reached its destination
     if (!navMeshAgent.pathPending &&
         navMeshAgent.remainingDistance <= stoppingDistance &&
         (!navMeshAgent.hasPath || navMeshAgent.velocity.sqrMagnitude < 0.01f))
