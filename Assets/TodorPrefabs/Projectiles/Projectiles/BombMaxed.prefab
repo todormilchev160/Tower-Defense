@@ -138,7 +138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bomb
   travelTime: 1.2
-  arcHeight: 3
+  arcHeight: 1
   explosionRadius: 4
   damage: 5
   enemyTag: EnemyBomber

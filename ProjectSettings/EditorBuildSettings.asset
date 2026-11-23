@@ -6,14 +6,17 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/FV DEMO 1/MainMenu Demo 1.unity
-    guid: becad68cc18b03f4493a49172671d892
-  - enabled: 0
-    path: Assets/Scenes/FV DEMO 1/Level 1.unity
-    guid: d4fee9b7b4d450c4b924f099456aab5a
+    path: Assets/Scenes/FV DEMO Ingmar/MainMenu Demo 1.unity
+    guid: 41eb41cda8ad93d4e8bd1bc58fefbb8f
   - enabled: 1
     path: Assets/Scenes/FV DEMO Todor/Level 1Todor.unity
     guid: c879f26f562cc0d4e8f6c609a30698ba
+  - enabled: 1
+    path: Assets/Scenes/FV DEMO Ingmar/VictoryScene.unity
+    guid: fb96780bd151fcf4aa954c9c756ee1a7
+  - enabled: 1
+    path: Assets/Scenes/FV DEMO Ingmar/DeathScene.unity
+    guid: f68c235381e7a434497154efbaf0a269
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

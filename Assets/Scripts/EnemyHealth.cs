@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class EnemyHealth : MonoBehaviour
 {
@@ -10,8 +11,9 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] private int amountOfMoney;
     public Image healthbarFill;
     public TextMeshProUGUI damageText;
-    public float damagefeedbacktime=1;
+    public float damagefeedbacktime = 1;
     public Animator animator;
+    public string victoryScene;
 
     private bool isDead = false;
     void Start()
@@ -34,16 +36,20 @@ public class EnemyHealth : MonoBehaviour
     }
     IEnumerator DamageFeedback(float damage)
     {
-        damageText.text="-"+damage;
+        damageText.text = "-" + damage;
         yield return new WaitForSeconds(damagefeedbacktime);
-        damageText.text="";
+        damageText.text = "";
     }
 
     public void Die()
     {
+        if (isLastEnemy)
+        {
+            SceneManager.LoadScene(victoryScene);
+        }
         animator.SetTrigger("Die");
-        GameManager.currency+=amountOfMoney;
-        
+        GameManager.currency += amountOfMoney;
+
         isDead = true;
 
         if (isLastEnemy)
@@ -52,11 +58,11 @@ public class EnemyHealth : MonoBehaviour
         }
         EnemyCombat combat = GetComponent<EnemyCombat>();
 
-if (combat != null)
-{
-    combat.Die();
-}
-        
+        if (combat != null)
+        {
+            combat.Die();
+        }
+
         Destroy(gameObject);
     }
 
@@ -64,8 +70,8 @@ if (combat != null)
     {
         return isDead;
     }
-     void Update()
+    void Update()
     {
-        healthbarFill.fillAmount =health/maxHealth;
+        healthbarFill.fillAmount = health / maxHealth;
     }
 }
