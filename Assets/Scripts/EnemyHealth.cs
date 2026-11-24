@@ -18,7 +18,7 @@ public float ExtraSpawnDelay => extraSpawnDelay;
     public float damagefeedbacktime = 1;
     public Animator animator;
     public string victoryScene;
-    public bool orc;
+    public bool bigEnemy;
     private bool isDead = false;
     void Start()
     {

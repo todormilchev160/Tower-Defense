@@ -452,7 +452,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 781b5d9ad94f00247883cc6b649f5de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  extraSpawnDelay: 10
+  extraSpawnDelay: 0
   maxHealth: 5
   isLastEnemy: 0
   amountOfMoney: 5
@@ -461,7 +461,7 @@ MonoBehaviour:
   damagefeedbacktime: 1
   animator: {fileID: 8676941879701166690}
   victoryScene: 
-  orc: 1
+  bigEnemy: 0
 --- !u!1 &1053708213700355643
 GameObject:
   m_ObjectHideFlags: 0

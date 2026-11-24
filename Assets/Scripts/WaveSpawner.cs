@@ -81,7 +81,16 @@ public class WaveSpawner : MonoBehaviour
         waveGrayedOut.SetActive(true);
         foreach (GameObject enemy in wave.enemies)
 {
-           if (enemy != null)
+    EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
+
+    float extraDelay = enemyHealth != null
+        ? enemyHealth.ExtraSpawnDelay
+        : 0f;
+
+    yield return new WaitForSeconds(
+        wave.timeBetweenEnemies + extraDelay
+    );
+       if (enemy != null)
             {
                 float randomX = Random.Range(
                     leftSpawnPoint.position.x,
@@ -100,15 +109,6 @@ public class WaveSpawner : MonoBehaviour
                     leftSpawnPoint.rotation
                 );
             }
-    EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
-
-    float extraDelay = enemyHealth != null
-        ? enemyHealth.ExtraSpawnDelay
-        : 0f;
-
-    yield return new WaitForSeconds(
-        wave.timeBetweenEnemies + extraDelay
-    );
 }
     }
 

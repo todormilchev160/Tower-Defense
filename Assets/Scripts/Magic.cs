@@ -121,14 +121,8 @@ public class Magic : MonoBehaviour
             return;
 
         hasHit = true;
-        if(health.orc)
-        {
-            health.TakeDamage(damage+damageMoreDealtOnOrcs);
-        }
-        else
-        {
+    
              health.TakeDamage(damage);
-        }
         Destroy(gameObject);
     }
 }

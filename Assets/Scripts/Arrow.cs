@@ -90,7 +90,7 @@ public class Arrow : MonoBehaviour
             return;
 
         hasHit = true;
-        if(enemyHealth.orc)
+        if(enemyHealth.bigEnemy)
         {
             enemyHealth.TakeDamage(damage-damageLessDealtOnOrcs);
         }

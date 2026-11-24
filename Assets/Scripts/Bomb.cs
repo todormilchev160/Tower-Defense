@@ -9,6 +9,7 @@ public class Bomb : MonoBehaviour
     [Header("Explosion")]
     [SerializeField] private float explosionRadius = 3f;
     [SerializeField] private float damage = 5f;
+    [SerializeField] private float damageLessDealtOnBigEnemy = 2f;
 
     [Header("Enemy")]
     [SerializeField] private string enemyTag = "Enemy";
@@ -84,7 +85,13 @@ public class Bomb : MonoBehaviour
 
             if (enemyHealth != null)
             {
-                enemyHealth.TakeDamage(damage);
+                if(enemyHealth.bigEnemy)
+                {
+                    enemyHealth.TakeDamage(damage-damageLessDealtOnBigEnemy);
+                }
+                else
+                {  enemyHealth.TakeDamage(damage);
+                }
             }
         }
 
