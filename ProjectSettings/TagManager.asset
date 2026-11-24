@@ -9,6 +9,7 @@ TagManager:
   - Ground
   - EnemyHitPoint
   - EnemyBomber
+  - BombEnemy
   layers:
   - Default
   - TransparentFX

@@ -141,7 +141,7 @@ MonoBehaviour:
   arcHeight: 3
   explosionRadius: 3
   damage: 4
-  enemyTag: Enemy
+  enemyTag: BombEnemy
 --- !u!1 &2212964620992332317
 GameObject:
   m_ObjectHideFlags: 0

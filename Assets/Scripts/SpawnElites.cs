@@ -37,9 +37,9 @@ public class SpawnElites : MonoBehaviour
 
     public void SpawnTroops()
     {
-        if(cooldown1<cooldown)
-        return;
-       
+        if(cooldown1<=cooldown)
+            return;
+        
         if(GameManager.currency<elitesPrice)
         return;
          GameManager.currency-=elitesPrice;

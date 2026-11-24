@@ -29,17 +29,19 @@ public class WaveSpawner : MonoBehaviour
     [Header("UI elements")]
     public Image clock;
     public TextMeshProUGUI wavecounter;
+    public GameObject waveGrayedOut;
 
     [Header("Object To Disable")]
     [SerializeField] private GameObject objectToDisable;
 
-    private float clocktime;
+    public static float clocktime;
     private float maxClockTime;
     private int currentWave = 0;
     private bool clockrunout = false;
     private bool clockticking = false;
     private int wavenumber = 1;
     private int maxwaves;
+    
 
     void Start()
     {
@@ -50,15 +52,14 @@ public class WaveSpawner : MonoBehaviour
     }
 
     IEnumerator StartWaves()
-    {
-
+    { 
         if (objectToDisable != null)
         {
             objectToDisable.SetActive(false);
         }
-
         while (currentWave < waves.Length)
         {
+            waveGrayedOut.SetActive(false);
             if (currentWave != 0)
             {
                 clockticking = true;
@@ -77,6 +78,7 @@ public class WaveSpawner : MonoBehaviour
 
     IEnumerator SpawnWave(Wave wave)
     {
+        waveGrayedOut.SetActive(true);
         foreach (GameObject enemy in wave.enemies)
         {
             if (enemy != null)

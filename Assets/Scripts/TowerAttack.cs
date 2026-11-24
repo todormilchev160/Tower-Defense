@@ -25,10 +25,13 @@ public class TowerAttack : MonoBehaviour
     [Header("Facing Direction")]
     public FacingDirection facingDirection = FacingDirection.ZForward;
 
-    [Header("Targeting")]
-    public Transform targetPoint;
-    public string enemyTag = "Enemy";
-    public float attackRange = 10f;
+[Header("Targeting")]
+public Transform targetPoint;
+
+public string enemyTag = "Enemy";
+public string secondEnemyTag = "BombEnemy";
+
+public float attackRange = 10f;
 
     [Header("Shooting")]
     public GameObject projectilePrefab;
@@ -133,43 +136,64 @@ public class TowerAttack : MonoBehaviour
         );
     }
 
-    void FindClosestEnemy()
+void FindClosestEnemy()
+{
+    GameObject[] enemies1 =
+        GameObject.FindGameObjectsWithTag(enemyTag);
+
+    GameObject[] enemies2 =
+        GameObject.FindGameObjectsWithTag(secondEnemyTag);
+
+    float closestDistanceToPoint = Mathf.Infinity;
+    Transform closestEnemy = null;
+
+    Vector3 referencePosition =
+        targetPoint != null
+        ? targetPoint.position
+        : transform.position;
+
+    // Bomb only targets the second enemy tag.
+    // Arrow and Magic target both tags.
+    GameObject[] validEnemies;
+
+    if (projectileType == ProjectileType.Bomb)
     {
-        GameObject[] enemies =
-            GameObject.FindGameObjectsWithTag(enemyTag);
-
-        float closestDistanceToPoint = Mathf.Infinity;
-        Transform closestEnemy = null;
-
-        Vector3 referencePosition =
-            targetPoint != null
-            ? targetPoint.position
-            : transform.position;
-
-        foreach (GameObject enemy in enemies)
-        {
-            float distanceFromTroop = Vector3.Distance(
-                transform.position,
-                enemy.transform.position
-            );
-
-            if (distanceFromTroop > attackRange)
-                continue;
-
-            float distanceToPoint = Vector3.Distance(
-                referencePosition,
-                enemy.transform.position
-            );
-
-            if (distanceToPoint < closestDistanceToPoint)
-            {
-                closestDistanceToPoint = distanceToPoint;
-                closestEnemy = enemy.transform;
-            }
-        }
-
-        currentTarget = closestEnemy;
+        validEnemies = enemies2;
     }
+    else
+    {
+        validEnemies = new GameObject[
+            enemies1.Length + enemies2.Length
+        ];
+
+        enemies1.CopyTo(validEnemies, 0);
+        enemies2.CopyTo(validEnemies, enemies1.Length);
+    }
+
+    foreach (GameObject enemy in validEnemies)
+    {
+        float distanceFromTroop = Vector3.Distance(
+            transform.position,
+            enemy.transform.position
+        );
+
+        if (distanceFromTroop > attackRange)
+            continue;
+
+        float distanceToPoint = Vector3.Distance(
+            referencePosition,
+            enemy.transform.position
+        );
+
+        if (distanceToPoint < closestDistanceToPoint)
+        {
+            closestDistanceToPoint = distanceToPoint;
+            closestEnemy = enemy.transform;
+        }
+    }
+
+    currentTarget = closestEnemy;
+}
 
     IEnumerator Shoot()
     {
@@ -209,6 +233,7 @@ public class TowerAttack : MonoBehaviour
         {
             case ProjectileType.Bomb:
                 {
+                    
                     Bomb bomb = projectile.GetComponent<Bomb>();
 
                     if (bomb != null)

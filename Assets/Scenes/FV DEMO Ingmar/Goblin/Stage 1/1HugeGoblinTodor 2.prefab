@@ -280,7 +280,7 @@ GameObject:
   - component: {fileID: 3989456533482156186}
   m_Layer: 3
   m_Name: 1HugeGoblinTodor 2
-  m_TagString: Enemy
+  m_TagString: BombEnemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

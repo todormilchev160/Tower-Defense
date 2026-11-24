@@ -22,17 +22,18 @@ public class TowerUIManager : MonoBehaviour
 
     [Header("Spawn Settings")]
     [SerializeField] private float spawnY = 0f;
-    [Header("Prices")]
     [Header("Buy Prices")]
     public int archerPrice;
     public int magicPrice;
     public int bombPrice;
     public int troopPrice = 0;
-    [Header("Upgrade prices")]
+    [Header("Upgrade prices and settings")]
     public int archerUpgradePrice;
     public int bombUpgradePrice;
     public int magicUpgradePrice;
     public int troopUpgradePrice = 0;
+    public int maxLevel=3;
+    public GameObject coin;
     [Header("Barrack settings")]
     public int maxbarracks = 1;
     [Header("Sell prices")]
@@ -68,6 +69,7 @@ public class TowerUIManager : MonoBehaviour
     public TextMeshProUGUI troopPriceText;
     public GameObject cross;
     public static int currentbarrackscount = 0;
+    private int level=1;
 
     void Start()
     {
@@ -90,7 +92,12 @@ public class TowerUIManager : MonoBehaviour
 
     void Update()
     {
-        if (archer)
+        if(level==maxLevel)
+        {
+            coin.SetActive(false);
+            upgradePriceText.text="Max";
+        }
+        else if (archer)
         {
             upgradePriceText.text = "" + archerUpgradePrice2;
             sellPriceText.text = "" + archerSellPrice2;
@@ -264,6 +271,8 @@ public void ShowTowerOptions()
         rallyPointButton.SetActive(troop);
 }    public void SellTower()
     {
+        level=1;
+        coin.SetActive(true);
         currentLevel = 0;
 
         if (magic)
@@ -309,6 +318,11 @@ HoverActivation.selecting = false;
     }
     public void UpgradeTower()
     {
+        if(level==maxLevel)
+        {
+            StartCoroutine(NoMoneyTextCoroutine());
+                return;
+        }
         if (archer)
         {
             if (GameManager.currency < archerUpgradePrice2)
@@ -318,6 +332,7 @@ HoverActivation.selecting = false;
             }
             else
             {
+                level++;
                 HoverActivation.selecting = false;
                 archerSellPrice2 += archerUpgradePrice * 8 / 10;
                 GameManager.currency -= archerUpgradePrice2;
@@ -334,6 +349,7 @@ HoverActivation.selecting = false;
             }
             else
             {
+                level++;
                 HoverActivation.selecting = false;
                 magicSellPrice2 += magicUpgradePrice * 8 / 10;
                 GameManager.currency -= magicUpgradePrice2;
@@ -350,6 +366,7 @@ HoverActivation.selecting = false;
             }
             else
             {
+                level++;
                 HoverActivation.selecting = false;
                 bombSellPrice2 += bombUpgradePrice * 8 / 10;
                 GameManager.currency -= bombUpgradePrice2;
@@ -366,6 +383,7 @@ HoverActivation.selecting = false;
             }
             else
             {
+                level++;
                 HoverActivation.selecting = false;
                 troopSellPrice2 += troopUpgradePrice * 8 / 10;
                 GameManager.currency -= troopUpgradePrice2;
