@@ -5,6 +5,10 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class EnemyHealth : MonoBehaviour
 {
+    [Header("Spawn Settings")]
+     [SerializeField] private float extraSpawnDelay = 0f;
+
+public float ExtraSpawnDelay => extraSpawnDelay;
     [SerializeField] private float maxHealth = 10;
     private float health;
     [SerializeField] private bool isLastEnemy;

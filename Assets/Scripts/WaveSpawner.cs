@@ -80,8 +80,8 @@ public class WaveSpawner : MonoBehaviour
     {
         waveGrayedOut.SetActive(true);
         foreach (GameObject enemy in wave.enemies)
-        {
-            if (enemy != null)
+{
+           if (enemy != null)
             {
                 float randomX = Random.Range(
                     leftSpawnPoint.position.x,
@@ -100,10 +100,16 @@ public class WaveSpawner : MonoBehaviour
                     leftSpawnPoint.rotation
                 );
             }
-        
+    EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
 
-            yield return new WaitForSeconds(wave.timeBetweenEnemies);
-        }
+    float extraDelay = enemyHealth != null
+        ? enemyHealth.ExtraSpawnDelay
+        : 0f;
+
+    yield return new WaitForSeconds(
+        wave.timeBetweenEnemies + extraDelay
+    );
+}
     }
 
     void Update()

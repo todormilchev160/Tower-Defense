@@ -452,6 +452,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 781b5d9ad94f00247883cc6b649f5de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  extraSpawnDelay: 10
   maxHealth: 5
   isLastEnemy: 0
   amountOfMoney: 5
