@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RunningTroops
   damage: 2
-  enemyTag: EnemyBomber
+  enemyTag: BombEnemy
   target: {fileID: 5291832413418804748, guid: f9740d7bae376eb4a8611343a8e84a5c, type: 3}
   stoppingDistance: 0.5
 --- !u!195 &6481253815080449171

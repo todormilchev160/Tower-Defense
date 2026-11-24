@@ -23,7 +23,7 @@ public class RestartGame : MonoBehaviour
         HoverActivation.selecting = false;
         GameManager.currency=200;
         GameManager.waveCleared=true;
-
+       TowerUIManager.currentbarrackscount=0;
         // Add other static variables here:
         // GameManager.currency = 100;
         // Barracks.spawningUnlocked = false;

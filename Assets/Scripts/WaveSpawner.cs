@@ -33,6 +33,12 @@ public class WaveSpawner : MonoBehaviour
 
     [Header("Object To Disable")]
     [SerializeField] private GameObject objectToDisable;
+    [Header("Orc Tutorial")]
+    public GameObject panel;
+    public int waveToShowPanel=2;
+    public NewCameraMovement camera;
+    public GameObject gameUI;
+    public GameObject tutorialButton;
 
     public static float clocktime;
     private float maxClockTime;
@@ -79,7 +85,7 @@ public class WaveSpawner : MonoBehaviour
     IEnumerator SpawnWave(Wave wave)
     {
         waveGrayedOut.SetActive(true);
-        foreach (GameObject enemy in wave.enemies)
+foreach (GameObject enemy in wave.enemies)
 {
     EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
 
@@ -114,9 +120,13 @@ public class WaveSpawner : MonoBehaviour
 
     void Update()
     {
+        if(currentWave+1 == waveToShowPanel)
+        {
+          tutorialButton.SetActive(true);
+        }
+     
         wavecounter.text ="Wave " +wavenumber+"/"+maxwaves;
         clock.fillAmount = clocktime / maxClockTime;
-
         if (clocktime == 0)
         {
             clockrunout = true;
@@ -134,5 +144,19 @@ public class WaveSpawner : MonoBehaviour
         {
             clocktime = maxClockTime;
         }
+    }
+    public void DismissPanel()
+    {
+        gameUI.SetActive(true);
+        panel.SetActive(false);
+        camera.enabled = true;
+        Time.timeScale = 1f;
+    }
+    public void ShowTutorialPanel()
+    {
+        gameUI.SetActive(false);
+        panel.SetActive(true);
+        camera.enabled = false;
+        Time.timeScale = 0f;
     }
 }

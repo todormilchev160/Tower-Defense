@@ -68,8 +68,7 @@ public class Troops : MonoBehaviour
         if (engaged)
             return;
 
-        if (currentEnemy == null)
-        {
+    
             FindNearestEnemy();
 
             if (currentEnemy == null)
@@ -77,7 +76,7 @@ public class Troops : MonoBehaviour
                 GoToRallyPoint();
                 return;
             }
-        }
+        
 
         if (currentEnemy.IsDead() ||
             currentEnemy.IsEngaged())

@@ -112,6 +112,11 @@ public class TowerUIManager : MonoBehaviour
             upgradePriceText.text = "" + bombUpgradePrice2;
             sellPriceText.text = "" + bombSellPrice2;
         }
+        if (troop)
+        {
+            upgradePriceText.text = "" + troopUpgradePrice2;
+            sellPriceText.text = "" + troopSellPrice2;
+        }
 
         if (!towerUIOpen)
             return;
@@ -295,6 +300,8 @@ public void ShowTowerOptions()
         }
         if (troop)
         {
+            TroopRallyPoint.navMeshVisual.SetActive(false);
+           currentbarrackscount --;
             GameManager.currency += troopSellPrice2;
             troopSellPrice2 = troopSellPrice;
             troopUpgradePrice2 = troopUpgradePrice;
@@ -413,6 +420,7 @@ HoverActivation.selecting = false;
     }
     private void UpgradeBarracks()
     {
+        TroopRallyPoint.navMeshVisual.SetActive(false);
         Destroy(tower);
         currentLevel += 1;
         SpawnTower(troopTowers[currentLevel]);
