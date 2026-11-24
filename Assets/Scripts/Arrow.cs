@@ -6,6 +6,7 @@ public class Arrow : MonoBehaviour
     [Header("Projectile Settings")]
     public float speed = 10f;
     public float damage = 10f;
+    public float damageLessDealtOnOrcs;
 
     [Header("Lifetime")]
     public float lifeTime = 5f;
@@ -89,10 +90,16 @@ public class Arrow : MonoBehaviour
             return;
 
         hasHit = true;
+        if(enemyHealth.orc)
+        {
+            enemyHealth.TakeDamage(damage-damageLessDealtOnOrcs);
+        }
+        else
+        {
+            enemyHealth.TakeDamage(damage);
 
-        enemyHealth.TakeDamage(damage);
+        }
 
-        // Destroy ONLY when hitting a living enemy
         Destroy(gameObject);
     }
 }

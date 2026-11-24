@@ -74,7 +74,7 @@ MonoBehaviour:
   damage: 6
   attackInterval: 1
   engagementDistance: 0.6
-  enemyTag: Enemy
+  enemyTag: BombEnemy
   detectionRange: 3
   rallyStoppingDistance: 0.5
   troopModel: {fileID: 5255831081408778649}

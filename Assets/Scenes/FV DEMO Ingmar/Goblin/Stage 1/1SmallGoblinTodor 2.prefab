@@ -460,6 +460,7 @@ MonoBehaviour:
   damagefeedbacktime: 1
   animator: {fileID: 8676941879701166690}
   victoryScene: 
+  orc: 1
 --- !u!1 &1053708213700355643
 GameObject:
   m_ObjectHideFlags: 0

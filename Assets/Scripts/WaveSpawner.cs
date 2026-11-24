@@ -100,6 +100,7 @@ public class WaveSpawner : MonoBehaviour
                     leftSpawnPoint.rotation
                 );
             }
+        
 
             yield return new WaitForSeconds(wave.timeBetweenEnemies);
         }

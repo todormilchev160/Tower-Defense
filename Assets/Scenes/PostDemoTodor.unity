@@ -40777,15 +40777,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NewCameraMovement
   moveSpeed: 0.02
-  minX: -100
-  maxX: 100
-  minZ: -100
-  maxZ: 100
+  minX: -10
+  maxX: 10
+  minZ: -10
+  maxZ: 10
   rotationTarget: {fileID: 1615274070}
   rotationSpeed: 0.2
   rotationDetectionThreshold: 5
   rotationSmoothTime: 0.08
-  minVerticalAngle: -85
+  minVerticalAngle: 20
   maxVerticalAngle: 85
   zoomSpeed: 50
   minZoom: 3
@@ -155447,19 +155447,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WaveSpawner
   waves:
   - enemies:
-    - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
-    - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
-    - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
-    - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
-    - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
-    - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
-    - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
-    - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
-    - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
-    - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
-    timeBetweenEnemies: 2
-  - enemies:
-    - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
+    - {fileID: 605666533674246333, guid: 3080afb6ece1a074e9562e4159a83b7b, type: 3}
     - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
     - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
     - {fileID: 605666533674246333, guid: b5eff65043550814db5f633624628fe5, type: 3}
@@ -155475,6 +155463,18 @@ MonoBehaviour:
     - {fileID: 605666533674246333, guid: b5eff65043550814db5f633624628fe5, type: 3}
     - {fileID: 605666533674246333, guid: b5eff65043550814db5f633624628fe5, type: 3}
     timeBetweenEnemies: 1.5
+  - enemies:
+    - {fileID: 605666533674246333, guid: 3080afb6ece1a074e9562e4159a83b7b, type: 3}
+    - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
+    - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
+    - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
+    - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
+    - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
+    - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
+    - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
+    - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
+    - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
+    timeBetweenEnemies: 2
   - enemies:
     - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
     - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
