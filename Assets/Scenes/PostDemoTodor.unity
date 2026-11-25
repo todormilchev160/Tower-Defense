@@ -44118,7 +44118,7 @@ MonoBehaviour:
   magicUpgradePrice: 220
   troopUpgradePrice: 200
   maxLevel: 3
-  currentMapLevel: 3
+  currentMapLevel: 1
   coin: {fileID: 2061412405}
   maxbarracks: 1
   archerSellPrice: 50
@@ -80446,7 +80446,7 @@ MonoBehaviour:
   magicUpgradePrice: 220
   troopUpgradePrice: 200
   maxLevel: 3
-  currentMapLevel: 3
+  currentMapLevel: 1
   coin: {fileID: 2061412405}
   maxbarracks: 1
   archerSellPrice: 50
@@ -91482,7 +91482,7 @@ MonoBehaviour:
   magicUpgradePrice: 220
   troopUpgradePrice: 200
   maxLevel: 3
-  currentMapLevel: 3
+  currentMapLevel: 1
   coin: {fileID: 2061412405}
   maxbarracks: 1
   archerSellPrice: 50
@@ -114085,7 +114085,7 @@ MonoBehaviour:
   magicUpgradePrice: 220
   troopUpgradePrice: 200
   maxLevel: 3
-  currentMapLevel: 3
+  currentMapLevel: 1
   coin: {fileID: 2061412405}
   maxbarracks: 1
   archerSellPrice: 50
@@ -139616,7 +139616,7 @@ MonoBehaviour:
   magicUpgradePrice: 220
   troopUpgradePrice: 200
   maxLevel: 3
-  currentMapLevel: 3
+  currentMapLevel: 1
   coin: {fileID: 2061412405}
   maxbarracks: 1
   archerSellPrice: 50
@@ -160714,27 +160714,27 @@ MonoBehaviour:
     - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
     - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
     - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
-    - {fileID: 605666533674246333, guid: b5eff65043550814db5f633624628fe5, type: 3}
-    - {fileID: 605666533674246333, guid: b5eff65043550814db5f633624628fe5, type: 3}
-    - {fileID: 605666533674246333, guid: b5eff65043550814db5f633624628fe5, type: 3}
-    - {fileID: 605666533674246333, guid: b5eff65043550814db5f633624628fe5, type: 3}
-    - {fileID: 605666533674246333, guid: b5eff65043550814db5f633624628fe5, type: 3}
-    - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
-    - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
-    - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
-    - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
-    - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
-    - {fileID: 605666533674246333, guid: b5eff65043550814db5f633624628fe5, type: 3}
-    - {fileID: 605666533674246333, guid: b5eff65043550814db5f633624628fe5, type: 3}
-    - {fileID: 605666533674246333, guid: b5eff65043550814db5f633624628fe5, type: 3}
-    - {fileID: 605666533674246333, guid: b5eff65043550814db5f633624628fe5, type: 3}
-    - {fileID: 605666533674246333, guid: b5eff65043550814db5f633624628fe5, type: 3}
-    - {fileID: 605666533674246333, guid: b5eff65043550814db5f633624628fe5, type: 3}
-    - {fileID: 605666533674246333, guid: b5eff65043550814db5f633624628fe5, type: 3}
-    - {fileID: 605666533674246333, guid: b5eff65043550814db5f633624628fe5, type: 3}
-    - {fileID: 605666533674246333, guid: b5eff65043550814db5f633624628fe5, type: 3}
-    - {fileID: 605666533674246333, guid: b5eff65043550814db5f633624628fe5, type: 3}
     - {fileID: 605666533674246333, guid: 3080afb6ece1a074e9562e4159a83b7b, type: 3}
+    - {fileID: 605666533674246333, guid: b5eff65043550814db5f633624628fe5, type: 3}
+    - {fileID: 605666533674246333, guid: b5eff65043550814db5f633624628fe5, type: 3}
+    - {fileID: 605666533674246333, guid: b5eff65043550814db5f633624628fe5, type: 3}
+    - {fileID: 605666533674246333, guid: b5eff65043550814db5f633624628fe5, type: 3}
+    - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
+    - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
+    - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
+    - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
+    - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
+    - {fileID: 605666533674246333, guid: b5eff65043550814db5f633624628fe5, type: 3}
+    - {fileID: 605666533674246333, guid: b5eff65043550814db5f633624628fe5, type: 3}
+    - {fileID: 605666533674246333, guid: b5eff65043550814db5f633624628fe5, type: 3}
+    - {fileID: 605666533674246333, guid: b5eff65043550814db5f633624628fe5, type: 3}
+    - {fileID: 605666533674246333, guid: b5eff65043550814db5f633624628fe5, type: 3}
+    - {fileID: 605666533674246333, guid: b5eff65043550814db5f633624628fe5, type: 3}
+    - {fileID: 605666533674246333, guid: b5eff65043550814db5f633624628fe5, type: 3}
+    - {fileID: 605666533674246333, guid: b5eff65043550814db5f633624628fe5, type: 3}
+    - {fileID: 605666533674246333, guid: b5eff65043550814db5f633624628fe5, type: 3}
+    - {fileID: 605666533674246333, guid: b5eff65043550814db5f633624628fe5, type: 3}
+    - {fileID: 605666533674246333, guid: b5eff65043550814db5f633624628fe5, type: 3}
     - {fileID: 605666533674246333, guid: b5eff65043550814db5f633624628fe5, type: 3}
     - {fileID: 605666533674246333, guid: b5eff65043550814db5f633624628fe5, type: 3}
     - {fileID: 605666533674246333, guid: b5eff65043550814db5f633624628fe5, type: 3}
@@ -175923,7 +175923,7 @@ MonoBehaviour:
   magicUpgradePrice: 220
   troopUpgradePrice: 200
   maxLevel: 3
-  currentMapLevel: 3
+  currentMapLevel: 1
   coin: {fileID: 2061412405}
   maxbarracks: 1
   archerSellPrice: 50
@@ -211626,7 +211626,7 @@ MonoBehaviour:
   magicUpgradePrice: 220
   troopUpgradePrice: 200
   maxLevel: 3
-  currentMapLevel: 3
+  currentMapLevel: 1
   coin: {fileID: 2061412405}
   maxbarracks: 1
   archerSellPrice: 50
@@ -259687,7 +259687,7 @@ MonoBehaviour:
   magicUpgradePrice: 220
   troopUpgradePrice: 200
   maxLevel: 3
-  currentMapLevel: 3
+  currentMapLevel: 1
   coin: {fileID: 2061412405}
   maxbarracks: 1
   archerSellPrice: 50
@@ -274812,7 +274812,7 @@ MonoBehaviour:
   magicUpgradePrice: 220
   troopUpgradePrice: 200
   maxLevel: 3
-  currentMapLevel: 3
+  currentMapLevel: 1
   coin: {fileID: 2061412405}
   maxbarracks: 1
   archerSellPrice: 50
@@ -315728,7 +315728,7 @@ MonoBehaviour:
   magicUpgradePrice: 220
   troopUpgradePrice: 200
   maxLevel: 3
-  currentMapLevel: 3
+  currentMapLevel: 1
   coin: {fileID: 2061412405}
   maxbarracks: 1
   archerSellPrice: 50
@@ -352204,7 +352204,7 @@ MonoBehaviour:
   magicUpgradePrice: 220
   troopUpgradePrice: 200
   maxLevel: 3
-  currentMapLevel: 3
+  currentMapLevel: 1
   coin: {fileID: 2061412405}
   maxbarracks: 1
   archerSellPrice: 50
@@ -357796,7 +357796,7 @@ MonoBehaviour:
   magicUpgradePrice: 220
   troopUpgradePrice: 200
   maxLevel: 3
-  currentMapLevel: 3
+  currentMapLevel: 1
   coin: {fileID: 2061412405}
   maxbarracks: 1
   archerSellPrice: 50
