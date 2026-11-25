@@ -45,7 +45,7 @@ public class WaveSpawner : MonoBehaviour
     private int currentWave = 0;
     private bool clockrunout = false;
     private bool clockticking = false;
-    private int wavenumber = 1;
+    private int wavenumber = 0;
     private int maxwaves;
     
 
