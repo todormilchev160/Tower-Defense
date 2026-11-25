@@ -455,7 +455,7 @@ MonoBehaviour:
   extraSpawnDelay: 0
   maxHealth: 10
   isLastEnemy: 0
-  amountOfMoney: 10
+  amountOfMoney: 8
   healthbarFill: {fileID: 1445252073108139028}
   damageText: {fileID: 2558749157472531735}
   damagefeedbacktime: 1

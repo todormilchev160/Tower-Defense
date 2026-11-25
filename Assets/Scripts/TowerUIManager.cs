@@ -153,6 +153,7 @@ public class TowerUIManager : MonoBehaviour
 
     if (secondStage)
     {
+        towerUI2.SetActive(false);
         towerUI.SetActive(false);
         towerOptions.SetActive(true);
     }
@@ -252,7 +253,7 @@ public class TowerUIManager : MonoBehaviour
         TowerHover towerHover = tower.GetComponent<TowerHover>();
 
         
-
+        towerUI2.SetActive(false);
         towerUI.SetActive(false);
         towerSelectionUI.SetActive(false);
         towerOptions.SetActive(true);
@@ -269,7 +270,7 @@ public void ShowTowerOptions()
     HoverActivation.selecting = true;
  
     towerOptions.SetActive(false);
-    if(currentMapLevel==1)
+    if(currentMapLevel==1||(currentMapLevel==2 && level==2))
     {
         towerUI2.SetActive(true);
     }
@@ -280,7 +281,7 @@ public void ShowTowerOptions()
       
 
     towerUIOpen = true;
-
+      rallyPointButton2.SetActive(troop);
     if (rallyPointButton != null)
         rallyPointButton.SetActive(troop);
 }    public void SellTower()
