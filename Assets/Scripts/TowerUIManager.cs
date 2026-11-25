@@ -12,9 +12,9 @@ public class TowerUIManager : MonoBehaviour
     public GameObject slotButton;
     public GameObject towerOptions;
     public GameObject towerUI;
+    public GameObject towerUI2;
     public GameObject rallyPointButton;
-
-    [Header("Tower Prefabs")]
+    public GameObject rallyPointButton2;   [Header("Tower Prefabs")]
     public GameObject[] archerTowers;
     public GameObject[] magicTowers;
     public GameObject[] troopTowers;
@@ -33,6 +33,7 @@ public class TowerUIManager : MonoBehaviour
     public int magicUpgradePrice;
     public int troopUpgradePrice = 0;
     public int maxLevel=3;
+    public int currentMapLevel;
     public GameObject coin;
     [Header("Barrack settings")]
     public int maxbarracks = 1;
@@ -268,7 +269,15 @@ public void ShowTowerOptions()
     HoverActivation.selecting = true;
  
     towerOptions.SetActive(false);
-    towerUI.SetActive(true);
+    if(currentMapLevel==1)
+    {
+        towerUI2.SetActive(true);
+    }
+    else
+    {
+        towerUI.SetActive(true);
+        }
+      
 
     towerUIOpen = true;
 
