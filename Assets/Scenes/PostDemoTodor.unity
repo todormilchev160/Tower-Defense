@@ -4569,7 +4569,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 19043563}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.0000037252903}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -65124,7 +65124,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 352940109}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.0000037252903}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -80420,7 +80420,7 @@ MonoBehaviour:
   towerUI: {fileID: 1973164903}
   towerUI2: {fileID: 1018626819}
   rallyPointButton: {fileID: 238044231}
-  rallyPointButton2: {fileID: 843990997}
+  rallyPointButton2: {fileID: 352940109}
   archerTowers:
   - {fileID: 1496601591821776289, guid: 7e4e29f104c3e6e418fc63fd1baf57f8, type: 3}
   - {fileID: 1496601591821776289, guid: 4795100e3d9f60947afa572517e43c43, type: 3}
@@ -91456,7 +91456,7 @@ MonoBehaviour:
   towerUI: {fileID: 1984167562}
   towerUI2: {fileID: 333077647}
   rallyPointButton: {fileID: 1144103534}
-  rallyPointButton2: {fileID: 843990997}
+  rallyPointButton2: {fileID: 820566739}
   archerTowers:
   - {fileID: 1496601591821776289, guid: 7e4e29f104c3e6e418fc63fd1baf57f8, type: 3}
   - {fileID: 1496601591821776289, guid: 4795100e3d9f60947afa572517e43c43, type: 3}
@@ -114059,7 +114059,7 @@ MonoBehaviour:
   towerUI: {fileID: 345677889}
   towerUI2: {fileID: 1669632553}
   rallyPointButton: {fileID: 513096858}
-  rallyPointButton2: {fileID: 843990997}
+  rallyPointButton2: {fileID: 1883992633}
   archerTowers:
   - {fileID: 1496601591821776289, guid: 7e4e29f104c3e6e418fc63fd1baf57f8, type: 3}
   - {fileID: 1496601591821776289, guid: 4795100e3d9f60947afa572517e43c43, type: 3}
@@ -139590,7 +139590,7 @@ MonoBehaviour:
   towerUI: {fileID: 144180178}
   towerUI2: {fileID: 1995956069}
   rallyPointButton: {fileID: 1635909081}
-  rallyPointButton2: {fileID: 843990997}
+  rallyPointButton2: {fileID: 189785426}
   archerTowers:
   - {fileID: 1496601591821776289, guid: 7e4e29f104c3e6e418fc63fd1baf57f8, type: 3}
   - {fileID: 1496601591821776289, guid: 4795100e3d9f60947afa572517e43c43, type: 3}
@@ -211600,7 +211600,7 @@ MonoBehaviour:
   towerUI: {fileID: 1751322095}
   towerUI2: {fileID: 1677062620}
   rallyPointButton: {fileID: 103870875}
-  rallyPointButton2: {fileID: 843990997}
+  rallyPointButton2: {fileID: 1128577663}
   archerTowers:
   - {fileID: 1496601591821776289, guid: 7e4e29f104c3e6e418fc63fd1baf57f8, type: 3}
   - {fileID: 1496601591821776289, guid: 4795100e3d9f60947afa572517e43c43, type: 3}
@@ -274786,7 +274786,7 @@ MonoBehaviour:
   towerUI: {fileID: 1439482880}
   towerUI2: {fileID: 95703389}
   rallyPointButton: {fileID: 280644819}
-  rallyPointButton2: {fileID: 843990997}
+  rallyPointButton2: {fileID: 543779678}
   archerTowers:
   - {fileID: 1496601591821776289, guid: 7e4e29f104c3e6e418fc63fd1baf57f8, type: 3}
   - {fileID: 1496601591821776289, guid: 4795100e3d9f60947afa572517e43c43, type: 3}
@@ -315702,7 +315702,7 @@ MonoBehaviour:
   towerUI: {fileID: 817233954}
   towerUI2: {fileID: 434290148}
   rallyPointButton: {fileID: 358350288}
-  rallyPointButton2: {fileID: 843990997}
+  rallyPointButton2: {fileID: 1324723867}
   archerTowers:
   - {fileID: 1496601591821776289, guid: 7e4e29f104c3e6e418fc63fd1baf57f8, type: 3}
   - {fileID: 1496601591821776289, guid: 4795100e3d9f60947afa572517e43c43, type: 3}
