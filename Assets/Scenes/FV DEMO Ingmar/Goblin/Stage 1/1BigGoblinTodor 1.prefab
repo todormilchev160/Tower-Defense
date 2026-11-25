@@ -582,7 +582,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e8fb8a417d043a488d1caa80fc9d097, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyDamageBase
-  damageDealtOnBase: 5
+  damageDealtOnBase: 40
 --- !u!1 &9071014564029258736
 GameObject:
   m_ObjectHideFlags: 0
