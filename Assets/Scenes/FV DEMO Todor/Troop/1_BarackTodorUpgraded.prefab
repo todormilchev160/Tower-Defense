@@ -1321,9 +1321,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Barracks
   troopPrefab: {fileID: 185401566911014844, guid: 18e3e8f991777a44a9b0c0dcaa453b19, type: 3}
-  spawnInterval: 10
+  spawnInterval: 5
   intervalBetweenFirstSpawn: 1
-  maxTroops: 2
+  maxTroops: 3
   navMeshSearchDistance: 635.5
   rallyRange: 6
 --- !u!1 &8936751923229048852

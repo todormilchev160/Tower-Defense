@@ -129,7 +129,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
   speed: 10
-  damage: 3
+  damage: 2
+  damageLessDealtOnOrcs: 1
   lifeTime: 1
 --- !u!96 &1400824162991967633
 TrailRenderer:

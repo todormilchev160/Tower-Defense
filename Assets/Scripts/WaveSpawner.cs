@@ -29,17 +29,25 @@ public class WaveSpawner : MonoBehaviour
     [Header("UI elements")]
     public Image clock;
     public TextMeshProUGUI wavecounter;
+    public GameObject waveGrayedOut;
 
     [Header("Object To Disable")]
     [SerializeField] private GameObject objectToDisable;
+    [Header("Orc Tutorial")]
+    public GameObject panel;
+    public int waveToShowPanel=2;
+    public NewCameraMovement camera;
+    public GameObject gameUI;
+    public GameObject tutorialButton;
 
-    private float clocktime;
+    public static float clocktime;
     private float maxClockTime;
     private int currentWave = 0;
     private bool clockrunout = false;
     private bool clockticking = false;
     private int wavenumber = 1;
     private int maxwaves;
+    
 
     void Start()
     {
@@ -50,15 +58,14 @@ public class WaveSpawner : MonoBehaviour
     }
 
     IEnumerator StartWaves()
-    {
-
+    { 
         if (objectToDisable != null)
         {
             objectToDisable.SetActive(false);
         }
-
         while (currentWave < waves.Length)
         {
+            waveGrayedOut.SetActive(false);
             if (currentWave != 0)
             {
                 clockticking = true;
@@ -77,9 +84,19 @@ public class WaveSpawner : MonoBehaviour
 
     IEnumerator SpawnWave(Wave wave)
     {
-        foreach (GameObject enemy in wave.enemies)
-        {
-            if (enemy != null)
+        waveGrayedOut.SetActive(true);
+foreach (GameObject enemy in wave.enemies)
+{
+    EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
+
+    float extraDelay = enemyHealth != null
+        ? enemyHealth.ExtraSpawnDelay
+        : 0f;
+
+    yield return new WaitForSeconds(
+        wave.timeBetweenEnemies + extraDelay
+    );
+       if (enemy != null)
             {
                 float randomX = Random.Range(
                     leftSpawnPoint.position.x,
@@ -98,16 +115,18 @@ public class WaveSpawner : MonoBehaviour
                     leftSpawnPoint.rotation
                 );
             }
-
-            yield return new WaitForSeconds(wave.timeBetweenEnemies);
-        }
+}
     }
 
     void Update()
     {
+        if(currentWave+1 == waveToShowPanel)
+        {
+          tutorialButton.SetActive(true);
+        }
+     
         wavecounter.text ="Wave " +wavenumber+"/"+maxwaves;
         clock.fillAmount = clocktime / maxClockTime;
-
         if (clocktime == 0)
         {
             clockrunout = true;
@@ -125,5 +144,19 @@ public class WaveSpawner : MonoBehaviour
         {
             clocktime = maxClockTime;
         }
+    }
+    public void DismissPanel()
+    {
+        gameUI.SetActive(true);
+        panel.SetActive(false);
+        camera.enabled = true;
+        Time.timeScale = 1f;
+    }
+    public void ShowTutorialPanel()
+    {
+        gameUI.SetActive(false);
+        panel.SetActive(true);
+        camera.enabled = false;
+        Time.timeScale = 0f;
     }
 }

@@ -1308,10 +1308,11 @@ MonoBehaviour:
   facingDirection: 1
   targetPoint: {fileID: 325111080236345537, guid: 011884cb52f5058499d59736d762586a, type: 3}
   enemyTag: EnemyBomber
+  secondEnemyTag: BombEnemy
   attackRange: 2
   projectilePrefab: {fileID: 1668196817524577328, guid: 0cb6c5ad80ea385489dab5bda448bcb3, type: 3}
   firePoint: {fileID: 6724974189312829906}
-  fireRate: 0.25
+  fireRate: 0.5
   fireDelay: 1
   animator: {fileID: 5859484575649890379}
   projectileType: 2

@@ -28,7 +28,7 @@ public class TroopRallyPoint : MonoBehaviour
     private float visualHeightOffset = 0.05f;
 
 
-    private GameObject navMeshVisual;
+    public static GameObject navMeshVisual;
 
     private MeshFilter navMeshFilter;
 

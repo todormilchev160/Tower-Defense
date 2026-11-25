@@ -280,7 +280,7 @@ GameObject:
   - component: {fileID: 3989456533482156186}
   m_Layer: 3
   m_Name: 1GoblinTodor
-  m_TagString: Enemy
+  m_TagString: BombEnemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -452,14 +452,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 781b5d9ad94f00247883cc6b649f5de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  extraSpawnDelay: 0
   maxHealth: 10
   isLastEnemy: 0
-  amountOfMoney: 10
+  amountOfMoney: 8
   healthbarFill: {fileID: 1445252073108139028}
   damageText: {fileID: 2558749157472531735}
   damagefeedbacktime: 1
   animator: {fileID: 8676941879701166690}
   victoryScene: 
+  bigEnemy: 0
 --- !u!1 &1053708213700355643
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,6 +5,10 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class EnemyHealth : MonoBehaviour
 {
+    [Header("Spawn Settings")]
+     [SerializeField] private float extraSpawnDelay = 0f;
+
+public float ExtraSpawnDelay => extraSpawnDelay;
     [SerializeField] private float maxHealth = 10;
     private float health;
     [SerializeField] private bool isLastEnemy;
@@ -14,7 +18,7 @@ public class EnemyHealth : MonoBehaviour
     public float damagefeedbacktime = 1;
     public Animator animator;
     public string victoryScene;
-
+    public bool bigEnemy;
     private bool isDead = false;
     void Start()
     {
@@ -23,22 +27,16 @@ public class EnemyHealth : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        
         if (isDead)
             return;
 
         health -= damage;
-        StartCoroutine(DamageFeedback(damage));
 
         if (health <= 0)
         {
             Die();
         }
-    }
-    IEnumerator DamageFeedback(float damage)
-    {
-        damageText.text = "-" + damage;
-        yield return new WaitForSeconds(damagefeedbacktime);
-        damageText.text = "";
     }
 
     public void Die()

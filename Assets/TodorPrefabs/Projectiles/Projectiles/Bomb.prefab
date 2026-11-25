@@ -137,10 +137,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 816e64e7df225554da8cfaa700045f74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bomb
-  travelTime: 1.2
-  arcHeight: 1
+  travelTime: 0.5
+  arcHeight: 0.8
   explosionRadius: 1
   damage: 3
+  damageLessDealtOnBigEnemy: 2
   enemyTag: EnemyBomber
 --- !u!1 &2212964620992332317
 GameObject:

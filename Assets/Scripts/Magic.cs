@@ -15,6 +15,7 @@ public class Magic : MonoBehaviour
     [Header("Damage")]
     public float damage = 40f;
     public LayerMask hitLayers = ~0;
+    public float damageMoreDealtOnOrcs;
 
     private Vector3 direction;
     private float currentSpeed;
@@ -72,7 +73,7 @@ public class Magic : MonoBehaviour
         {
             Collider col = hit.collider;
 
-            // Ignore our own projectile colliders.
+           
             if (col.transform == transform ||
                 col.transform.IsChildOf(transform))
             {
@@ -81,8 +82,6 @@ public class Magic : MonoBehaviour
 
             EnemyHealth health =
                 col.GetComponentInParent<EnemyHealth>();
-
-            // Continue through objects that aren't enemies.
             if (health == null)
                 continue;
 
@@ -122,9 +121,8 @@ public class Magic : MonoBehaviour
             return;
 
         hasHit = true;
-
-        health.TakeDamage(damage);
-
+    
+             health.TakeDamage(damage);
         Destroy(gameObject);
     }
 }
