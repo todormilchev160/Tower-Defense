@@ -327,6 +327,7 @@ HoverActivation.selecting = false;
         firstStage = true;
         secondStage = false;
         slotButton.SetActive(true);
+        towerUI2.SetActive(false);
         towerUI.SetActive(false);
         bomb = false;
         magic = false;
