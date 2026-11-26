@@ -240,6 +240,7 @@ MonoBehaviour:
   facingDirection: 1
   targetPoint: {fileID: 325111080236345537, guid: 011884cb52f5058499d59736d762586a, type: 3}
   enemyTag: Enemy
+  secondEnemyTag: BombEnemy
   attackRange: 4
   projectilePrefab: {fileID: 336754060067766669, guid: 91e539a57650bf243aceb31ed175689f, type: 3}
   firePoint: {fileID: 5958316418809139997}
@@ -364,8 +365,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1519625831976116148}
   - {fileID: 8869571919824764954}
@@ -1783,7 +1784,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3975825394862494690, guid: 9f4e443204d78b14183db96813b526db, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.573
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 3975825394862494690, guid: 9f4e443204d78b14183db96813b526db, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
