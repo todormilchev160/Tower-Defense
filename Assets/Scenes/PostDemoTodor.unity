@@ -160580,7 +160580,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WaveSpawner
   waves:
   - enemies:
-    - {fileID: 605666533674246333, guid: 2837f946bb915fe4281fa40218d37f69, type: 3}
+    - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
     - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
     - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
     - {fileID: 605666533674246333, guid: cbe5ae493a258fd4580c5af1cdb93fd6, type: 3}
@@ -348603,7 +348603,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.1
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 1c0f3a310af518e45b8ba5c0886e6e5e, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 37555b5d241af7d46995a5f1c0485512, type: 2}
   m_BuildHeightMesh: 0
 --- !u!4 &1938580214
 Transform:
