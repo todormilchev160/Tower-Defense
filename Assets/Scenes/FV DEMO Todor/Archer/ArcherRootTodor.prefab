@@ -86,6 +86,7 @@ MonoBehaviour:
   facingDirection: 1
   targetPoint: {fileID: 325111080236345537, guid: 011884cb52f5058499d59736d762586a, type: 3}
   enemyTag: Enemy
+  secondEnemyTag: BombEnemy
   attackRange: 6
   projectilePrefab: {fileID: 5627795090312600175, guid: 61dc25e238f70844780ef1ad5910a320, type: 3}
   firePoint: {fileID: 3863694470015374174}
@@ -167,7 +168,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3975825394862494690, guid: 9f4e443204d78b14183db96813b526db, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.573
+      value: 1.198
       objectReference: {fileID: 0}
     - target: {fileID: 3975825394862494690, guid: 9f4e443204d78b14183db96813b526db, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -212,6 +213,18 @@ PrefabInstance:
       value: Archer (1)
       objectReference: {fileID: 0}
     - target: {fileID: 8987572226893191817, guid: a17f0214f69d09c4891bf15d1e362df6, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8987572226893191817, guid: a17f0214f69d09c4891bf15d1e362df6, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8987572226893191817, guid: a17f0214f69d09c4891bf15d1e362df6, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8987572226893191817, guid: a17f0214f69d09c4891bf15d1e362df6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -250,6 +263,10 @@ PrefabInstance:
     - target: {fileID: 8987572226893191817, guid: a17f0214f69d09c4891bf15d1e362df6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8987572226893191817, guid: a17f0214f69d09c4891bf15d1e362df6, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

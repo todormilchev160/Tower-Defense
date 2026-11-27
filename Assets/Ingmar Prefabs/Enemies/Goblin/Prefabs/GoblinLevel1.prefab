@@ -33,7 +33,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3838735236420061615}
@@ -150,7 +150,7 @@ MonoBehaviour:
   barricadeAttackDistance: 2
   barricadeDamage: 5
   barricadeAttackInterval: 1
-  animator: {fileID: 0}
+  animator: {fileID: 8854864438585121183}
 --- !u!54 &4696692800492674748
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -194,11 +194,11 @@ MonoBehaviour:
   maxHealth: 10
   isLastEnemy: 0
   amountOfMoney: 8
-  healthbarFill: {fileID: 0}
-  damageText: {fileID: 0}
+  healthbarFill: {fileID: 6813338053066823352}
+  damageText: {fileID: 1438366938519081660}
   damagefeedbacktime: 1
-  animator: {fileID: 0}
-  victoryScene: 
+  animator: {fileID: 8854864438585121183}
+  victoryScene: VIctoryScene
   bigEnemy: 0
 --- !u!1 &1053708213700355643
 GameObject:
@@ -870,5 +870,10 @@ PrefabInstance:
 --- !u!4 &5720246892791840146 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9097180770791716958, guid: d69c0a035cfd2d946b49763b0b5afbaf, type: 3}
+  m_PrefabInstance: {fileID: 3557223081320531404}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &8854864438585121183 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5458089799190879315, guid: d69c0a035cfd2d946b49763b0b5afbaf, type: 3}
   m_PrefabInstance: {fileID: 3557223081320531404}
   m_PrefabAsset: {fileID: 0}
